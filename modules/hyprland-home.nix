@@ -8,7 +8,7 @@
     home.packages = with pkgs; [
       hyprland
       waybar
-      rofi-wayland
+      rofi
       kitty
     ];
 
