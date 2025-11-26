@@ -7,24 +7,19 @@
     ];
 
   boot.loader.systemd-boot.enable = false;
-
   boot.loader.grub.enable = true;
   boot.loader.grub.efiSupport = true;
   boot.loader.grub.devices = [ "nodev" ];
   boot.loader.grub.useOSProber = true;
-
   boot.loader.efi.efiSysMountPoint = "/boot";
-
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.hostName = "starkiller";
-
+  networking.firewall.enable = true;
   networking.networkmanager.enable = true;
 
   time.timeZone = "America/Chicago";
-
   i18n.defaultLocale = "en_US.UTF-8";
-
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_US.UTF-8";
     LC_IDENTIFICATION = "en_US.UTF-8";
@@ -38,17 +33,14 @@
   };
 
   services.xserver.enable = true;
-
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
-
+  services.printing.enable = true;
+  services.openssh.enable = true;
   services.xserver.xkb = {
     layout = "us";
     variant = "";
   };
-
-  services.printing.enable = true;
-
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -66,7 +58,6 @@
       kdePackages.kate
     ];
   };
-
   users.users.riley = {
     isNormalUser = true;
     description = "Riley";
@@ -84,9 +75,8 @@
     wget
     git
     vscode
-    discord
-    steam
     fastfetch
+    htop
   ];
 
   system.stateVersion = "25.05";
