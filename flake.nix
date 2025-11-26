@@ -28,9 +28,6 @@
           }
         ];
       };
-
-      # Optional: makes `nix build .#starkiller` work
-      defaultPackage.${system} = self.nixosConfigurations.starkiller.config.system.build.toplevel;
     };
 
 }

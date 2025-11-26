@@ -1,12 +1,15 @@
 { config, pkgs, ... }:
 
 {
+  imports = [
+    ../../modules/hyprland-home.nix
+  ];
+
+  my.desktop.hyprland.enable = true;
+
   home.username = "figs";
   home.homeDirectory = "/home/figs";
-
   home.stateVersion = "25.05";
-
-  nixpkgs.config.allowUnfree = true;
 
   home.packages = with pkgs; [
     steam
@@ -15,18 +18,11 @@
     wezterm
   ];
 
-  #programs.zsh.enable = true;
+  programs.git = {
+    enable = true;
+    userName = "fagurativejam";
+    userEmail = "fagurativejam@proton.me";
+  };
 
-#  programs.git = {
-#    enable = true;
-#    userName = "Fig Jam";
-#    userEmail = "figs@example.com";
-#  };
-
-#  home.sessionVariables = {
-#    EDITOR = "nvim";
-#  };
-
-  # Required for Home Manager
   programs.home-manager.enable = true;
 }
