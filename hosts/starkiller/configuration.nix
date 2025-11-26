@@ -64,6 +64,7 @@
     extraGroups = [ "networkmanager" "wheel" ];
   };
 
+  programs.hyprland.enable = true;
   programs.firefox.enable = true;
   programs.steam.enable = true;
   hardware.graphics.enable = true;
