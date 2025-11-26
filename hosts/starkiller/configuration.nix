@@ -65,6 +65,8 @@
   };
 
   programs.hyprland.enable = true;
+  services.xserver.displayManager.defaultSession = "hyprland";
+
   programs.firefox.enable = true;
   programs.steam.enable = true;
   hardware.graphics.enable = true;
