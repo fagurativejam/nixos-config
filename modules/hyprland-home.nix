@@ -9,15 +9,12 @@
       hyprland
       waybar
       rofi
-      kitty
     ];
 
     home.file.".config/hypr/hyprland.conf".text = ''
       monitor=,preferred,auto,auto
       exec-once = waybar
       exec-once = rofi -show drun
-      exec-once = kitty
-      bind = SUPER, RETURN, exec kitty
       bind = SUPER, D, exec rofi -show drun
     '';
   };
