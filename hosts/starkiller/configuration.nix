@@ -11,6 +11,7 @@
   boot.loader.grub.devices = [ "nodev" ];
   boot.loader.grub.useOSProber = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
+  boot.loader.grub.efiInstallAsRemovable = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Networking
