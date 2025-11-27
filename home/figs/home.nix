@@ -8,7 +8,6 @@
   ];
 
   my.desktop.wezterm.config = ./wezterm.lua;
-}
 
   my.desktop.hyprland.enable = true;
 
