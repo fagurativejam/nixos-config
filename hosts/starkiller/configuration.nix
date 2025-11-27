@@ -9,11 +9,13 @@
   boot.loader.grub.enable = true;
   boot.loader.grub.efiSupport = true;
   boot.loader.grub.devices = [ "nodev" ];
-  boot.loader.grub.useOSProber = false;
+  boot.loader.grub.useOSProber = true;
+
   boot.loader.efi.efiSysMountPoint = "/boot";
-  boot.loader.grub.configurationLimit = 20;
-  boot.loader.grub.efiInstallAsRemovable = false;
   boot.loader.efi.canTouchEfiVariables = true;
+
+  boot.loader.grub.efiInstallAsRemovable = false;
+  boot.loader.grub.configurationLimit = 20;
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Networking
