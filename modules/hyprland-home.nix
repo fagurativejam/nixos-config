@@ -24,7 +24,7 @@
 		
 		programs.waybar = {
 			enable = true;
-			settigns = {
+			settings = {
 				layer = "top";
 				position = "bottom";
 				modules-left = [ "hyprland/workspaces" ];
