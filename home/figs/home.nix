@@ -3,7 +3,12 @@
 {
   imports = [
     ../../modules/hyprland-home.nix
+    ../../modules/wezterm.nix
+    ../../modules/ghostty.nix
   ];
+
+  my.desktop.wezterm.config = ./wezterm.lua;
+}
 
   my.desktop.hyprland.enable = true;
 
