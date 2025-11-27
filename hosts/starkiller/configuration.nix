@@ -67,9 +67,6 @@
     isNormalUser = true;
     description = "Fig Jam";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-      kdePackages.kate
-    ];
   };
 
   users.users.riley = {
