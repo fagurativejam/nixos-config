@@ -4,7 +4,6 @@
   imports = [
     ../../modules/hyprland-home.nix
     ../../modules/wezterm.nix
-    ../../modules/ghostty.nix
   ];
 
   my.desktop.wezterm.config = ./wezterm.lua;
@@ -18,8 +17,11 @@
   home.packages = with pkgs; [
     steam
     discord
-    ghostty
     wezterm
+    
+    #Nerd Fonts
+    pkgs.nerd-fonts.jetbrains-mono  
+    pkgs.nerd-fonts.fira-code
   ];
 
   programs.git = {
@@ -30,3 +32,4 @@
 
   programs.home-manager.enable = true;
 }
+
