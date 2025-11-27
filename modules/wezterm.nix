@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ config, lib, pkgs, ... }:
 {
   options.my.desktop.wezterm.config = lib.mkOption {
     type = lib.types.path;
