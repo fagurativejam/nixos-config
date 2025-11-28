@@ -7,7 +7,6 @@
   ];
 
   my.desktop.wezterm.config = ./wezterm.lua;
-
   my.desktop.hyprland.enable = true;
 
   home.username = "figs";
@@ -18,18 +17,19 @@
     steam
     discord
     wezterm
-    
-    #Nerd Fonts
+
+    # Nerd Fonts
     pkgs.nerd-fonts.jetbrains-mono  
     pkgs.nerd-fonts.fira-code
   ];
 
   programs.git = {
     enable = true;
-    userName = "fagurativejam";
-    userEmail = "fagurativejam@proton.me";
+    settings = {
+      user.name = "fagurativejam";
+      user.email = "fagurativejam@proton.me";
+    };
   };
 
   programs.home-manager.enable = true;
 }
-

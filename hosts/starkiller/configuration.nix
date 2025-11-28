@@ -15,7 +15,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot.loader.grub.efiInstallAsRemovable = false;
-  boot.loader.grub.configurationLimit = 20;
+  boot.loader.grub.configurationLimit = 5;
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Networking
