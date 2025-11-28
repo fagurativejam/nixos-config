@@ -6,28 +6,36 @@
     ../../modules/wezterm.nix
   ];
 
-  my.desktop.wezterm.config = ./wezterm.lua;
-  my.desktop.hyprland.enable = true;
-
-  home.username = "figs";
-  home.homeDirectory = "/home/figs";
-  home.stateVersion = "25.05";
-
-  home.packages = with pkgs; [
-    steam
-    discord
-    wezterm
-    pkgs.nerd-fonts.jetbrains-mono  
-    pkgs.nerd-fonts.fira-code
-  ];
-
-  programs.git = {
-    enable = true;
-    settings = {
-      user.name = "fagurativejam";
-      user.email = "fagurativejam@proton.me";
-    };
+  my.desktop = {
+    wezterm.config = ./wezterm.lua;
+    hyprland.enable = true;
   };
 
-  programs.home-manager.enable = true;
+  home = {
+    username = "figs";
+    homeDirectory = "/home/figs";
+    stateVersion = "25.05";
+    enableNixpkgsReleaseCheck = false;
+
+    packages = with pkgs; [
+      steam
+      discord
+      wezterm
+      
+      pkgs.nerd-fonts.jetbrains-mono  
+      pkgs.nerd-fonts.fira-code
+    ];
+  };
+
+  programs = {
+    git = {
+      enable = true;
+      settings = {
+        user.name = "fagurativejam";
+        user.email = "fagurativejam@proton.me";
+      };
+    };
+
+    home-manager.enable = true;
+  };
 }

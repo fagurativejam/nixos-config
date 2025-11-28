@@ -3,8 +3,10 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
-    home-manager.url = "github:nix-community/home-manager/release-25.05";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, ... }:
@@ -15,19 +17,25 @@
         config.allowUnfree = true;
       };
     in {
-      nixosConfigurations.starkiller = nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
-          ./hosts/starkiller/configuration.nix
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.figs = import ./home/figs/home.nix;
-            home-manager.users.riley = import ./home/riley/home.nix;
-          }
-        ];
+      nixosConfigurations = {
+        starkiller = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [
+            ./hosts/starkiller/configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                users = {
+                  figs  = import ./home/figs/home.nix;
+                  riley = import ./home/riley/home.nix;
+                };
+              };
+            }
+          ];
+        };
       };
     };
-
 }
+

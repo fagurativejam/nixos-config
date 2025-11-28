@@ -6,6 +6,7 @@
   home.homeDirectory = "/home/riley";
 
   home.stateVersion = "25.05";
+  home.enableNixpkgsReleaseCheck = false;
   # Packages installed just for Riley
   home.packages = with pkgs; [
 #    neovim
