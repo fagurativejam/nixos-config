@@ -71,7 +71,7 @@
   programs = {
     hyprland.enable = true; # Hyprland available
     firefox.enable = true;
-    steam.enable = true;
+    vim.enable = true;
   };
 
   # Audio / security

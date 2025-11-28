@@ -18,12 +18,25 @@
     enableNixpkgsReleaseCheck = false;
 
     packages = with pkgs; [
+      # gaming
       steam
       discord
+
+      # terminal
       wezterm
       
+      # fonts
       pkgs.nerd-fonts.jetbrains-mono  
       pkgs.nerd-fonts.fira-code
+
+      # Extra desktop tools
+      copyq # clipboard manager
+      grimblast # screenshot tool
+      slurp # for region selection screenshots
+      light # brightness control
+      playerctl # commandline media controls
+      mako # notification daemon
+      hyprpaper # wallpaper daemon 
     ];
   };
 
@@ -35,7 +48,7 @@
         user.email = "fagurativejam@proton.me";
       };
     };
-
+    xterm.enable = false;
     home-manager.enable = true;
   };
 }

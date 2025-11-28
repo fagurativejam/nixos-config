@@ -5,7 +5,7 @@
     default = [
  			# --- Application Launchers ---
 			"SUPER, D, exec, rofi -show drun" 
-			"SUPER, RETURN, exec, ghostty" 
+			"SUPER, RETURN, exec, wezterm" 
 			# --- General Keybindings ---
 			"SUPER, Q, killactive"
 			"SUPER, F, fullscreen"
@@ -60,7 +60,11 @@
 			"SUPER|ALT, L, resizeactive, 50 0"
 			"SUPER|ALT, K, resizeactive, 0 -50"
 			"SUPER|ALT, J, resizeactive, 0 50"
-    ];
+
+			# Minimize-like behavior
+      "SUPER, M, movetoworkspace, special"   # send to scratchpad
+      "SUPER, N, togglespecialworkspace"     # toggle scratchpad
+		];
     description = "List of keybindings for Hyprland.";
   };
 }
