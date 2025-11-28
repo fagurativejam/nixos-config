@@ -46,7 +46,6 @@
     programs = {
 			rofi = {
       	enable = true;
-      	theme = "Monokai";
     	};
 			waybar = {
 				enable = true;
@@ -59,17 +58,6 @@
 						modules-right  = [ "pulseaudio" "network" "battery" "cpu" "memory" ];
 					}
 				];
-				style = ''
-					* {
-						font-family: "JetBrains Mono", monospace;
-						font-size: 12px;
-					}
-					#workspaces button.active {
-						background: #282828;
-						color: #fabd2f;
-					}
-					#clock { padding: 0 10px; font-weight: bold; }
-				'';
 			};
     };
   };

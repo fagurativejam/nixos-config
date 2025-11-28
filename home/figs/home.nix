@@ -4,7 +4,7 @@
   imports = [
     ../../modules/hyprland-home.nix
     ../../modules/wezterm.nix
-    ../../modules/catpuccin-theme.nix
+    ../../modules/theme.nix
   ];
 
   my.desktop = {
