@@ -22,9 +22,10 @@
       steam
       discord
 
-      # terminal
+      # productivity
       wezterm
-      
+      libreoffice
+
       # fonts
       pkgs.nerd-fonts.jetbrains-mono  
       pkgs.nerd-fonts.fira-code

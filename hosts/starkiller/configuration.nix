@@ -108,6 +108,27 @@
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+
+  # Auto update service/timer
+  systemd.services.nixos-flake-update = {
+    description = "Auto update NixOS using flakes";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = ''
+        ${pkgs.nixos-rebuild}/bin/nixos-rebuild switch --flake /etc/nixos#starkiller --upgrade
+      '';
+    };
+  };
+
+  systemd.timers.nixos-flake-update = {
+    description = "Run NixOS flake update daily";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "daily";
+      Persistent = true;
+    };
+  };
+
   # State version
   system.stateVersion = "25.05";
 }
