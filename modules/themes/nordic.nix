@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
-  name = "Nord";
+  name = "Nordic";
   colors = {
     base = "#2e3440";
     text = "#d8dee9";
