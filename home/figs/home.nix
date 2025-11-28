@@ -4,11 +4,13 @@
   imports = [
     ../../modules/hyprland-home.nix
     ../../modules/wezterm.nix
+    ../../modules/catpuccin-theme.nix
   ];
 
   my.desktop = {
     wezterm.config = ./wezterm.lua;
     hyprland.enable = true;
+    catppuccin.enable = true;
   };
 
   home = {
