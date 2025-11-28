@@ -10,7 +10,6 @@
   my.desktop = {
     wezterm.config = ./wezterm.lua;
     hyprland.enable = true;
-    catppuccin.enable = true;
   };
 
   home = {

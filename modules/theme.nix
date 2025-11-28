@@ -1,22 +1,26 @@
 { config, pkgs, lib, ... }:
 
 let
-  # Pick your theme here
-  theme = import ../themes/nordic.nix { inherit pkgs; };
-in {
-  home.packages = [
-    theme.gtkTheme.package
-    theme.iconTheme.package
-    theme.cursorTheme.package
-  ];
+  # Pick your theme here (just change the string!)
+  selectedTheme = "nordic";
 
-  gtk = {
+  theme = import ../themes/${selectedTheme}.nix { inherit pkgs; };
+in {
+  # Install only the packages the theme defines
+  home.packages =
+    lib.optionals (theme ? gtkTheme) [ theme.gtkTheme.package ]
+    ++ lib.optionals (theme ? iconTheme) [ theme.iconTheme.package ]
+    ++ lib.optionals (theme ? cursorTheme) [ theme.cursorTheme.package ];
+
+  # GTK theming
+  gtk = lib.mkIf (theme ? gtkTheme) {
     enable = true;
     theme = theme.gtkTheme;
     iconTheme = theme.iconTheme;
     cursorTheme = theme.cursorTheme;
   };
 
+  # Waybar styling
   programs.waybar.style = ''
     * {
       font-family: "${theme.font}", monospace;
@@ -30,9 +34,15 @@ in {
     #clock { color: ${theme.colors.peach}; }
   '';
 
+  # Hyprland borders
   wayland.windowManager.hyprland.settings.general = {
     col.active_border =
       "${theme.colors.blue} ${theme.colors.peach} ${theme.colors.mauve} ${theme.colors.red}";
     col.inactive_border = theme.colors.base;
   };
+
+  # Optional: force overwrite GTK2 config if it exists
+  xdg.configFile.".gtkrc-2.0".force = true;
+
 }
+
