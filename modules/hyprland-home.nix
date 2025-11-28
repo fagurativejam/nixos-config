@@ -32,8 +32,8 @@
         };
 
         windowrule = [
-          "float,^(pavucontrol)$"
-          "float,^(blueman-manager)$"
+					"float,class:^(pavucontrol)$"
+					"float,class:^(blueman-manager)$"
         ];
       };
     };

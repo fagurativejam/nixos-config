@@ -30,13 +30,13 @@
       pkgs.nerd-fonts.fira-code
 
       # Extra desktop tools
-      copyq # clipboard manager
       grimblast # screenshot tool
       slurp # for region selection screenshots
       light # brightness control
       playerctl # commandline media controls
       mako # notification daemon
       hyprpaper # wallpaper daemon 
+      wl-clipboard # wayland clipboard utility
     ];
   };
 
@@ -48,7 +48,6 @@
         user.email = "fagurativejam@proton.me";
       };
     };
-    xterm.enable = false;
     home-manager.enable = true;
   };
 }
