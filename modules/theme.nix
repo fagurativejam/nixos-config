@@ -4,7 +4,7 @@ let
   # Pick your theme here (just change the string!)
   selectedTheme = "nordic";
 
-  theme = import ../themes/${selectedTheme}.nix { inherit pkgs; };
+  theme = import ./themes/${selectedTheme}.nix { inherit pkgs; };
 in {
   # Install only the packages the theme defines
   home.packages =
@@ -36,13 +36,10 @@ in {
 
   # Hyprland borders
   wayland.windowManager.hyprland.settings.general = {
-    col.active_border =
+    border_size = 2;
+    "col.active_border" =
       "${theme.colors.blue} ${theme.colors.peach} ${theme.colors.mauve} ${theme.colors.red}";
-    col.inactive_border = theme.colors.base;
+    "col.inactive_border" = "${theme.colors.base}";
   };
-
-  # Optional: force overwrite GTK2 config if it exists
-  xdg.configFile.".gtkrc-2.0".force = true;
-
 }
 
