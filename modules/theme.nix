@@ -20,20 +20,6 @@ in {
     cursorTheme = theme.cursorTheme;
   };
 
-  # Waybar styling
-  programs.waybar.style = ''
-    * {
-      font-family: "${theme.font}", monospace;
-      background: ${theme.colors.base};
-      color: ${theme.colors.text};
-    }
-    #workspaces button.active {
-      background: ${theme.colors.mauve};
-      color: ${theme.colors.blue};
-    }
-    #clock { color: ${theme.colors.peach}; }
-  '';
-
   # Hyprland borders
   wayland.windowManager.hyprland.settings.general = {
     border_size = 2;

@@ -4,7 +4,6 @@
   imports = [
     ../../modules/hyprland-home.nix
     ../../modules/wezterm.nix
-    ../../modules/theme.nix
   ];
 
   my.desktop = {
@@ -20,8 +19,8 @@
 
     packages = with pkgs; [
       # gaming
-      steam
       discord
+      steam
 
       # productivity
       wezterm

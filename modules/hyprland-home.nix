@@ -47,17 +47,29 @@
 			rofi = {
       	enable = true;
     	};
-			waybar = {
-				enable = true;
-				settings = [
-					{
-						layer = "top";
-						position = "bottom";
-						modules-left   = [ "hyprland/workspaces" "tray" ];
-						modules-center = [ "clock" ];
-						modules-right  = [ "pulseaudio" "network" "battery" "cpu" "memory" ];
-					}
-				];
+      waybar = {
+        enable = true;
+
+        settings = [
+          {
+            mainbar = {
+              layer = "top";
+              position = "bottom";
+              height = 30;
+              spacing = 10;
+              separator = "|";
+              background = "rgba(30,30,30,0.6)";
+              border-radius = 8;
+              padding = 5;
+
+              modules-left   = [ "hyprland/workspaces" "hyprland/window" ];
+              modules-center = [ "tray" ];
+              modules-right  = [ "pulseaudio" "cpu" "memory" "clock" ];
+            };
+          }
+        ];
+
+        style = builtins.readFile .themes/nord.css;
 			};
     };
   };

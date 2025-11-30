@@ -72,6 +72,7 @@
     hyprland.enable = true; # Hyprland available
     firefox.enable = true;
     vim.enable = true;
+    steam.enable = true;
   };
 
   # Audio / security
@@ -92,7 +93,16 @@
   };
 
   # Graphics
-  hardware.graphics.enable = true;
+  hardware = {
+    graphics = {
+      enable = true;
+      extraPackages = with pkgs; [
+        vulkan-loader
+        vulkan-tools
+        vulkan-validation-layers
+      ];
+    };
+  };
 
   # System packages
   environment.systemPackages = with pkgs; [
