@@ -44,7 +44,6 @@
       };
 
       initContent = ''
-        eval "$(starship init zsh)"
         eval "$(direnv hook zsh)"
       '';
     };
@@ -62,7 +61,6 @@
       '';
     };
 
-    programs.starship.enable = true;
     programs.fzf.enable = true;
     programs.bat.enable = true;
     programs.eza.enable = true;

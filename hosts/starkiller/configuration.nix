@@ -140,6 +140,7 @@
   # │ 🔤 Fonts                      │
   # └───────────────────────────────┘
   fonts = {
+    fontDir.enable = true;
     fontconfig.enable = true;
     packages = with pkgs; [
       pkgs.nerd-fonts.fira-code
