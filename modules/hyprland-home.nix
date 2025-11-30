@@ -4,24 +4,34 @@
   imports = [ 
     ./keybindings.nix
   ];
-    
+
+  # ┌───────────────────────────────┐
+  # │ ⚙️ Options                    │
+  # └───────────────────────────────┘
   options.my.desktop.hyprland.enable =
     lib.mkEnableOption "Enable Hyprland for user";
 
+  # ┌───────────────────────────────┐
+  # │ 🖥️ Hyprland Configuration     │
+  # └───────────────────────────────┘
   config = lib.mkIf config.my.desktop.hyprland.enable {
-    # Hyprland
     wayland.windowManager.hyprland = {
       enable = true;
       settings = {
+        # Monitor setup
         monitor = [ ",preferred,auto,auto" ];
+
+        # Programs to run once at startup
         exec-once = [ 
           "waybar"
-          "mako"          # notifications
-          "copyq"         # clipboard manager
+          "mako"   # notifications
+          "copyq"  # clipboard manager
         ];
 
+        # Keybindings imported from ./keybindings.nix
         bind = config.my.desktop.hyprland.keybindings;
 
+        # Window animations
         animations = {
           enabled = true;
           bezier = [ "myBezier,0.05,0.9,0.1,1.05" ];
@@ -31,25 +41,30 @@
           ];
         };
 
+        # Window rules (float specific apps)
         windowrule = [
-					"float,class:^(pavucontrol)$"
-					"float,class:^(blueman-manager)$"
+          "float,class:^(pavucontrol)$"
+          "float,class:^(blueman-manager)$"
         ];
       };
     };
-    # Extras
+
+    # ┌───────────────────────────────┐
+    # │ 🎨 Extras (Services)          │
+    # └───────────────────────────────┘
     services = {
-      hyprpaper.enable = true;   # wallpaper daemon
-      mako.enable = true;        # notifications
+      hyprpaper.enable = true; # wallpaper daemon
+      mako.enable = true;      # notifications
     };
 
+    # ┌───────────────────────────────┐
+    # │ 📦 Programs                   │
+    # └───────────────────────────────┘
     programs = {
-			rofi = {
-      	enable = true;
-    	};
+      rofi.enable = true;
+
       waybar = {
         enable = true;
-
         settings = [
           {
             mainbar = {
@@ -57,20 +72,14 @@
               position = "bottom";
               height = 30;
               spacing = 10;
-              separator = "|";
-              background = "rgba(30,30,30,0.6)";
-              border-radius = 8;
-              padding = 5;
-
               modules-left   = [ "hyprland/workspaces" "hyprland/window" ];
               modules-center = [ "tray" ];
               modules-right  = [ "pulseaudio" "cpu" "memory" "clock" ];
             };
           }
         ];
-
-        style = builtins.readFile .themes/nord.css;
-			};
+        style = builtins.readFile ./themes/nord.css;
+      };
     };
   };
 }

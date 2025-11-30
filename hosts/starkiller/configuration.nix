@@ -1,11 +1,9 @@
 { config, pkgs, ... }:
 
 {
-  imports = [
-    ./hardware-configuration.nix
-  ];
-
-  # Bootloader
+  # ┌───────────────────────────────┐
+  # │ 🚀 Bootloader & Kernel        │
+  # └───────────────────────────────┘
   boot = {
     loader = {
       grub = {
@@ -24,18 +22,23 @@
     kernelPackages = pkgs.linuxPackages_latest;
   };
 
-  # Networking
+  # ┌───────────────────────────────┐
+  # │ 🌐 Networking                 │
+  # └───────────────────────────────┘
   networking = {
     hostName = "starkiller";
     firewall.enable = true;
-    networkmanager.enable = true;
+    networkmanager.enable = true; # Use NetworkManager for Wi-Fi/Ethernet
   };
 
-  # Locale & Time
+  # ┌───────────────────────────────┐
+  # │ 🕑 Locale & Time              │
+  # └───────────────────────────────┘
   time.timeZone = "America/Chicago";
   i18n = {
     defaultLocale = "en_US.UTF-8";
     extraLocaleSettings = {
+      # All set to en_US.UTF-8
       LC_ADDRESS = "en_US.UTF-8";
       LC_IDENTIFICATION = "en_US.UTF-8";
       LC_MEASUREMENT = "en_US.UTF-8";
@@ -48,15 +51,22 @@
     };
   };
 
-  # Display server & desktop environments
+  # ┌───────────────────────────────┐
+  # │ 🖥️ Display & Desktop          │
+  # └───────────────────────────────┘
   services = {
+    # X server basics
     xserver = {
       enable = true;
       xkb.layout = "us";
     };
-    displayManager.defaultSession = "hyprland"; # boot into Hyprland by default
+
+    # Display managers & sessions
+    displayManager.defaultSession = "hyprland"; # Boot into Hyprland by default
     displayManager.sddm.enable = true;
-    desktopManager.plasma6.enable = true; # KDE Plasma available
+    desktopManager.plasma6.enable = true;       # KDE Plasma available
+
+    # Audio stack
     pulseaudio.enable = false;
     pipewire = {
       enable = true;
@@ -64,27 +74,40 @@
       alsa.support32Bit = true;
       pulse.enable = true;
     };
-    printing.enable = true;
-    openssh.enable = true;
+
+    # Other services
+    printing.enable = true; # CUPS printing
+    openssh.enable = true;  # SSH server
   };
 
+  # ┌───────────────────────────────┐
+  # │ 📦 Programs(system-integrated)│
+  # └───────────────────────────────┘
   programs = {
-    hyprland.enable = true; # Hyprland available
-    firefox.enable = true;
-    vim.enable = true;
-    steam.enable = true;
+    hyprland.enable = true; # Hyprland WM
+    firefox.enable = true;  # Desktop integration for Firefox
+    steam.enable = true;    # Steam runtime + 32-bit libs
+    zsh.enable = true;      # Proper login shell support
   };
 
-  # Audio / security
-  security.rtkit.enable = true;
+  # ┌───────────────────────────────┐
+  # │ 🔒 Audio / Security           │
+  # └───────────────────────────────┘
+  security.rtkit.enable = true; # Needed for PipeWire real-time scheduling
 
-  # Users
+  # ┌───────────────────────────────┐
+  # │ 👥 Users                      │
+  # └───────────────────────────────┘
   users.users = {
+    # Primary user
     figs = {
       isNormalUser = true;
       description = "Fig Jam";
+      shell = pkgs.zsh;
       extraGroups = [ "networkmanager" "wheel" ];
     };
+
+    # Secondary user
     riley = {
       isNormalUser = true;
       description = "Riley";
@@ -92,34 +115,36 @@
     };
   };
 
-  # Graphics
-  hardware = {
-    graphics = {
-      enable = true;
-      extraPackages = with pkgs; [
-        vulkan-loader
-        vulkan-tools
-        vulkan-validation-layers
-      ];
-    };
+  # ┌───────────────────────────────┐
+  # │ 🎨 Graphics                   │
+  # └───────────────────────────────┘
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      vulkan-loader
+      vulkan-tools
+      vulkan-validation-layers # Debugging/validation tools
+    ];
   };
 
-  # System packages
+  # ┌───────────────────────────────┐
+  # │ 📦 System Packages            │
+  # └───────────────────────────────┘
   environment.systemPackages = with pkgs; [
-    vim
     wget
     git
-    vscode
-    fastfetch
-    htop
+    # zsh and firefox are redundant here since enabled above
   ];
 
-  # Nix settings
+  # ┌───────────────────────────────┐
+  # │ ⚙️ Nix Settings               │
+  # └───────────────────────────────┘
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-
-  # Auto update service/timer
+  # ┌───────────────────────────────┐
+  # │ 🔄 Auto Update Service/Timer  │
+  # └───────────────────────────────┘
   systemd.services.nixos-flake-update = {
     description = "Auto update NixOS using flakes";
     serviceConfig = {
@@ -139,6 +164,8 @@
     };
   };
 
-  # State version
-  system.stateVersion = "25.05";
+  # ┌───────────────────────────────┐
+  # │ 🗓️ State Version              │
+  # └───────────────────────────────┘
+  system.stateVersion = "25.05"; # Do not change once set
 }
