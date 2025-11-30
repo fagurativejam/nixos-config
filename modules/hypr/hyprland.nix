@@ -34,10 +34,10 @@
         # Window animations
         animations = {
           enabled = true;
-          bezier = [ "myBezier,0.05,0.9,0.1,1.05" ];
           animation = [
-            "windows,1,7,myBezier"
-            "fade,1,10,default"
+            "windows,1,4,default"
+            "fade,1,5,default"
+            "workspaces,1,3,default"
           ];
         };
 
@@ -62,24 +62,6 @@
     # └───────────────────────────────┘
     programs = {
       rofi.enable = true;
-
-      waybar = {
-        enable = true;
-        settings = [
-          {
-            mainbar = {
-              layer = "top";
-              position = "bottom";
-              height = 30;
-              spacing = 10;
-              modules-left   = [ "hyprland/workspaces" "hyprland/window" ];
-              modules-center = [ "tray" ];
-              modules-right  = [ "pulseaudio" "cpu" "memory" "clock" ];
-            };
-          }
-        ];
-        style = builtins.readFile ./themes/nord.css;
-      };
     };
   };
 }

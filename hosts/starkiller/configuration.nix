@@ -118,6 +118,7 @@
   # ┌───────────────────────────────┐
   # │ 🎨 Graphics                   │
   # └───────────────────────────────┘
+  
   hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
@@ -134,6 +135,25 @@
     wget
     git
   ];
+
+  # ┌───────────────────────────────┐
+  # │ 🔤 Fonts                      │
+  # └───────────────────────────────┘
+  fonts = {
+    fontconfig.enable = true;
+    packages = with pkgs; [
+      pkgs.nerd-fonts.fira-code
+      pkgs.nerd-fonts.jetbrains-mono
+      pkgs.nerd-fonts.hack
+      pkgs.nerd-fonts.iosevka
+      pkgs.nerd-fonts.sauce-code-pro
+      pkgs.nerd-fonts.dejavu-sans-mono
+      pkgs.nerd-fonts.ubuntu-mono
+      pkgs.nerd-fonts.droid-sans-mono
+      pkgs.nerd-fonts.symbols-only
+    ];
+  };
+
 
   # ┌───────────────────────────────┐
   # │ ⚙️ Nix Settings               │

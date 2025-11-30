@@ -2,8 +2,9 @@
 
 {
   imports = [
-    ../../modules/hyprland-home.nix
+    ../../modules/hypr/hyprland.nix
     ../../modules/wezterm.nix
+    ../../modules/waybar.nix
   ];
 
   # ┌───────────────────────────────┐
@@ -32,16 +33,6 @@
       libreoffice
       vscode
 
-      # Fonts
-      nerd-fonts.fira-code
-      nerd-fonts.jetbrains-mono
-      nerd-fonts.hack
-      nerd-fonts.iosevka
-      nerd-fonts.sauce-code-pro
-      nerd-fonts.dejavu-sans-mono
-      nerd-fonts.ubuntu-mono
-      nerd-fonts.droid-sans-mono
-
       # Extra desktop tools
       grimblast    # screenshot tool
       slurp        # region selection screenshots
@@ -54,11 +45,6 @@
       htop
     ];
   };
-
-  # ┌───────────────────────────────┐
-  # │ 🔤 Fonts                      │
-  # └───────────────────────────────┘
-  fonts.fontconfig.enable = true;
 
   # ┌───────────────────────────────┐
   # │ ⚙️ Programs & Shells          │
@@ -78,6 +64,7 @@
       enable = true;
       shellAliases = {
         hm = "nix run .#home-manager --";
+        hmrbld = "nix run .#home-manager -- switch --flake .#figs";
         rebuild = "sudo nixos-rebuild switch --flake .#starkiller";
         update = "nix flake update";
       };
@@ -91,6 +78,7 @@
       autosuggestion.enable = true;
 
       shellAliases = {
+        hmrbld = "nix run .#home-manager -- switch --flake .#figs";
         hm = "nix run .#home-manager --";
         rebuild = "sudo nixos-rebuild switch --flake .#starkiller";
         update = "nix flake update";
