@@ -133,7 +133,6 @@
   environment.systemPackages = with pkgs; [
     wget
     git
-    # zsh and firefox are redundant here since enabled above
   ];
 
   # ┌───────────────────────────────┐

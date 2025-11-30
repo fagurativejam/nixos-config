@@ -33,8 +33,14 @@
       vscode
 
       # Fonts
-      nerd-fonts.jetbrains-mono
       nerd-fonts.fira-code
+      nerd-fonts.jetbrains-mono
+      nerd-fonts.hack
+      nerd-fonts.iosevka
+      nerd-fonts.sauce-code-pro
+      nerd-fonts.dejavu-sans-mono
+      nerd-fonts.ubuntu-mono
+      nerd-fonts.droid-sans-mono
 
       # Extra desktop tools
       grimblast    # screenshot tool
