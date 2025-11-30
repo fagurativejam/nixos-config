@@ -5,6 +5,7 @@
     ../../modules/hypr/hyprland.nix
     ../../modules/wezterm.nix
     ../../modules/waybar.nix
+    ../../modules/terminal/terminal.nix
   ];
 
   # ┌───────────────────────────────┐
@@ -13,6 +14,10 @@
   my.desktop = {
     wezterm.config = ./wezterm.lua;
     hyprland.enable = true;
+    terminal = {
+      enable = true;
+      defaultTerminal = "wezterm";
+    };
   };
 
   # ┌───────────────────────────────┐
@@ -67,31 +72,6 @@
         hmrbld = "nix run .#home-manager -- switch --flake .#figs";
         rebuild = "sudo nixos-rebuild switch --flake .#starkiller";
         update = "nix flake update";
-      };
-    };
-
-    # Zsh (primary shell)
-    zsh = {
-      enable = true;
-
-      syntaxHighlighting.enable = true;
-      autosuggestion.enable = true;
-
-      shellAliases = {
-        hmrbld = "nix run .#home-manager -- switch --flake .#figs";
-        hm = "nix run .#home-manager --";
-        rebuild = "sudo nixos-rebuild switch --flake .#starkiller";
-        update = "nix flake update";
-      };
-
-      oh-my-zsh = {
-        enable = true;
-        theme = "agnoster"; # or "powerlevel10k" if installed
-        plugins = [
-          "git"
-          "zsh-autosuggestions"
-          "zsh-syntax-highlighting"
-        ];
       };
     };
 
