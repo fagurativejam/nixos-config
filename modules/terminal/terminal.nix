@@ -5,7 +5,7 @@
     enable = lib.mkOption {
       type = lib.types.bool;
       default = true;
-      description = "Enable terminal stack (Zsh, WezTerm, tmux, etc.).";
+      description = "Enable terminal stack (Zsh WezTerm).";
     };
 
     defaultTerminal = lib.mkOption {
@@ -49,24 +49,8 @@
     };
 
     programs.wezterm.enable = true;
-
-    programs.tmux = {
-      enable = true;
-      clock24 = true;
-      terminal = "screen-256color";
-      extraConfig = ''
-        set -g mouse on
-        set -g history-limit 10000
-        setw -g mode-keys vi
-      '';
-    };
-
     programs.fzf.enable = true;
     programs.bat.enable = true;
-    programs.eza.enable = true;
-    programs.ripgrep.enable = true;
-    programs.zoxide.enable = true;
-    programs.direnv.enable = true;
 
     home.sessionVariables = {
       TERMINAL = config.my.desktop.terminal.defaultTerminal;

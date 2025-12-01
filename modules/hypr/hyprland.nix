@@ -26,7 +26,7 @@
           "waybar"
           "mako"   # notifications
           "copyq"  # clipboard manager
-          "hyprpaper -c ~/.config/hypr/hyprpaper.conf"
+          "hyprpaper -c ~/.config/hypr/hyprpaper.conf" # wallpaper daemon
         ];
 
         # Keybindings imported from ./keybindings.nix
@@ -41,11 +41,20 @@
             "workspaces,1,3,default"
           ];
         };
+        
+        # Decorations (opacity/dimming)
+        decoration = {
+          active_opacity = 0.95;
+          inactive_opacity = 0.9;
+          dim_inactive = true;
+          dim_strength = 0.1;
+        };
 
         # Window rules (float specific apps)
         windowrule = [
           "float,class:^(pavucontrol)$"
           "float,class:^(blueman-manager)$"
+          "opacity 0.5,class:^(wofi)$"
         ];
       };
     };
