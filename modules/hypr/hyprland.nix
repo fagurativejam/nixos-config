@@ -54,7 +54,6 @@
     # │ 🎨 Extras (Services)          │
     # └───────────────────────────────┘
     services = {
-      hyprpaper.enable = true; # wallpaper daemon
       mako.enable = true;      # notifications
     };
 
@@ -62,15 +61,13 @@
     # │ 📦 Programs                   │
     # └───────────────────────────────┘
     programs = {
-      # Switch from rofi → wofi
       wofi.enable = true;
-      # rofi.enable = true;  # remove or comment out
     };
 
     # ┌───────────────────────────────┐
     # │ 📂 Files (symlinks)           │
     # └───────────────────────────────┘
-    home.file.".config/hypr/hyprpaper.conf".source = ./modules/hypr/hyprpaper.conf;
-    home.file.".config/hypr/wallpapers".source = ./modules/hypr/wallpapers;
+    home.file.".config/hypr/hyprpaper.conf".source = ./hyprpaper.conf;
+    home.file.".config/hypr/wallpapers".source = ./wallpapers;
   };
 }
