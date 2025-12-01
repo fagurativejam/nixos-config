@@ -6,6 +6,7 @@
     ../../modules/wezterm.nix
     ../../modules/waybar.nix
     ../../modules/terminal/terminal.nix
+    ../../modules/wofi.nix
   ];
 
   # ┌───────────────────────────────┐
