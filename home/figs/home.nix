@@ -3,11 +3,10 @@
 {
   imports = [
     ../../modules/hypr/hyprland.nix
-    ../../modules/termina/wezterm.nix
+    ../../modules/terminal/wezterm.nix
     ../../modules/waybar.nix
     ../../modules/terminal/terminal.nix
     ../../modules/wofi.nix
-    ../../modules/terminal/fastfetch.nix
   ];
 
   # ┌───────────────────────────────┐
@@ -48,6 +47,7 @@
       mako         # notification daemon
       hyprpaper    # wallpaper daemon 
       wl-clipboard # wayland clipboard utility
+      hyfetch
       fastfetch
       htop
     ];
