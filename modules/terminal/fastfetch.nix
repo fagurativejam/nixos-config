@@ -2,18 +2,17 @@
 
 {
   options.my.desktop.fastfetch.enable =
-    lib.mkEnableOption "Enable Fastfetch with Dracula/Tokyo Night config";
+    lib.mkEnableOption "Enable Fastfetch with custom ASCII logo";
 
   config = lib.mkIf config.my.desktop.fastfetch.enable {
-    # Install fastfetch
     home.packages = [ pkgs.fastfetch ];
 
-    # Drop in your custom config.jsonc
+    # Install Fastfetch config
     home.file.".config/fastfetch/config.jsonc".text = ''
       {
         "logo": {
-          "source": "auto",
-          "color": "magenta"
+          "source": "${config.home.homeDirectory}/.config/fastfetch/logo.txt",
+          "color": "bright-magenta"
         },
         "modules": [
           { "type": "os" },
@@ -36,5 +35,8 @@
         }
       }
     '';
+
+    # Copy your ASCII art logo into place
+    home.file.".config/fastfetch/boobs.txt".source = ./boobs.txt;
   };
 }
