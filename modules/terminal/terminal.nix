@@ -50,6 +50,7 @@
     programs.wezterm.enable = true;
     programs.fzf.enable = true;
     programs.bat.enable = true;
+    programs.nnn.enable = true;
 
     home.sessionVariables = {
       TERMINAL = config.my.desktop.terminal.defaultTerminal;

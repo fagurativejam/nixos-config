@@ -3,10 +3,11 @@
 {
   imports = [
     ../../modules/hypr/hyprland.nix
-    ../../modules/wezterm.nix
+    ../../modules/termina/wezterm.nix
     ../../modules/waybar.nix
     ../../modules/terminal/terminal.nix
     ../../modules/wofi.nix
+    ../../modules/terminal/fastfetch.nix
   ];
 
   # ┌───────────────────────────────┐

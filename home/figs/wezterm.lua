@@ -23,31 +23,31 @@ return {
     "Fira Code",
   },
   font_size = 12.0,
-  color_scheme = "Catppuccin Mocha",
+  color_scheme = "Catppuccin Mocha", -- or "Dracula" , "Catppuccin Mocha" , "Tokyo Night"
   window_background_opacity = 0.85,
   window_padding = { left = 8, right = 8, top = 8, bottom = 8 },
-  enable_tab_bar = false,
+  enable_tab_bar = true,
   hide_tab_bar_if_only_one_tab = false,
   inactive_pane_hsb = { saturation = 0.9, brightness = 0.8 },
-  use_fancy_tab_bar = true,
-  window_decorations = "RESIZE",
+  use_fancy_tab_bar = false,
+  window_decorations = "NONE",
   scrollback_lines = 10000,
 
   keys = {
-    {key="H", mods="SUPER|SHIFT", action=wezterm.action.SplitHorizontal{domain="CurrentPaneDomain"}},
-    {key="J", mods="SUPER|SHIFT", action=wezterm.action.SplitVertical{domain="CurrentPaneDomain"}},
-    {key="H", mods="SUPER", action=wezterm.action.ActivatePaneDirection("Left")},
-    {key="L", mods="SUPER", action=wezterm.action.ActivatePaneDirection("Right")},
-    {key="K", mods="SUPER", action=wezterm.action.ActivatePaneDirection("Up")},
-    {key="J", mods="SUPER", action=wezterm.action.ActivatePaneDirection("Down")},
-    {key="H", mods="SUPER|ALT", action=wezterm.action.AdjustPaneSize{"Left", 5}},
-    {key="L", mods="SUPER|ALT", action=wezterm.action.AdjustPaneSize{"Right", 5}},
-    {key="K", mods="SUPER|ALT", action=wezterm.action.AdjustPaneSize{"Up", 2}},
-    {key="J", mods="SUPER|ALT", action=wezterm.action.AdjustPaneSize{"Down", 2}},
-    -- Tab management
-    {key="T", mods="SUPER", action=wezterm.action.SpawnTab("CurrentPaneDomain")},
-    {key="W", mods="SUPER", action=wezterm.action.CloseCurrentTab{confirm=true}},
-    {key="Tab", mods="SUPER", action=wezterm.action.ActivateTabRelative(1)},
-    {key="Tab", mods="SUPER|SHIFT", action=wezterm.action.ActivateTabRelative(-1)}
+    -- Split horizontally
+    {key="|", mods="CTRL|SHIFT", action=wezterm.action.SplitHorizontal{domain="CurrentPaneDomain"}},
+    -- Split vertically
+    {key="l", mods="CTRL|SHIFT", action=wezterm.action.SplitVertical{domain="CurrentPaneDomain"}},
+    -- New tab
+    {key="t", mods="CTRL|SHIFT", action=wezterm.action.SpawnTab "CurrentPaneDomain"},
+    -- Switch tabs
+    {key="Tab", mods="CTRL", action=wezterm.action.ActivateTabRelative(1)},
+    {key="Tab", mods="CTRL|SHIFT", action=wezterm.action.ActivateTabRelative(-1)},
+    {key="w", mods="CTRL|ALT", action=wezterm.action.CloseCurrentPane{confirm=true}},
   },
+  -- Multiplexer persistence
+  unix_domains = {
+    { name = "mydomain" },
+  },
+  default_gui_startup_args = { "connect", "local" },
 }
