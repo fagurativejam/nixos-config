@@ -44,7 +44,6 @@
       };
 
       initContent = ''
-        eval "$(direnv hook zsh)"
       '';
     };
 
