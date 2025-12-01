@@ -50,6 +50,7 @@
       hyfetch
       fastfetch
       htop
+      cava
     ];
   };
 
