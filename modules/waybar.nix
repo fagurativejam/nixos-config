@@ -23,9 +23,11 @@
         };
 
         clock = {
-          format = "{:%a %b %d %H:%M}";
-          # Tooltip now shows full date/time, no calendar
-          tooltip-format = "{:%A, %B %d, %Y — %H:%M:%S}";
+          # Bar display: short weekday, month, day, 12‑hour time with AM/PM
+          format = "{:%a %b %d %I:%M %p}";
+
+          # Tooltip: full weekday, month name, day, year, 12‑hour time with seconds + AM/PM
+          tooltip-format = "{:%A, %B %d, %Y — %I:%M:%S %p}";
         };
 
         mpris = {
@@ -81,7 +83,7 @@
       }
 
       #workspaces button {
-        background: rgba(76, 86, 106, 0.8);
+        background: transparent;
         border: none;
         padding: 1px 4px;
         color: rgba(236, 239, 244, 0.6);
@@ -102,11 +104,11 @@
       }
 
       #cpu { background: rgba(191, 97, 106, 0.8); }
-      #memory { background: rgba(235, 203, 139, 0.8); }
-      #temperature { background: rgba(208, 135, 112, 0.8); }
-      #pulseaudio { background: rgba(180, 142, 173, 0.8); }
+      #memory { background: rgba(208, 135, 112, 0.8); }
+      #temperature { background: rgba(235, 203, 139, 0.8); }
+      #pulseaudio { background: rgba(163, 190, 140, 0.8); }
       #network { background: rgba(129, 161, 193, 0.8); }
-      #clock { background: rgba(129, 161, 193, 1); }
+      #clock { background: rgba(180, 142, 173, 0.8); }
       #mpris { background: rgba(163, 190, 140, 0.8); }
       #tray { background: rgba(76, 86, 106, 0.8); }
     '';

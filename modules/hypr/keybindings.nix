@@ -4,7 +4,7 @@
     type = lib.types.listOf lib.types.str;
     default = [
  			# --- Application Launchers ---
-			"SUPER, D, exec, rofi -show drun" 
+			"SUPER, D, exec, wofi -show drun" 
 			"SUPER, RETURN, exec, wezterm" 
 			# --- General Keybindings ---
 			"SUPER, Q, killactive"

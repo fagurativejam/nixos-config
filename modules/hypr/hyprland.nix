@@ -26,6 +26,7 @@
           "waybar"
           "mako"   # notifications
           "copyq"  # clipboard manager
+          "hyprpaper -c ~/.config/hypr/hyprpaper.conf"
         ];
 
         # Keybindings imported from ./keybindings.nix
@@ -61,7 +62,15 @@
     # │ 📦 Programs                   │
     # └───────────────────────────────┘
     programs = {
-      rofi.enable = true;
+      # Switch from rofi → wofi
+      wofi.enable = true;
+      # rofi.enable = true;  # remove or comment out
     };
+
+    # ┌───────────────────────────────┐
+    # │ 📂 Files (symlinks)           │
+    # └───────────────────────────────┘
+    home.file.".config/hypr/hyprpaper.conf".source = ./modules/hypr/hyprpaper.conf;
+    home.file.".config/hypr/wallpapers".source = ./modules/hypr/wallpapers;
   };
 }

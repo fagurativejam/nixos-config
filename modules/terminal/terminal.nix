@@ -30,7 +30,7 @@
   config = lib.mkIf config.my.desktop.terminal.enable {
     programs.zsh = {
       enable = true;
-      autosuggestion.enable = true;   # fixed
+      autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
       enableCompletion = true;
       shellAliases = config.my.desktop.terminal.zshAliases;
