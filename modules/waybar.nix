@@ -23,10 +23,7 @@
         };
 
         clock = {
-          # Bar display: short weekday, month, day, 12‑hour time with AM/PM
           format = "{:%a %b %d %I:%M %p}";
-
-          # Tooltip: full weekday, month name, day, year, 12‑hour time with seconds + AM/PM
           tooltip-format = "{:%A, %B %d, %Y — %I:%M:%S %p}";
         };
 
@@ -74,12 +71,13 @@
         min-height: 16px;
       }
 
+      /* Left group (workspaces) */
       #workspaces {
         background: rgba(76, 86, 106, 0.8);
         border: 2px solid #81a1c1;
         border-radius: 8px;
-        padding: 2px 6px;
         margin: 2px 4px;
+        padding: 2px 6px;
       }
 
       #workspaces button {
@@ -103,14 +101,33 @@
         box-shadow: inset 0 -2px #81a1c1;
       }
 
-      #cpu { background: rgba(191, 97, 106, 0.8); }
-      #memory { background: rgba(208, 135, 112, 0.8); }
-      #temperature { background: rgba(235, 203, 139, 0.8); }
-      #pulseaudio { background: rgba(163, 190, 140, 0.8); }
-      #network { background: rgba(129, 161, 193, 0.8); }
-      #clock { background: rgba(180, 142, 173, 0.8); }
-      #mpris { background: rgba(163, 190, 140, 0.8); }
-      #tray { background: rgba(76, 86, 106, 0.8); }
+      /* Center group */
+      .modules-center {
+        background: rgba(76, 86, 106, 0.8);
+        border: 2px solid #81a1c1;
+        border-radius: 8px;
+        margin: 2px 4px;
+        padding: 0; /* keep tray icons safe */
+      }
+
+      /* Right group */
+      .modules-right {
+        background: rgba(76, 86, 106, 0.8);
+        border: 2px solid #81a1c1;
+        border-radius: 8px;
+        margin: 2px 4px;
+        padding: 0;
+      }
+
+      /* Individual module accent colors */
+      #cpu { background: rgba(191, 97, 106, 0.8); padding: 2px 6px; }
+      #memory { background: rgba(208, 135, 112, 0.8); padding: 2px 6px; }
+      #temperature { background: rgba(235, 203, 139, 0.8); padding: 2px 6px; }
+      #pulseaudio { background: rgba(163, 190, 140, 0.8); padding: 2px 6px; }
+      #network { background: rgba(129, 161, 193, 0.8); padding: 2px 6px; }
+      #clock { background: rgba(180, 142, 173, 0.8); padding: 2px 6px; }
+      #mpris { background: rgba(163, 190, 140, 0.8); padding: 2px 6px; }
+      #tray { background: rgba(76, 86, 106, 0.8); padding: 2px 6px; }
     '';
   };
 }

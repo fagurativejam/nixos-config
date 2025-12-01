@@ -7,6 +7,7 @@
     ../../modules/waybar.nix
     ../../modules/terminal/terminal.nix
     ../../modules/wofi.nix
+    ../../modules/nixvim.nix
   ];
 
   # ┌───────────────────────────────┐
@@ -51,6 +52,8 @@
       fastfetch
       htop
       cava
+      cowsay
+      fortune
     ];
   };
 
