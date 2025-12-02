@@ -4,7 +4,7 @@
 }
 
 window {
-  background-color: rgba(30, 30, 46, 0.95);   /* base */
+  background-color: rgba(30, 30, 46, 0.95); /* base */
   border-radius: 12px;
   padding: 10px;
 }
@@ -13,26 +13,46 @@ window {
   margin: 8px;
   padding: 6px;
   border-radius: 8px;
-  background-color: rgba(49, 50, 68, 1.0);   /* surface0 */
-  color: rgba(205, 214, 244, 1.0);           /* text */
+  background-color: rgba(49, 50, 68, 1.0); /* surface0 */
+  color: rgba(205, 214, 244, 1.0);         /* text */
   min-width: 100%;
-  box-sizing: border-box;
 }
 
 #entry {
   padding: 6px;
   border-radius: 6px;
-  background-color: transparent;
-  color: rgba(205, 214, 244, 1.0);           /* text */
+  color: rgba(205, 214, 244, 1.0);
 }
 
 #entry:selected {
   background-color: rgba(137, 180, 250, 1.0); /* blue accent */
-  color: rgba(30, 30, 46, 1.0);               /* base for contrast */
+  color: rgba(30, 30, 46, 1.0);
 }
 
 #text {
   margin-left: 6px;
   min-width: 100%;
-  box-sizing: border-box;
+  color: inherit;
+}
+
+list {
+  background-color: rgba(137, 180, 250, 1.0); /* base */
+  padding: 6px;
+}
+
+list row {
+  background-color: rgba(69, 71, 90, 1.0);  /* surface1 */
+  color: rgba(205, 214, 244, 1.0);
+  border-radius: 0;                          /* remove rounding to avoid corners */
+  padding: 8px 10px;
+  margin: 2px 0;
+}
+
+list row:hover {
+  background-color: rgba(88, 91, 112, 1.0); /* surface2 */
+}
+
+list row:selected {
+  border: 2px solid  rgba(88, 91, 112, 1.0);
+  border-radius: 4px;
 }
