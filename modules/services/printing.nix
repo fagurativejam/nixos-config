@@ -6,7 +6,7 @@
   # Optional: enable discovery of network printers
   services.avahi = {
     enable = true;
-    nssmdns = true;
+    nssmdns4 = true;
   };
 
   # Optional: add common drivers
