@@ -7,6 +7,8 @@
   imports = [
     ./keybindings.nix
     ./settings.nix
+    ./startup.nix
+    ./wallpaper.nix
   ];
 
   config = lib.mkIf config.my.desktop.hyprland.enable {
@@ -24,7 +26,6 @@
 
     # Supporting services/programs
     services.mako.enable = true;
-    home.file.".config/hypr/hyprpaper.conf".source = ./hyprpaper.conf;
-    home.file.".config/hypr/wallpapers".source = ./wallpapers;
+    programs.wofi.enable = true;
   };
 }
