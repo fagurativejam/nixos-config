@@ -2,29 +2,24 @@
 
 {
   imports = [
-    ../../modules/hypr/hyprland.nix
-    ../../modules/terminal/wezterm.nix
-    ../../modules/waybar.nix
-    ../../modules/terminal/terminal.nix
-    ../../modules/wofi.nix
-    ../../modules/nixvim.nix
+    ../../modules/home/git.nix
+    ../../modules/home/terminal.nix
+    ../../modules/home/wofi.nix
+    ../../modules/home/hypr/hyprland.nix
+    ../../modules/home/waybar/waybar.nix
+    ../../modules/home/wezterm/wezterm.nix
   ];
 
-  # ┌───────────────────────────────┐
-  # │ 🖥️ Desktop Modules            │
-  # └───────────────────────────────┘
   my.desktop = {
-    wezterm.config = ./wezterm.lua;
+    wezterm.enable = true;
     hyprland.enable = true;
+    waybar.enable = true;
     terminal = {
       enable = true;
       defaultTerminal = "wezterm";
     };
   };
 
-  # ┌───────────────────────────────┐
-  # │ 👤 Home Manager User Config   │
-  # └───────────────────────────────┘
   home = {
     username = "figs";
     homeDirectory = "/home/figs";
@@ -32,45 +27,27 @@
     enableNixpkgsReleaseCheck = false;
 
     packages = with pkgs; [
-      # Gaming / Communication
       discord
-
-      # Productivity
       wezterm
       libreoffice
       vscode
-
-      # Extra desktop tools
-      grimblast    # screenshot tool
-      slurp        # region selection screenshots
-      light        # brightness control
-      playerctl    # commandline media controls
-      mako         # notification daemon
-      hyprpaper    # wallpaper daemon 
-      wl-clipboard # wayland clipboard utility
+      grimblast
+      slurp
+      light
+      playerctl
+      mako
+      hyprpaper
+      wl-clipboard
       hyfetch
       fastfetch
       htop
       cava
-      cowsay
       fortune
+      cowsay
     ];
   };
 
-  # ┌───────────────────────────────┐
-  # │ ⚙️ Programs & Shells          │
-  # └───────────────────────────────┘
   programs = {
-    # Git configuration
-    git = {
-      enable = true;
-      settings = {
-        user.name = "fagurativejam";
-        user.email = "fagurativejam@proton.me";
-      };
-    };
-
-    # Bash (optional, keep only if you use Bash)
     bash = {
       enable = true;
       shellAliases = {
@@ -81,7 +58,6 @@
       };
     };
 
-    # Enable Home Manager itself
     home-manager.enable = true;
   };
 }
