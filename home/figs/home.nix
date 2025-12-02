@@ -4,7 +4,7 @@
   imports = [
     ../../modules/home/git.nix
     ../../modules/home/terminal.nix
-    ../../modules/home/wofi.nix
+    ../../modules/home/wofi/wofi.nix
     ../../modules/home/hypr/hyprland.nix
     ../../modules/home/waybar/waybar.nix
     ../../modules/home/wezterm/wezterm.nix
@@ -15,6 +15,7 @@
     hyprland.enable = true;
     waybar.enable = true;
     terminal.enable = true;
+    wofi.enable = true;
   };
 
   home = {

@@ -26,6 +26,10 @@
 
     # Supporting services/programs
     services.mako.enable = true;
+    services.xembed-sni-proxy.enable = true;
     programs.wofi.enable = true;
+    systemd.user.services.kded = {
+      Unit.Masked = true;
+    };
   };
 }

@@ -1,0 +1,60 @@
+{ config, lib, pkgs, ... }:
+
+{
+  options.my.desktop.wofi.enable =
+    lib.mkEnableOption "Enable Wofi application launcher";
+
+  config = lib.mkIf config.my.desktop.wofi.enable {
+    programs.wofi = {
+      enable = true;
+
+      settings = {
+        mode = "drun";          # Launch desktop entries
+        prompt = "Search...";   # Prompt text
+        show-icons = true;      # Show app icons
+        lines = 10;             # Visible entries
+        width = 225;            # Window width
+      };
+
+      style = ''
+        * {
+          font-family: "JetBrains Mono", monospace;
+          font-size: 14px;
+        }
+
+        window {
+          background-color: rgba(30, 30, 46, 0.95);   /* base */
+          border-radius: 12px;
+        }
+
+        #input {
+          margin: 8px;
+          padding: 6px;
+          border-radius: 8px;
+          background-color: rgba(49, 50, 68, 1.0);   /* surface0 */
+          color: rgba(205, 214, 244, 1.0);           /* text */
+          min-width: 100%;
+          box-sizing: border-box;
+        }
+
+        #entry {
+          padding: 6px;
+          border-radius: 6px;
+          background-color: transparent;
+          color: rgba(205, 214, 244, 1.0);           /* text */
+        }
+
+        #entry:selected {
+          background-color: rgba(137, 180, 250, 1.0); /* blue accent */
+          color: rgba(30, 30, 46, 1.0);               /* base for contrast */
+        }
+
+        #text {
+          margin-left: 6px;
+          min-width: 100%;
+          box-sizing: border-box;
+        }
+      '';
+    };
+  };
+}
