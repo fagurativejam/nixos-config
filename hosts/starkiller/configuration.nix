@@ -12,7 +12,6 @@ imports = [
   ../../modules/system/updates.nix
   ../../modules/services/ssh.nix
   ../../modules/services/printing.nix
-  ../../modules/desktop/plasma.nix
   ../../modules/desktop/xserver.nix
 ];
 

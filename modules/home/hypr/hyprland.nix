@@ -15,19 +15,17 @@
     wayland.windowManager.hyprland = {
       enable = true;
       settings = {
-        monitor = [ ",preferred,auto,auto" ];
-        bind = config.my.desktop.hyprland.keybindings;
-        animations = config.my.desktop.hyprland.animations;
-        decoration = config.my.desktop.hyprland.decoration;
-        windowrule = config.my.desktop.hyprland.windowrules;
-        exec-once = config.my.desktop.hyprland.execOnce;
+        monitor     = [ ",preferred,auto,auto" ];
+        bind        = config.my.desktop.hyprland.keybindings;
+        animations  = config.my.desktop.hyprland.animations;
+        decoration  = config.my.desktop.hyprland.decoration;
+        windowrule  = config.my.desktop.hyprland.windowrules;
+        exec-once   = config.my.desktop.hyprland.execOnce;
       };
     };
 
+    # Supporting services/programs
     services.mako.enable = true;
     programs.wofi.enable = true;
-
-    home.file.".config/hypr/hyprpaper.conf".source = ./hyprpaper.conf;
-    home.file.".config/hypr/wallpapers".source = ./wallpapers;
   };
 }

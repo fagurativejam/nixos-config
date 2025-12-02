@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, config, ... }:
 
 {
   options.my.desktop.hyprland = {

@@ -14,10 +14,7 @@
     wezterm.enable = true;
     hyprland.enable = true;
     waybar.enable = true;
-    terminal = {
-      enable = true;
-      defaultTerminal = "wezterm";
-    };
+    terminal.enable = true;
   };
 
   home = {
