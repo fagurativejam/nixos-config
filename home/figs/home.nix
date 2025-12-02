@@ -15,6 +15,7 @@
     hyprland.enable = true;
     waybar.enable = true;
     terminal.enable = true;
+    terminal.defaultTerminal = "wezterm";
     wofi.enable = true;
   };
 
@@ -42,24 +43,7 @@
       cava
       fortune
       cowsay
-      snixembed
     ];
-  };
-
-  systemd.user.services.snixembed = {
-    Unit = {
-      Description = "AppIndicator to XEmbed tray proxy for Waybar";
-      After = [ "graphical.target" "dbus.service" ];
-    };
-
-    Service = {
-      ExecStart = "${pkgs.snixembed}/bin/snixembed --verbose";
-      Restart = "on-failure";
-    };
-
-    Install = {
-      WantedBy = [ "graphical.target" ];
-    };
   };
 
   programs = {
