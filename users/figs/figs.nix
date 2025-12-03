@@ -384,8 +384,9 @@
       enable = true;
       theme = "angoster" ;
       plugins = [ "git" ];
-      initExtra= "";
     };
+    initExtra = ''
+    '';
   };
 
   programs.bash = {
