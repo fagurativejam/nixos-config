@@ -11,10 +11,13 @@
       devices = [ "nodev" ];
       efiSupport = true;
       useOSProber = true;
+      efiInstallAsRemovable = false;
     };
     efi = {
+      efiSysMountPoint = "/boot";
       canTouchEfiVariables = true;
     };
+    kernelPackages = pkgs.linuxPackages_latest;
   };
 
   time.timeZone = "America/Chicago";
@@ -48,7 +51,13 @@
     pulse.enable = true;
   };
 
-  xdg.portal.config.common.default = "*";
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-wlr
+      xdg-desktop-portal-gtk
+    ];
+  };
 
   programs.steam.enable = true;
 
@@ -67,6 +76,11 @@
       pkgs.nerd-fonts.symbols-only
     ];
   };
+
+  environment.pathsToLink = [
+    "/share/applications"
+    "/share/xdg-desktop-portal"
+  ];
 
   system.stateVersion = "25.05"; # match your NixOS release
 }
