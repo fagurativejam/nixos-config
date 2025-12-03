@@ -382,7 +382,7 @@
     };
     oh-my-zsh = {
       enable = true;
-      theme = "angoster" ;
+      theme = "agnoster" ;
       plugins = [ "git" ];
     };
     initExtra = ''

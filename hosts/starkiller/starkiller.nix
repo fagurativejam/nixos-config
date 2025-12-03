@@ -64,6 +64,7 @@
 
   programs.steam.enable = true;
   programs.hyprland.enable = true;
+  programs.zsh.enable = true;
   
   services.greetd = {
     enable = true;
