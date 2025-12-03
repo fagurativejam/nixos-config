@@ -424,7 +424,7 @@
 
   xdg.configFile."hypr/hyprpaper.conf".text = ''
     preload = ./wallpapers/wallpaper1.jpg
-    wallpaper = *,./wallpapers/wallpaper1.jpg
+    wallpaper = ,./wallpapers/wallpaper1.jpg
   '';
 
   home.stateVersion = "25.05"; # match your NixOS release
