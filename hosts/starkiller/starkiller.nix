@@ -5,10 +5,16 @@
   networking.firewall.enable = true;
   networking.networkmanager.enable = true;
 
-  boot.loader.grub = {
-    enable = true;
-    version = 2;
-    devices = [ "/dev/nvme0n1p1" ];
+  boot.loader = {
+    grub = {
+      enable = true;
+      devices = [ "nodev" ];
+      efiSupport = true;
+      useOSProber = true;
+    };
+    efi = {
+      canTouchEfiVariables = true;
+    };
   };
 
   time.timeZone = "America/Chicago";
@@ -21,9 +27,9 @@
     extraGroups = [ "networkmanager" "wheel" "video" "audio" ];
   };
 
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
-    driSupport32Bit = true;
+    enable32Bit = true;
   };
 
   # hardware.graphics = {
@@ -42,13 +48,7 @@
     pulse.enable = true;
   };
 
-  xdg.portal = {
-    enable = true;
-    extraPortals = [ 
-      pkgs.xdg-desktop-portal-gtk  
-      pkgs.xdg-desktop-portal-wlr 
-    ];
-  };
+  xdg.portal.config.common.default = "*";
 
   programs.steam.enable = true;
 
