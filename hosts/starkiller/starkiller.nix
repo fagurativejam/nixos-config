@@ -29,7 +29,7 @@
   users.users.figs = {
     isNormalUser = true;
     description = "Fig Jam";
-    shell = pkgs.zsh
+    shell = pkgs.zsh;
     extraGroups = [ "networkmanager" "wheel" "video" "audio" ];
   };
 
