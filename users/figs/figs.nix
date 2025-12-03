@@ -108,6 +108,7 @@
   programs = {
     vscode.enable = true;
     hyfetch.enable = true;
+    fastfetch.enable = true;
   };
 
   programs.wezterm = {
@@ -374,9 +375,9 @@
     syntaxHighlighting.enable = true;
     enableCompletion = true;
     shellAliases = {
-      hmrbld  = "nix run .#home-manager -- switch --flake .#figs";
-      hm      = "nix run .#home-manager --";
-      rebuild = "sudo nixos-rebuild switch --flake .#starkiller";
+      hmrbld  = "home-manager switch --flake .#figs";
+      hm      = "home-manager";
+      rbld = "sudo nixos-rebuild switch --flake .#starkiller";
       update  = "nix flake update";
       garbage = "sudo nix-collect-garbage -d";
     };

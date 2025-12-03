@@ -22,6 +22,13 @@
           }
         ];
       };
+      homeConfigurations.figs = home-manager.lib.homeManagerConfiguration {
+        pkgs = import nixpkgs { 
+          system = "x86_64-linux"; 
+          config.allowUnfree = true;
+        };
+        modules = [ ./users/figs/figs.nix ];
+      };
     };
 
 }

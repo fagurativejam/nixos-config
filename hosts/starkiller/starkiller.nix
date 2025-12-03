@@ -61,6 +61,10 @@
       xdg-desktop-portal-gtk
     ];
   };
+  
+  environment.systemPackages = with pkgs; [
+    home-manager
+  ];
 
   programs.steam.enable = true;
   programs.hyprland.enable = true;
