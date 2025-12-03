@@ -15,8 +15,8 @@
       ];
       
       input = {
-        kb_layout ="us";
-        kb_options = "caps:escape";
+        kb_layout = "us";
+        numlock_by_default = true;
       };
 
       general = {
@@ -37,6 +37,10 @@
 
       animations = {
         enabled = true;
+      };
+
+      misc = {
+        disable_hyprland_logo = true;
       };
 
       bind = [
@@ -423,10 +427,17 @@
     hyprpaper
   ];
 
-  xdg.configFile."hypr/hyprpaper.conf".text = ''
-    preload = ./wallpapers/wallpaper1.jpg
-    wallpaper = ,./wallpapers/wallpaper1.jpg
-  '';
+  services.hyprpaper = {
+    enable = true;
+    settings = {
+      preload = [
+        "/home/figs/Bullshit/users/figs/wallpapers/wallpaper1.jpg"
+      ];
+      wallpaper = [
+        ",/home/figs/Bullshit/users/figs/wallpapers/wallpaper1.jpg"
+      ];
+    };
+  };
 
   home.stateVersion = "25.05"; # match your NixOS release
 }
