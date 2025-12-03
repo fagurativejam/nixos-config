@@ -5,6 +5,12 @@
   networking.firewall.enable = true;
   networking.networkmanager.enable = true;
 
+  boot.loader.grub = {
+    enable = true;
+    version = 2;
+    devices = [ "/dev/nvme0n1p1" ];
+  };
+
   time.timeZone = "America/Chicago";
 
   services.openssh.enable = true;
