@@ -108,11 +108,6 @@
   programs = {
     vscode.enable = true;
     hyfetch.enable = true;
-    htop.enable = true;
-    fortune.enable = true;
-    cowsay.enable = true;
-    nnn.enable = true;
-    fzf.enable = true;
   };
 
   programs.wezterm = {
@@ -424,6 +419,11 @@
   };
 
   home.packages = with pkgs; [
+    cowsay
+    fortune
+    htop
+    nnn
+    fzf
     discord
     steam
     spotify
