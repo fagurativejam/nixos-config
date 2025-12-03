@@ -5,17 +5,19 @@
   networking.firewall.enable = true;
   networking.networkmanager.enable = true;
 
-  boot.loader = {
-    grub = {
-      enable = true;
-      devices = [ "nodev" ];
-      efiSupport = true;
-      useOSProber = true;
-      efiInstallAsRemovable = false;
-    };
-    efi = {
-      efiSysMountPoint = "/boot";
-      canTouchEfiVariables = true;
+  boot = {
+    loader = {
+      grub = {
+        enable = true;
+        devices = [ "nodev" ];
+        efiSupport = true;
+        useOSProber = true;
+        efiInstallAsRemovable = false;
+      };
+      efi = {
+        efiSysMountPoint = "/boot";
+        canTouchEfiVariables = true;
+      };
     };
     kernelPackages = pkgs.linuxPackages_latest;
   };
@@ -60,6 +62,15 @@
   };
 
   programs.steam.enable = true;
+  programs.hyprland.enable = true;
+  
+  services.greetd = {
+    enable = true;
+    settings.default_session = {
+      command = "${pkgs.hyprland}/bin/Hyprland";
+      user = "figs";   # your username
+    };
+  };
 
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
@@ -76,11 +87,6 @@
       pkgs.nerd-fonts.symbols-only
     ];
   };
-
-  environment.pathsToLink = [
-    "/share/applications"
-    "/share/xdg-desktop-portal"
-  ];
 
   system.stateVersion = "25.05"; # match your NixOS release
 }
