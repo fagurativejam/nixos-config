@@ -56,6 +56,8 @@
     experimental-features = [ "nix-command" "flakes" ];
   };
 
+  nixpkgs.config.allowUnfree = true;
+
   fonts = {
     fontDir.enable = true;
     fontconfig.enable = true;
