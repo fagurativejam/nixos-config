@@ -430,6 +430,7 @@
     cava
     firefox
     hyprpaper
+    blender
     prismlauncher
     jdk17
   ];
