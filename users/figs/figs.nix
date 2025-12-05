@@ -20,8 +20,8 @@
       };
 
       general = {
-        gaps_in = 5;
-        gaps_out = 10;
+        gaps_in = 2.5;
+        gaps_out = 7;
         border_size = 2;
         "col.active_border" = "rgba(33ccffee)";
         "col.inactive_border" = "rgba(595959aa)";
@@ -113,6 +113,11 @@
     vscode.enable = true;
     hyfetch.enable = true;
     fastfetch.enable = true;
+  };
+
+  programs.neovim = {
+    enable = true;
+    vimAlias = true;
   };
 
   programs.wezterm = {
@@ -425,6 +430,8 @@
     cava
     firefox
     hyprpaper
+    prismlauncher
+    jdk17
   ];
 
   services.hyprpaper = {

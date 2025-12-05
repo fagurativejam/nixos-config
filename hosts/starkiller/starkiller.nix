@@ -1,9 +1,12 @@
 { config, pkgs, ... }:
 
 {
-  networking.hostName = "starkiller";
-  networking.firewall.enable = true;
-  networking.networkmanager.enable = true;
+  networking = {
+    hostName = "starkiller";
+    firewall.enable = true;
+    firewall.allowedTCPPorts = [ 25565 ];
+    networkmanager.enable = true;
+  };
 
   boot = {
     loader = {
@@ -38,15 +41,6 @@
     enable32Bit = true;
   };
 
-  # hardware.graphics = {
-  #   enable = true;
-  #   extraPackages = with pkgs; [
-  #     vulkan-loader
-  #     vulkan-tools
-  #     vulkan-validation-layers 
-  #   ];
-  # };
-
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -66,10 +60,12 @@
     home-manager
   ];
 
-  programs.steam.enable = true;
-  programs.hyprland.enable = true;
-  programs.zsh.enable = true;
-  
+  programs = { 
+    steam.enable = true;
+    hyprland.enable = true;
+    zsh.enable = true;
+  };
+
   services.greetd = {
     enable = true;
     settings.default_session = {
