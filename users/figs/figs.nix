@@ -53,9 +53,17 @@
         "SUPER, ESC, exit"
         "SUPER, SPACE, togglefloating"
         "SUPER, R, exec, hyprctl reload"
-        "SUPER, F10, exec, pactl set-sink-mute @DEFAULT_SINK@ toggle"	
-        "SUPER, F11, exec, pactl set-sink-volume @DEFAULT_SINK@ -5%"
-        "SUPER, F12, exec, pactl set-sink-volume @DEFAULT_SINK@ +5%"
+        # --- Media Controls ---
+        "SUPER, F7, exec, playerctl previous"   # previous track
+        "SUPER, F8, exec, playerctl play-pause" # toggle play/pause
+        "SUPER, F9, exec, playerctl next"       # next track
+        # --- Audio Controls ---
+        "SUPER, F10, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+        "SUPER, F11, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+        "SUPER, F12, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+        # --- Mouse Side Buttons mapped to Volume ---
+        "KEY_VOLUMEUP, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+        "KEY_VOLUMEDOWN, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
         # --- Workspace Switching ---
         "SUPER, 1, workspace, 1"
         "SUPER, 2, workspace, 2"
@@ -101,10 +109,16 @@
         "SUPER|ALT, L, resizeactive, 50 0"
         "SUPER|ALT, K, resizeactive, 0 -50"
         "SUPER|ALT, J, resizeactive, 0 50"
-
         # Minimize-like behavior
         "SUPER|SHIFT, M, movetoworkspace, special"   # send to scratchpad
         "SUPER, M, togglespecialworkspace"     # toggle scratchpad
+        # Session Management
+        "SUPER|SHIFT, L, exec, hyprlock"          # lock screen
+        "SUPER|SHIFT, E, exec, wlogout"           # graphical logout/power menu
+        "SUPER|SHIFT, S, exec, systemctl suspend" # suspend
+        "SUPER|SHIFT, H, exec, systemctl hibernate" # hibernate
+        "SUPER|SHIFT, R, exec, systemctl reboot"  # reboot
+        "SUPER|SHIFT, P, exec, systemctl poweroff" # shutdown
       ];
     };
   };
@@ -433,6 +447,9 @@
     blender
     prismlauncher
     jdk17
+    hyprlock
+    swayidle
+    wlogout
   ];
 
   services.hyprpaper = {
