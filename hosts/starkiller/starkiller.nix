@@ -58,6 +58,8 @@
   
   environment.systemPackages = with pkgs; [
     home-manager
+    greetd
+    tuigreet
   ];
 
   programs = { 
@@ -68,11 +70,29 @@
 
   services.greetd = {
     enable = true;
-    settings.default_session = {
-      command = "${pkgs.hyprland}/bin/Hyprland";
-      user = "figs";   # your username
+    settings = {
+      default_session = {
+        command = "${pkgs.tuigreet}/bin/tuigreet \
+          --time \
+          --asterisks \
+          --remember \
+          --cmd ${pkgs.hyprland}/bin/Hyprland";
+        user = "greeter";
+      };
+
+      sessions = [
+        {
+          name = "tty";
+          command = "${pkgs.bash}/bin/bash";
+          user = "root";
+        }
+      ];
     };
   };
+
+  services.udev.enable = true;        # device management
+  services.udisks2.enable = true;     # automount disks
+
 
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];

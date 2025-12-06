@@ -9,9 +9,9 @@
     settings = {
       monitor = [ "*,preferred,auto,auto" ];
       exec-once = [
-        "wofi --show drun"
         "waybar"
         "hyprpaper"
+        "mako"
       ];
       
       input = {
@@ -45,80 +45,77 @@
 
       bind = [
         # --- Application Launchers ---
-        "SUPER, D, exec, wofi --show drun" 
-        "SUPER, RETURN, exec, wezterm" 
+          "SUPER, D, exec, wofi --show drun" 
+          "SUPER, RETURN, exec, wezterm" 
         # --- General Keybindings ---
-        "SUPER, Q, killactive"
-        "SUPER, F, fullscreen"
-        "SUPER, ESC, exit"
-        "SUPER, SPACE, togglefloating"
-        "SUPER, R, exec, hyprctl reload"
-        # --- Media Controls ---
-        "SUPER, F7, exec, playerctl previous"   # previous track
-        "SUPER, F8, exec, playerctl play-pause" # toggle play/pause
-        "SUPER, F9, exec, playerctl next"       # next track
+          "SUPER, Q, killactive"
+          "SUPER, F, fullscreen"
+          "SUPER, ESC, exit"
+          "SUPER, SPACE, togglefloating"
+          "SUPER, R, exec, hyprctl reload"
+        # Playback
+          "SUPER, F7, exec, playerctl play-pause"
+          "SUPER, F8, exec, playerctl next"
+          "SUPER, F6, exec, playerctl previous"
+          "SUPER, F5, exec, playerctl stop"
         # --- Audio Controls ---
-        "SUPER, F10, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-        "SUPER, F11, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-        "SUPER, F12, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
-        # --- Mouse Side Buttons mapped to Volume ---
-        "KEY_VOLUMEUP, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
-        "KEY_VOLUMEDOWN, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+          "SUPER, F10, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+          "SUPER, F11, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+          "SUPER, F12, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
         # --- Workspace Switching ---
-        "SUPER, 1, workspace, 1"
-        "SUPER, 2, workspace, 2"
-        "SUPER, 3, workspace, 3"
-        "SUPER, 4, workspace, 4"
-        "SUPER, 5, workspace, 5"
-        "SUPER, 6, workspace, 6"
-        "SUPER, 7, workspace, 7"
-        "SUPER, 8, workspace, 8"
-        "SUPER, 9, workspace, 9"
-        "SUPER, 0, workspace, 10"
+          "SUPER, 1, workspace, 1"
+          "SUPER, 2, workspace, 2"
+          "SUPER, 3, workspace, 3"
+          "SUPER, 4, workspace, 4"
+          "SUPER, 5, workspace, 5"
+          "SUPER, 6, workspace, 6"
+          "SUPER, 7, workspace, 7"
+          "SUPER, 8, workspace, 8"
+          "SUPER, 9, workspace, 9"
+          "SUPER, 0, workspace, 10"
         # --- Move Active Window to Workspace ---
-        "SUPER|SHIFT, 1, movetoworkspace, 1"
-        "SUPER|SHIFT, 2, movetoworkspace, 2"
-        "SUPER|SHIFT, 3, movetoworkspace, 3"
-        "SUPER|SHIFT, 4, movetoworkspace, 4"
-        "SUPER|SHIFT, 5, movetoworkspace, 5"
-        "SUPER|SHIFT, 6, movetoworkspace, 6"
-        "SUPER|SHIFT, 7, movetoworkspace, 7"
-        "SUPER|SHIFT, 8, movetoworkspace, 8"
-        "SUPER|SHIFT, 9, movetoworkspace, 9"
-        "SUPER|SHIFT, 0, movetoworkspace, 10"
+          "SUPER|SHIFT, 1, movetoworkspace, 1"
+          "SUPER|SHIFT, 2, movetoworkspace, 2"
+          "SUPER|SHIFT, 3, movetoworkspace, 3"
+          "SUPER|SHIFT, 4, movetoworkspace, 4"
+          "SUPER|SHIFT, 5, movetoworkspace, 5"
+          "SUPER|SHIFT, 6, movetoworkspace, 6"
+          "SUPER|SHIFT, 7, movetoworkspace, 7"
+          "SUPER|SHIFT, 8, movetoworkspace, 8"
+          "SUPER|SHIFT, 9, movetoworkspace, 9"
+          "SUPER|SHIFT, 0, movetoworkspace, 10"
         # --- Cycle Workspaces ---
-        "SUPER, TAB, workspace, +1"
-        "SUPER|SHIFT, TAB, workspace, -1"
+          "SUPER, TAB, workspace, +1"
+          "SUPER|SHIFT, TAB, workspace, -1"
         # Move focus between windows
-        "SUPER, H, movefocus, l   # focus left"
-        "SUPER, L, movefocus, r   # focus right"
-        "SUPER, K, movefocus, u   # focus up"
-        "SUPER, J, movefocus, d   # focus down"
+          "SUPER, H, movefocus, l   # focus left"
+          "SUPER, L, movefocus, r   # focus right"
+          "SUPER, K, movefocus, u   # focus up"
+          "SUPER, J, movefocus, d   # focus down"
         # Move active window around
-        "SUPER|SHIFT, H, movewindow, l"
-        "SUPER|SHIFT, L, movewindow, r"
-        "SUPER|SHIFT, K, movewindow, u"
-        "SUPER|SHIFT, J, movewindow, d"
+          "SUPER|SHIFT, H, movewindow, l"
+          "SUPER|SHIFT, L, movewindow, r"
+          "SUPER|SHIFT, K, movewindow, u"
+          "SUPER|SHIFT, J, movewindow, d"
         # Swap active window with neighbor
-        "SUPER|CTRL, H, swapwindow, l"
-        "SUPER|CTRL, L, swapwindow, r"
-        "SUPER|CTRL, K, swapwindow, u"
-        "SUPER|CTRL, J, swapwindow, d"
+          "SUPER|CTRL, H, swapwindow, l"
+          "SUPER|CTRL, L, swapwindow, r"
+          "SUPER|CTRL, K, swapwindow, u"
+          "SUPER|CTRL, J, swapwindow, d"
         # Resize active window
-        "SUPER|ALT, H, resizeactive, -50 0"
-        "SUPER|ALT, L, resizeactive, 50 0"
-        "SUPER|ALT, K, resizeactive, 0 -50"
-        "SUPER|ALT, J, resizeactive, 0 50"
+          "SUPER|ALT, H, resizeactive, -50 0"
+          "SUPER|ALT, L, resizeactive, 50 0"
+          "SUPER|ALT, K, resizeactive, 0 -50"
+          "SUPER|ALT, J, resizeactive, 0 50"
         # Minimize-like behavior
-        "SUPER|SHIFT, M, movetoworkspace, special"   # send to scratchpad
-        "SUPER, M, togglespecialworkspace"     # toggle scratchpad
+          "SUPER|SHIFT, M, movetoworkspace, special"   # send to scratchpad
+          "SUPER, M, togglespecialworkspace"     # toggle scratchpad
         # Session Management
-        "SUPER|SHIFT, L, exec, hyprlock"          # lock screen
-        "SUPER|SHIFT, E, exec, wlogout"           # graphical logout/power menu
-        "SUPER|SHIFT, S, exec, systemctl suspend" # suspend
-        "SUPER|SHIFT, H, exec, systemctl hibernate" # hibernate
-        "SUPER|SHIFT, R, exec, systemctl reboot"  # reboot
-        "SUPER|SHIFT, P, exec, systemctl poweroff" # shutdown
+        "SUPER|ALT, F1, exec, hyprlock"          # lock screen
+        "SUPER|ALT, F2, exec, systemctl suspend" # suspend
+        "SUPER|ALT, F3, exec, systemctl hibernate" # hibernate
+        "SUPER|ALT, F4, exec, systemctl reboot"  # reboot
+        "SUPER|ALT, F5, exec, systemctl poweroff" # shutdown
       ];
     };
   };
@@ -272,7 +269,7 @@
         position = "bottom";
         modules-left = [ "hyprland/workspaces" ];
         modules-center = [ "tray" "mpris" ];
-        modules-right = [ "cpu" "memory" "temperature" "pulseaudio" "network" "clock" ];
+        modules-right = [ "custom-notifications" "cpu" "memory" "temperature" "pulseaudio" "network" "clock" ];
 
         "hyprland/workspaces" = {
           format = "{icon}";
@@ -281,39 +278,39 @@
             "6" = "6"; "7" = "7"; "8" = "8"; "9" = "9"; "10" = "10";
           };
         };
-
         clock = {
           format = "{:%a %b %d %I:%M %p}";
           tooltip-format = "{:%A, %B %d, %Y — %I:%M:%S %p}";
         };
-
         mpris = {
           format = "{player_icon} {artist} - {title}";
           format-paused = " {player_icon} {artist} - {title}";
           format-stopped = " Stopped";
           format-disconnected = " No Player";
         };
-
         cpu = { format = " {usage}%"; };
         memory = { format = " {used}G / {total}G"; };
         temperature = {
           format = " {temperatureC}°C";
           critical-threshold = 80;
         };
-
         pulseaudio = {
-          format = "{volume}% ";
+          format = "{volume}%  ";
           format-muted = " Muted";
           on-click = "pavucontrol";
         };
-
         network = {
-          format-wifi = "{essid} ";
-          format-ethernet = "{ifname} ";
+          format-wifi = "{essid}  ";
+          format-ethernet = "{ifname}  ";
           format-disconnected = " Disconnected";
         };
-
         tray = { };
+        "custom-notifications" = { 
+          format = " {}";
+          exec = "makoctl list | wc -l"; #show active number of notificaitons
+          interval = 5;
+          on-click = "makoctl dismiss --all"; #clear notifications
+        };
 
       };
     };
@@ -333,62 +330,109 @@
       }
 
       /* Left group (workspaces) */
-      #workspaces {
-        background: rgba(76, 86, 106, 0.8);
-        border: 2px solid #81a1c1;
-        border-radius: 8px;
-        margin: 2px 4px;
-        padding: 2px 6px;
-      }
+        #workspaces {
+          background: rgba(76, 86, 106, 0.8);
+          border: 2px solid rgba(126, 135, 153, 0.9);
+          border-radius: 8px;
+          margin: 2px 4px;
+          padding: 2px 6px;
+        }
 
-      #workspaces button {
-        background: transparent;
-        border: none;
-        padding: 1px 4px;
-        color: rgba(236, 239, 244, 0.6);
-        transition: color 0.2s ease-in-out,
-                    background 0.2s ease-in-out;
-      }
+        #workspaces button {
+          background: transparent;
+          border: none;
+          padding: 1px 4px;
+          color: rgba(236, 239, 244, 0.6);
+          transition: color 0.2s ease-in-out,
+                      background 0.2s ease-in-out;
+        }
 
-      #workspaces button:hover {
-        color: rgba(236, 239, 244, 1.0);
-        background: rgba(129, 161, 193, 0.3);
-        border-radius: 6px;
-      }
+        #workspaces button:hover {
+          color: rgba(236, 239, 244, 1.0);
+          background: rgba(129, 161, 193, 0.3);
+          border-radius: 6px;
+        }
 
-      #workspaces button.active {
-        background: rgba(129, 161, 193, 0.8);
-        color: rgba(236, 239, 244, 1.0);
-        box-shadow: inset 0 -2px #81a1c1;
-      }
+        #workspaces button.active {
+          background: rgba(129, 161, 193, 0.8);
+          color: rgba(236, 239, 244, 1.0);
+          box-shadow: inset 0 -2px #81a1c1;
+        }
 
       /* Center group */
-      .modules-center {
-        background: rgba(76, 86, 106, 0.8);
-        border: 2px solid #81a1c1;
-        border-radius: 8px;
-        margin: 2px 4px;
-        padding: 0;
-      }
+        .modules-center {
+          background: rgba(76, 86, 106, 0.8);
+          border: 2px solid rgba(126, 135, 153, 0.9);
+          border-radius: 8px;
+          margin: 2px 4px;
+          padding: 0;
+        }
 
       /* Right group */
-      .modules-right {
-        background: rgba(76, 86, 106, 0.8);
-        border: 2px solid #81a1c1;
-        border-radius: 8px;
-        margin: 2px 4px;
-        padding: 0;
-      }
+        .modules-right {
+          background: rgba(76, 86, 106, 0.8);
+          border: 2px solid rgba(126, 135, 153, 0.9);
+          border-radius: 8px;
+          margin: 2px 4px;
+          padding: 0;
+        }
 
       /* Individual module accent colors */
-      #cpu { background: rgba(191, 97, 106, 0.8); padding: 2px 6px; }
-      #memory { background: rgba(208, 135, 112, 0.8); padding: 2px 6px; }
-      #temperature { background: rgba(235, 203, 139, 0.8); padding: 2px 6px; }
-      #pulseaudio { background: rgba(163, 190, 140, 0.8); padding: 2px 6px; }
-      #network { background: rgba(129, 161, 193, 0.8); padding: 2px 6px; }
-      #clock { background: rgba(180, 142, 173, 0.8); padding: 2px 6px; }
-      #mpris { background: rgba(163, 190, 140, 0.8); padding: 2px 6px; }
-      #tray { background: rgba(76, 86, 106, 0.8); padding: 2px 6px; }
+        #custom-notifications {
+          background: rgba(76, 86, 106, 0.8);
+          border: 2px solid rgba(46, 52, 64, 0.9);
+          border-radius: 6px;
+          padding: 2px 6px;
+          margin: 2px 3px;
+        }
+        #cpu {
+          background: rgba(191, 97, 106, 0.8);
+          padding: 2px 6px;
+          border: 2px solid rgba(46, 52, 64, 0.9);
+          border-radius: 6px;
+        }
+        #memory {
+          background: rgba(208, 135, 112, 0.8);
+          padding: 2px 6px;
+          border: 2px solid rgba(46, 52, 64, 0.9);
+          border-radius: 6px;
+        }
+        #temperature {
+          background: rgba(235, 203, 139, 0.8);
+          padding: 2px 6px;
+          border: 2px solid rgba(46, 52, 64, 0.9);
+          border-radius: 6px;
+        }
+        #pulseaudio {
+          background: rgba(163, 190, 140, 0.8);
+          padding: 2px 6px;
+          border: 2px solid rgba(46, 52, 64, 0.9);
+          border-radius: 6px;
+        }
+        #network {
+          background: rgba(129, 161, 193, 0.8);
+          padding: 2px 6px;
+          border: 2px solid rgba(46, 52, 64, 0.9);
+          border-radius: 6px;
+        }
+        #clock {
+          background: rgba(180, 142, 173, 0.8);
+          padding: 2px 6px;
+          border: 2px solid rgba(46, 52, 64, 0.9);
+          border-radius: 6px;
+        }
+        #mpris {
+          background: rgba(163, 190, 140, 0.8);
+          padding: 2px 6px;
+          border: 2px solid rgba(46, 52, 64, 0.9);
+          border-radius: 6px;
+        }
+        #tray {
+          background: rgba(76, 86, 106, 0.8);
+          padding: 2px 6px;
+          border: 2px solid rgba(46, 52, 64, 0.9);
+          border-radius: 6px;
+        }
     ";
   };
 
@@ -432,24 +476,29 @@
   };
 
   home.packages = with pkgs; [
-    cowsay
-    fortune
-    htop
-    nnn
-    fzf
-    discord
-    steam
-    spotify
-    libreoffice
-    cava
-    firefox
-    hyprpaper
-    blender
-    prismlauncher
-    jdk17
-    hyprlock
-    swayidle
-    wlogout
+    #terminal utils
+      cowsay
+      fortune
+      htop
+      nnn
+      fzf
+      cava
+    #gaming/ entertainment
+      discord
+      steam
+      spotify
+      prismlauncher #minecraft official launcer currently busted
+    #hypr ecosystem
+      hyprpaper #wallpaper daemon
+      hyprlock #lock screen
+      swayidle #idle time out
+      mako #notification daemon
+    #audio
+      playerctl
+    #duh
+      libreoffice
+      firefox
+      blender
   ];
 
   services.hyprpaper = {
@@ -463,6 +512,45 @@
       ];
     };
   };
+
+  xdg.configFile."hypr/hyprlock.conf".text = ''
+    # Hyprlock configuration with high blur + vignette overlay
+
+    background {
+      blur = 20                        # strong blur effect
+      color = rgba(46,52,64,0.6)       # Nord dark tint
+      vignette = true                  # enable vignette shading
+      vignette_opacity = 0.25          # subtle dark edges
+      gradient = true                  # enable gradient overlay
+      gradient_angle = 45              # diagonal gradient
+      gradient_start = rgba(46,52,64,0.7) # Nord dark start
+      gradient_end   = rgba(76,86,106,0.5) # Nord gray end
+    }
+
+    clock {
+      format = %H:%M
+      font = JetBrainsMono Nerd Font
+      color = #ECEFF4
+      size = 64
+    }
+
+    input {
+      font = JetBrainsMono Nerd Font
+      color = #ECEFF4
+      inner_color = #2E3440
+      outline_color = #81A1C1
+      fail_color = #BF616A
+      size = 24
+    }
+
+    text {
+      message = "Enter password to fart"
+      font = JetBrainsMono Nerd Font
+      color = #A3BE8C
+      size = 20
+    }
+    '';
+
 
   home.stateVersion = "25.05"; # match your NixOS release
 }
