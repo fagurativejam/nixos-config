@@ -480,7 +480,7 @@
       cowsay
       fortune
       htop
-      nnn
+      lf
       fzf
       cava
     #gaming/ entertainment

@@ -93,7 +93,6 @@
   services.udev.enable = true;        # device management
   services.udisks2.enable = true;     # automount disks
 
-
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
   };
