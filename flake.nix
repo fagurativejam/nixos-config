@@ -1,5 +1,5 @@
 {
-  description = "My NixOS setup with Home Manager";
+  description = "NixOS + Home Manager setup for starkiller and figs";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -11,6 +11,7 @@
     let
       system = "x86_64-linux";
     in {
+      # --- Main host configuration ---
       nixosConfigurations.starkiller = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
@@ -25,10 +26,16 @@
         ];
       };
 
+      # --- Installer ISO configuration ---
       nixosConfigurations.install-iso = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
+          # Reuse your system config (but NOT hardware)
           ./hosts/starkiller/starkiller.nix
+
+          # Import the official installer ISO module
+          "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+
           home-manager.nixosModules.home-manager
           {
             environment.systemPackages = with nixpkgs.legacyPackages.${system}; [
@@ -38,9 +45,11 @@
         ];
       };
 
-      # 👇 expose the ISO image as a top-level package
-      packages.${system}.install-iso = self.nixosConfigurations.install-iso.config.system.build.isoImage;
+      # --- Expose ISO as a top-level package ---
+      packages.${system}.install-iso =
+        self.nixosConfigurations.install-iso.config.system.build.isoImage;
 
+      # --- Home Manager standalone config ---
       homeConfigurations.figs = home-manager.lib.homeManagerConfiguration {
         pkgs = import nixpkgs {
           inherit system;
