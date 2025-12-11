@@ -38,6 +38,7 @@
 
           home-manager.nixosModules.home-manager
           {
+            boot.supportedFilesystems = [ "btrfs" "xfs" "ext4" ];
             environment.systemPackages = with nixpkgs.legacyPackages.${system}; [
               git vim parted
             ];
