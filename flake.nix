@@ -36,12 +36,15 @@
           ./hosts/starkiller/starkiller.nix
           home-manager.nixosModules.home-manager
           {
-            environment.systemPackages = with nixpkgs.legacyPackages.x86_64-linux; [
-              git vim parted
+            environment.systemPackages = with pkgs; [ 
+              git 
+              vim 
+              parted 
             ];
           }
         ];
       };
+
     };
 
 }
