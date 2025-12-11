@@ -29,6 +29,7 @@
         };
         modules = [ ./users/figs/figs.nix ];
       };
+      packages.x86_64-linux.starkiller.iso = self.nixosConfigurations.starkiller.config.system.build.isoImage;
     };
 
 }
