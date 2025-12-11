@@ -29,22 +29,19 @@
         };
         modules = [ ./users/figs/figs.nix ];
       };
-
+      
       nixosConfigurations.install-iso = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           ./hosts/starkiller/starkiller.nix
           home-manager.nixosModules.home-manager
           {
-            environment.systemPackages = with pkgs; [ 
-              git 
-              vim 
-              parted 
+            environment.systemPackages = with nixpkgs.legacyPackages.x86_64-linux; [
+              git vim parted
             ];
           }
         ];
       };
-
     };
 
 }
