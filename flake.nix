@@ -33,12 +33,14 @@
           # Reuse your system config (but NOT hardware)
           ./hosts/starkiller/starkiller.nix
 
-          # Import the official installer ISO module
-          "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+          # ✅ Properly import the installer ISO module from nixpkgs input
+          (import "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix")
 
           home-manager.nixosModules.home-manager
           {
+            # Avoid broken ZFS by explicitly listing supported filesystems
             boot.supportedFilesystems = [ "btrfs" "xfs" "ext4" ];
+
             environment.systemPackages = with nixpkgs.legacyPackages.${system}; [
               git vim parted
             ];
