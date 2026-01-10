@@ -496,7 +496,6 @@
     #audio
       playerctl
     #duh
-      libreoffice
       firefox
       blender
   ];
