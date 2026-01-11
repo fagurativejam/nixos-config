@@ -507,7 +507,7 @@
         "/home/figs/Bullshit/users/figs/wallpapers/wallpaper1.jpg"
       ];
       wallpaper = [
-        ",/home/figs/Bullshit/users/figs/wallpapers/wallpaper1.jpg"
+        "HDMI-A-1,/home/figs/Bullshit/users/figs/wallpapers/wallpaper1.jpg"
       ];
     };
   };
