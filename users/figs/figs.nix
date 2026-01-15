@@ -502,13 +502,14 @@
 
   services.hyprpaper = {
     enable = true;
+
     settings = {
-      preload = [
-        "/home/figs/Bullshit/users/figs/wallpapers/wallpaper1.jpg"
-      ];
-      wallpaper = [
-        "HDMI-A-1,/home/figs/Bullshit/users/figs/wallpapers/wallpaper1.jpg"
-      ];
+      ipc = "on";
+      splash = false;
+      wallpaper = {
+        monitor = "";
+        path = "/home/figs/Bullshit/users/figs/wallpapers/wallpaper1.jpg";
+      };
     };
   };
 
