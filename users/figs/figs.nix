@@ -479,7 +479,7 @@
     #terminal utils
       cowsay
       fortune
-      htop
+      bottom
       lf
       fzf
       cava
@@ -497,7 +497,7 @@
       playerctl
     #duh
       firefox
-      blender
+      #blender
   ];
 
   services.hyprpaper = {
