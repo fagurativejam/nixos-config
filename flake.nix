@@ -39,6 +39,8 @@
             extraSpecialArgs = {inherit inputs self; }; #Pass flake to HM too
             users.figs = import ./users/figs/figs.nix;
           };
+
+          nixpkgs.config.allowUnfree = true;
         }
       ];
     };
