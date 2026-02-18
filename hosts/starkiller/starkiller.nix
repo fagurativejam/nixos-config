@@ -21,8 +21,9 @@
         devices = [ "nodev" ]; # Install GRUB to the EFI partition, not the MBR
         efiSupport = true;
         useOSProber = true; # Detect other OSes for dual-booting
-        timeout = 5; # Shorten GRUB timeout for faster booting
       };
+      timeout = 5; # Shorten GRUB timeout for faster booting
+
       efi = {
         efiSysMountPoint = "/boot"; # Mount EFI system partition at /boot
         canTouchEfiVariables = true; # Allow NixOS to update EFI variables for bootloader
@@ -52,7 +53,7 @@
     pulse.enable = true; # Enable PulseAudio compatibility layer
   };
 
-  hardware.pulseaudio.enable = false; # Disable PulseAudio since we're using PipeWire
+  services.pulseaudio.enable = false; # Disable PulseAudio since we're using PipeWire
 
   xdg.portal = {
     enable = true; # Enable XDG portals for sandboxed applications
@@ -107,7 +108,8 @@
   };
 
   environment.systemPackages = with pkgs; [
-    greetd.tuigreet # Include tuigreet greeter for a customizable login screen
+    home-manager # Include Home Manager for user configuration management
+    tuigreet # Include tuigreet greeter for a customizable login screen
   ];
 }
 

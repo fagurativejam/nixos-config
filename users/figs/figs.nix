@@ -436,14 +436,6 @@
     ";
   };
 
-  home.file.".zshrc.d/00-rebuild-aliases.zsh".text = ''
-      alias hmrbld="home-manager switch --flake .#figs"
-      alias hm="home-manager"
-      alias rbld="sudo nixos-rebuild switch --flake .#starkiller"
-      alias update="nix flake update"
-      alias garbage="sudo nix-collect-garbage -d"
-    '';
-
   programs.zsh = {
     enable = true;
     autosuggestion.enable = true;
