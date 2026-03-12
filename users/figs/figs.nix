@@ -495,6 +495,7 @@
       mako #notification daemon
     #audio
       playerctl
+      bluetuith
     #duh
       firefox
       #blender
