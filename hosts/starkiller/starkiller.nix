@@ -32,6 +32,8 @@
     kernelPackages = pkgs.linuxPackages_latest; # Use latest Linux kernel for best hardware support
   };
 
+  security.pam.services.hyprlock = {}; # Allow hyprlock to lock the screen on suspend
+
   time.timeZone = "America/Chicago"; # Set your local timezone
 
   users.users.figs = {
@@ -94,12 +96,9 @@
   services.greetd = {
     enable = true; # Enable greetd display manager
     settings = {
+
       default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet \
-          --time \
-          --asterisks \
-          --remember \
-          --cmd ${pkgs.hyprland}/bin/Hyprland"; # Command to start Hyprland session with tuigreet
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --asterisks --remember --cmd start-hyprland"; # Command to start Hyprland session with tuigreet
         user = "greeter"; # Use a dedicated greeter user for the login screen
       };
 

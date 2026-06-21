@@ -6,6 +6,8 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
+    configType = "hyprlang";
+
     settings = {
       monitor = [ "*,preferred,auto,auto" ];
       exec-once = [
@@ -108,14 +110,12 @@
           "SUPER|ALT, K, resizeactive, 0 -50"
           "SUPER|ALT, J, resizeactive, 0 50"
         # Minimize-like behavior
-          "SUPER|SHIFT, M, movetoworkspace, special"   # send to scratchpad
-          "SUPER, M, togglespecialworkspace"     # toggle scratchpad
+          "SUPER|SHIFT, M, movetoworkspace, special"
+          "SUPER, M, togglespecialworkspace"
         # Session Management
-        "SUPER|ALT, F1, exec, hyprlock"          # lock screen
-        "SUPER|ALT, F2, exec, systemctl suspend" # suspend
-        "SUPER|ALT, F3, exec, systemctl hibernate" # hibernate
-        "SUPER|ALT, F4, exec, systemctl reboot"  # reboot
-        "SUPER|ALT, F5, exec, systemctl poweroff" # shutdown
+          "SUPER|ALT, F1, exec, hyprlock"
+          "SUPER|ALT, F4, exec, systemctl reboot"
+          "SUPER|ALT, F5, exec, systemctl poweroff"
       ];
     };
   };
@@ -124,11 +124,6 @@
     vscode.enable = true;
     hyfetch.enable = true;
     fastfetch.enable = true;
-  };
-
-  programs.neovim = {
-    enable = true;
-    vimAlias = true;
   };
 
   programs.wezterm = {
@@ -475,13 +470,82 @@
     };
   };
 
+  programs.hyprlock = {
+    enable = true;
+    settings = {
+      general = { 
+        disable_loading_bar = true;
+        hide_cursor = true;
+        no_fade_in = false;
+        grace = 2;
+      };
+      background = [
+        {
+          monitor = "";
+          path = "screenshot";
+          blur_passes = 3;
+          blur_size = 8;
+          noise = 0.011;
+          contrast = 0.8916;
+          brightness = 0.5172;
+        }
+      ];
+      input-field = [
+        {
+          monitor = "";
+          size = "300, 50";
+          outline_thickness = 4;
+          dots_size = 0.2;
+          dots_spacing = 0.15;
+          dots_center = true;
+          outer_color = "rgba(33ccffee)";
+          inner_color = "rgba(00000000)";
+          font_color = "rgba(ffffff)";
+          fade_on_empty = false;
+          paceholder_text = "<i>Enter Password</i>";
+          position = "0, -120";
+          halign = "center";
+          valign = "center";
+        }
+      ];
+      label = [
+        {
+          monitor = "";
+          text = "$TIME";
+          font_size = 82;
+          position = "0, 280";
+          halign = "center";
+          valign = "center";
+          shadow_passes = 2;
+        }
+
+        {
+          monitor = "";
+          text = "cmd[update:1000] date +'%A, %B %d, %Y'";
+          font_size = 22;
+          position = "0, 200";
+          halign = "center";
+          valign = "center";
+        }
+
+        {
+          monitor = "";
+          text = "'Sup $USER";
+          font_size = 18;
+          position = "0, 150";
+          halign = "center";
+          valign = "center";
+        }
+      ];
+    };
+  };
+
   home.packages = with pkgs; [
     #terminal utils
       cowsay
       fortune
       bottom
       lf
-      fzf
       cava
     #gaming/ entertainment
       discord
@@ -491,15 +555,41 @@
     #hypr ecosystem
       hyprpaper #wallpaper daemon
       hyprlock #lock screen
-      swayidle #idle time out
+      hypridle
       mako #notification daemon
     #audio
       playerctl
       bluetuith
     #duh
       firefox
-      #blender
+      blender
   ];
+
+  services.hypridle = {
+    enable = true;
+    settings = {
+      general = {
+        after_sleep_cmd = "hyprctl dispatch dpms on";
+        before_sleep_cmd = "hyprlock";
+        lock_cmd = "hyprlock";
+      };
+      listener = [  
+        {
+          timeout = 3600; # Time in seconds before activating idle
+          on-timeout = "hyprlock";
+        }
+        {
+          timeout = 4200; # Time in seconds before activating sleep
+          on-timeout = "hyprctl dispatch dpms off";
+          on-resume = "hyprctl dispatch dpms on";
+        }
+        {
+          timeout = 7200;
+          on-timeout = "systemctl suspend";
+        }
+      ];
+    };
+  };
 
   services.hyprpaper = {
     enable = true;
@@ -513,45 +603,6 @@
       };
     };
   };
-
-  xdg.configFile."hypr/hyprlock.conf".text = ''
-    # Hyprlock configuration with high blur + vignette overlay
-
-    background {
-      blur = 20                        # strong blur effect
-      color = rgba(46,52,64,0.6)       # Nord dark tint
-      vignette = true                  # enable vignette shading
-      vignette_opacity = 0.25          # subtle dark edges
-      gradient = true                  # enable gradient overlay
-      gradient_angle = 45              # diagonal gradient
-      gradient_start = rgba(46,52,64,0.7) # Nord dark start
-      gradient_end   = rgba(76,86,106,0.5) # Nord gray end
-    }
-
-    clock {
-      format = %H:%M
-      font = JetBrainsMono Nerd Font
-      color = #ECEFF4
-      size = 64
-    }
-
-    input {
-      font = JetBrainsMono Nerd Font
-      color = #ECEFF4
-      inner_color = #2E3440
-      outline_color = #81A1C1
-      fail_color = #BF616A
-      size = 24
-    }
-
-    text {
-      message = "Enter password to fart"
-      font = JetBrainsMono Nerd Font
-      color = #A3BE8C
-      size = 20
-    }
-    '';
-
 
   home.stateVersion = "25.05"; # match your NixOS release
 }
