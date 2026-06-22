@@ -78,6 +78,13 @@
     displayManager.sddm.enable = true;
   };
 
+  environment.plasma6.excludePackages = with pkgs.kdePackages; [
+    kate
+    konsole
+    kwalletmanager
+    qrca
+  ];
+
   fonts = {
     fontDir.enable = true; # Enable font directory for custom fonts
     fontconfig.enable = true; # Enable fontconfig for managing fonts
