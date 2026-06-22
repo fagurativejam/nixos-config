@@ -1,19 +1,6 @@
 { config, lib, pkgs, ... }:
 
 {
-  system.stateVersion = "25.05"; # match your NixOS release
-
-  networking = {
-    hostName = "starkiller";
-    networkmanager.enable = true;
-
-    firewall = {
-      enable = true;
-      allowedTCPPorts = [ 25565 ]; # Allow Minecraft server port through firewall
-      #allowedUDPPorts = [ 25565 ]; # Uncomment if your Minecraft server uses UDP as well
-    };
-  };
-
   boot = {
     loader = {
       grub = {
@@ -32,9 +19,24 @@
     kernelPackages = pkgs.linuxPackages_latest; # Use latest Linux kernel for best hardware support
   };
 
-  security.pam.services.hyprlock = {}; # Allow hyprlock to lock the screen on suspend
+  hardware = {
+    graphics = {
+      enable = true; # Enable graphics drivers
+      enable32Bit = true; # Enable 32-bit graphics support for older games
+    };
+    bluetooth.enable = true;
+  };
 
-  time.timeZone = "America/Chicago"; # Set your local timezone
+  networking = {
+    hostName = "starkiller";
+    networkmanager.enable = true;
+
+    firewall = {
+      enable = true;
+      #allowedTCPPorts = [ 25565 ]; # Allow Minecraft server port through firewall
+      #allowedUDPPorts = [ 25565 ]; # Uncomment if your Minecraft server uses UDP as well
+    };
+  };
 
   users.users.figs = {
     isNormalUser = true;
@@ -43,41 +45,7 @@
     extraGroups = [ "networkmanager" "wheel" "video" "audio" ]; # Add user to necessary groups
   };
 
-  hardware.graphics = {
-    enable = true; # Enable graphics drivers
-    enable32Bit = true; # Enable 32-bit graphics support for older games
-  };
-
-  hardware.bluetooth = {
-    enable = true;
-    powerOnBoot = true;
-    settings = {
-      General = {
-        # Shows battery charge of connected devices on supported
-        # Bluetooth adapters. Defaults to 'false'.
-        Experimental = true;
-        # When enabled other devices can connect faster to us, however
-        # the tradeoff is increased power consumption. Defaults to
-        # 'false'.
-        FastConnectable = true;
-      };
-      Policy = {
-        # Enable all controllers when they are found. This includes
-        # adapters present on start as well as adapters that are plugged
-        # in later on. Defaults to 'true'.
-        AutoEnable = true;
-      };
-    };
-  };
-
-  services.pipewire = {
-    enable = true; # Use PipeWire for audio
-    alsa.enable = true; # Enable ALSA support
-    alsa.support32Bit = true; # Enable 32-bit ALSA support for older games
-    pulse.enable = true; # Enable PulseAudio compatibility layer
-  };
-
-  services.pulseaudio.enable = false; # Disable PulseAudio since we're using PipeWire
+  time.timeZone = "America/Chicago"; # Set your local timezone
 
   xdg.portal = {
     enable = true; # Enable XDG portals for sandboxed applications
@@ -89,33 +57,26 @@
 
   programs = {
     steam.enable = true; # Enable Steam for gaming
-    hyprland.enable = true; # Enable Hyprland Wayland compositor
     zsh.enable = true; # Enable Zsh shell
-  };
-
-  services.greetd = {
-    enable = true; # Enable greetd display manager
-    settings = {
-
-      default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --time --asterisks --remember --cmd start-hyprland"; # Command to start Hyprland session with tuigreet
-        user = "greeter"; # Use a dedicated greeter user for the login screen
-      };
-
-      tty_session = {
-        command = "${pkgs.bash}/bin/bash"; # Command for a fallback TTY session (useful for troubleshooting
-        user = "root"; # Run TTY session as root for full system access
-      };
-    };
   };
 
   services = {
     udev.enable = true; # Enable udev for device management
     udisks2.enable = true; # Enable udisks2 for automounting disks
     openssh.enable = true; # Enable OpenSSH server for remote access
+    pipewire = {
+      enable = true; # Use PipeWire for audio
+      alsa.enable = true; # Enable ALSA support
+      alsa.support32Bit = true; # Enable 32-bit ALSA support for older games
+      pulse.enable = true; # Enable PulseAudio compatibility layer
+    };
+    pulseaudio.enable = false; # Disable PulseAudio since we're using PipeWire
   };
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ]; # Enable experimental features for Nix
+  services = {
+    desktopManager.plasma6.enable = true;
+    displayManager.sddm.enable = true;
+  };
 
   fonts = {
     fontDir.enable = true; # Enable font directory for custom fonts
@@ -130,6 +91,9 @@
 
   environment.systemPackages = with pkgs; [
     home-manager # Include Home Manager for user configuration management
-    tuigreet # Include tuigreet greeter for a customizable login screen
   ];
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ]; # Enable experimental features for Nix
+
+  system.stateVersion = "25.05"; # match your NixOS release
 }
