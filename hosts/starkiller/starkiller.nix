@@ -7,7 +7,7 @@
     ./sysmodules/kde.nix
   ];
 
-  my.hyprland.enable = false;
+  my.hyprland.enable = true;
   my.kde.enable = true;
 
   boot = {

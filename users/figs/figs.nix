@@ -9,7 +9,7 @@
     ./modules/hypr-figs.nix
   ];
 
-  my.hyprland.enable = false;
+  my.hyprland.enable = true;
 
   programs = {
     hyfetch.enable = true;
