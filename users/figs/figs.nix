@@ -4,8 +4,11 @@
   home.username = "figs";
   home.homeDirectory = "/home/figs";
 
+  imports = [
+    ./modules/vscode.nix
+  ];
+
   programs = {
-    vscode.enable = true;
     hyfetch.enable = true;
     fastfetch.enable = true;
   };
@@ -107,7 +110,6 @@
       user.email = "fagurativejam@proton.me";
     };
   };
-
 
   home.packages = with pkgs; [
     #terminal utils
