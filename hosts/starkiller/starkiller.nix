@@ -1,6 +1,15 @@
 { config, lib, pkgs, ... }:
 
 {
+
+  imports = [
+    ./sysmodules/hypr-starkiller.nix
+    ./sysmodules/kde.nix
+  ];
+
+  my.hyprland.enable = false;
+  my.kde.enable = true;
+
   boot = {
     loader = {
       grub = {
@@ -72,18 +81,6 @@
     };
     pulseaudio.enable = false; # Disable PulseAudio since we're using PipeWire
   };
-
-  services = {
-    desktopManager.plasma6.enable = true;
-    displayManager.sddm.enable = true;
-  };
-
-  environment.plasma6.excludePackages = with pkgs.kdePackages; [
-    kate
-    konsole
-    kwalletmanager
-    qrca
-  ];
 
   fonts = {
     fontDir.enable = true; # Enable font directory for custom fonts

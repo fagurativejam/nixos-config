@@ -6,7 +6,10 @@
 
   imports = [
     ./modules/vscode.nix
+    ./modules/hypr-figs.nix
   ];
+
+  my.hyprland.enable = false;
 
   programs = {
     hyfetch.enable = true;
