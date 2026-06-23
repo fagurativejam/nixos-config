@@ -13,6 +13,9 @@
         #python extensions
           ms-python.python
           ms-toolsai.jupyter
+        #rust extensions
+          rust-lang.rust-analyzer
+          tamasfe.even-better-toml
       ];
 
       userSettings = {
@@ -25,9 +28,12 @@
           "python.defaultInterpreterPath" = "${pkgs.python3}/bin/python";
           "python.linting.enabled" = true;
           "python.formatting.provider" = "black";
-          "formatOnSave" = false;
+
+        #Rust
+          "rust-analyzer.server.path" = "${pkgs.rust-analyzer}/bin/rust-analyzer";
 
         #General
+          "formatOnSave" = false;
           "editor.formatOnSave" = false;
           "editor.tabSize" = 2;
           "files.autoSave" = "afterDelay";
@@ -46,5 +52,6 @@
     python3
     black
     python3Packages.pip
+    rust-analyzer
   ];
 }
