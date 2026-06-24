@@ -228,9 +228,17 @@
         settings = {
           open_mapping = "[[<c-\\>]]";
           direction = "float";
+          highlights = {
+            NormalFloat = {
+              link = "NormalFloat";
+            };
+            FloatBorder = {
+              link = "FloatBorder";
+            };
+          };
           float_opts = {
             border = "rounded";
-            winblend = 10;
+            winblend = 0;
           };
         };
       };
