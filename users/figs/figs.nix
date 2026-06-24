@@ -7,6 +7,7 @@
   imports = [
     ./modules/vscode.nix
     ./modules/hypr-figs.nix
+    ./modules/nixvim.nix
   ];
 
   my.hyprland.enable = true;
