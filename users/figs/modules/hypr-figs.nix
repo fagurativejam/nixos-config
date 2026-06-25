@@ -15,7 +15,6 @@
         monitor = [ "*,preferred,auto,auto" ];
         exec-once = [
           "waybar"
-          "hyprpaper"
           "mako"
         ];
         
@@ -28,7 +27,7 @@
           gaps_in = 2.5;
           gaps_out = 7;
           border_size = 2;
-          "col.active_border" = "rgba(33ccffee)";
+          "col.active_border" = "rgba(e63946ee) rgba(1e1e2eee) 45deg";
           "col.inactive_border" = "rgba(595959aa)";
         };
 
@@ -40,8 +39,29 @@
           dim_strength = 0.1;
         };
 
+        shadow = {
+          enabled = true;
+          range = 12;
+          render_power = 3;
+          color = "rgba(1e1e2e55)";
+        };
+
+        blur = {
+            enabled = true;
+            size = 6;
+            passes = 3;
+            new_optimizations = true;
+        };
+
         animations = {
           enabled = true;
+          animation = [
+            "windows, 1, 5, myBezier"
+            "windowsOut, 1, 5, default, popin 80%"
+            "border, 1, 8, default"
+            "fade, 1, 5, default"
+            "workspaces, 1, 4, default, slide"
+          ];
         };
 
         misc = {
@@ -219,7 +239,6 @@
             format = "{player_icon} {artist} - {title}";
             format-paused = " {player_icon} {artist} - {title}";
             format-stopped = " Stopped";
-            format-disconnected = " No Player";
           };
           cpu = { format = " {usage}%"; };
           memory = { format = " {used}G / {total}G"; };
@@ -248,125 +267,58 @@
         };
       };
 
-      style = "
+      style = ''
         window#waybar {
           background: transparent;
           border: none;
         }
 
-        .module {
+        /* Structural Parent Containers */
+        #workspaces, .modules-center, .modules-right {
+          background: rgba(76, 86, 106, 0.8);
+          border: 2px solid rgba(126, 135, 153, 0.9);
           border-radius: 8px;
+          margin: 2px 4px;
+          padding: 2px 6px;
+        }
+        .modules-center, .modules-right { padding: 0; }
+
+        /* Workspace Interaction Properties */
+        #workspaces button {
+          background: transparent;
+          border: none;
           padding: 1px 4px;
-          margin: 1px 3px;
-          min-width: 16px;
-          min-height: 16px;
+          color: rgba(236, 239, 244, 0.6);
+          transition: all 0.2s ease-in-out;
+        }
+        #workspaces button:hover {
+          color: rgba(236, 239, 244, 1.0);
+          background: rgba(129, 161, 193, 0.3);
+          border-radius: 6px;
+        }
+        #workspaces button.active {
+          background: rgba(129, 161, 193, 0.8);
+          color: rgba(236, 239, 244, 1.0);
+          box-shadow: inset 0 -2px #81a1c1;
         }
 
-        /* Left group (workspaces) */
-          #workspaces {
-            background: rgba(76, 86, 106, 0.8);
-            border: 2px solid rgba(126, 135, 153, 0.9);
-            border-radius: 8px;
-            margin: 2px 4px;
-            padding: 2px 6px;
-          }
+        /* Combined Global Module Geometry Rules */
+        #custom-notifications, #cpu, #memory, #temperature, #pulseaudio, #network, #clock, #mpris, #tray {
+          padding: 2px 6px;
+          margin: 2px 3px;
+          border: 2px solid rgba(46, 52, 64, 0.9);
+          border-radius: 6px;
+        }
 
-          #workspaces button {
-            background: transparent;
-            border: none;
-            padding: 1px 4px;
-            color: rgba(236, 239, 244, 0.6);
-            transition: color 0.2s ease-in-out,
-                        background 0.2s ease-in-out;
-          }
-
-          #workspaces button:hover {
-            color: rgba(236, 239, 244, 1.0);
-            background: rgba(129, 161, 193, 0.3);
-            border-radius: 6px;
-          }
-
-          #workspaces button.active {
-            background: rgba(129, 161, 193, 0.8);
-            color: rgba(236, 239, 244, 1.0);
-            box-shadow: inset 0 -2px #81a1c1;
-          }
-
-        /* Center group */
-          .modules-center {
-            background: rgba(76, 86, 106, 0.8);
-            border: 2px solid rgba(126, 135, 153, 0.9);
-            border-radius: 8px;
-            margin: 2px 4px;
-            padding: 0;
-          }
-
-        /* Right group */
-          .modules-right {
-            background: rgba(76, 86, 106, 0.8);
-            border: 2px solid rgba(126, 135, 153, 0.9);
-            border-radius: 8px;
-            margin: 2px 4px;
-            padding: 0;
-          }
-
-        /* Individual module accent colors */
-          #custom-notifications {
-            background: rgba(76, 86, 106, 0.8);
-            border: 2px solid rgba(46, 52, 64, 0.9);
-            border-radius: 6px;
-            padding: 2px 6px;
-            margin: 2px 3px;
-          }
-          #cpu {
-            background: rgba(191, 97, 106, 0.8);
-            padding: 2px 6px;
-            border: 2px solid rgba(46, 52, 64, 0.9);
-            border-radius: 6px;
-          }
-          #memory {
-            background: rgba(208, 135, 112, 0.8);
-            padding: 2px 6px;
-            border: 2px solid rgba(46, 52, 64, 0.9);
-            border-radius: 6px;
-          }
-          #temperature {
-            background: rgba(235, 203, 139, 0.8);
-            padding: 2px 6px;
-            border: 2px solid rgba(46, 52, 64, 0.9);
-            border-radius: 6px;
-          }
-          #pulseaudio {
-            background: rgba(163, 190, 140, 0.8);
-            padding: 2px 6px;
-            border: 2px solid rgba(46, 52, 64, 0.9);
-            border-radius: 6px;
-          }
-          #network {
-            background: rgba(129, 161, 193, 0.8);
-            padding: 2px 6px;
-            border: 2px solid rgba(46, 52, 64, 0.9);
-            border-radius: 6px;
-          }
-          #clock {
-            background: rgba(180, 142, 173, 0.8);
-            padding: 2px 6px;
-            border: 2px solid rgba(46, 52, 64, 0.9);
-            border-radius: 6px;
-          }
-          #mpris {
-            background: rgba(163, 190, 140, 0.8);
-            padding: 2px 6px;
-            border: 2px solid rgba(46, 52, 64, 0.9);
-            border-radius: 6px;
-          }
-          #tray {
-            background: rgba(76, 86, 106, 0.8);
-            padding: 2px 6px;
-            border: 2px solid rgba(46, 52, 64, 0.9);
-            border-radius: 6px;
-          }
-      ";
+        /* Nord Color Mappings */
+        #custom-notifications, #tray { background: rgba(76, 86, 106, 0.8); }
+        #cpu { background: rgba(191, 97, 106, 0.8); }
+        #memory { background: rgba(208, 135, 112, 0.8); }
+        #temperature { background: rgba(235, 203, 139, 0.8); }
+        #pulseaudio, #mpris { background: rgba(163, 190, 140, 0.8); }
+        #network { background: rgba(129, 161, 193, 0.8); }
+        #clock { background: rgba(180, 142, 173, 0.8); }
+      '';
     };
 
     programs.hyprlock = {
@@ -439,14 +391,6 @@
       };
     };
 
-    home.packages = with pkgs; [
-      #hypr ecosystem
-        hyprpaper #wallpaper daemon
-        hyprlock #lock screen
-        hypridle #idle management (sleep/lock)
-        mako #notification daemon
-    ];
-
     services.hypridle = {
       enable = true;
       settings = {
@@ -457,16 +401,16 @@
         };
         listener = [  
           {
-            timeout = 3600; # Time in seconds before activating idle
+            timeout = 1800; # Time in seconds before activating idle
             on-timeout = "hyprlock";
           }
           {
-            timeout = 4200; # Time in seconds before activating sleep
+            timeout = 2400; # Time in seconds before activating sleep
             on-timeout = "hyprctl dispatch dpms off";
             on-resume = "hyprctl dispatch dpms on";
           }
           {
-            timeout = 7200;
+            timeout = 3000;
             on-timeout = "systemctl suspend";
           }
         ];
@@ -485,5 +429,14 @@
         };
       };
     };
+
+    home.packages = with pkgs; [
+      #hypr ecosystem
+        hyprpaper #wallpaper daemon
+        hyprlock #lock screen
+        hypridle #idle management (sleep/lock)
+        mako #notification daemon
+    ];
   };
 }
+

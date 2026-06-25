@@ -7,7 +7,6 @@
   config = lib.mkIf config.my.kde.enable {
     services = {
       desktopManager.plasma6.enable = true;
-      displayManager.sddm.enable = true;
     };
 
     environment.plasma6.excludePackages = with pkgs.kdePackages; [

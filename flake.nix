@@ -14,10 +14,8 @@
     home-manager,
     ...
   } @ inputs: let
-    #Shared base config for all x86_64-linux outputs
     system = "x86_64-linux";
 
-    #Global nixpkgs config
     pkgs = import nixpkgs {
       inherit system;
       config.allowUnfree = true; #Allow unfree packages (for firmware, etc)
@@ -32,6 +30,7 @@
 
       modules = [
         #Hardware + host config
+        { nixpkgs.config.allowUnfree = true; }
         ./hosts/starkiller/starkiller.nix
         ./hosts/starkiller/starkiller-hardware.nix
 
@@ -44,8 +43,6 @@
             extraSpecialArgs = {inherit inputs self;}; #Pass flake to HM too
             users.figs = import ./users/figs/figs.nix;
           };
-
-          nixpkgs.config.allowUnfree = true;
         }
       ];
     };
@@ -60,6 +57,7 @@
 
       modules = [
         ./users/figs/figs.nix
+        { nixpkgs.config.allowUnfree = true; }
       ];
     };
 

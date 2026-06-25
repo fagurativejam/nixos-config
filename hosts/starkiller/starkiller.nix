@@ -59,9 +59,9 @@
   xdg.portal = {
     enable = true; # Enable XDG portals for sandboxed applications
     extraPortals = with pkgs; [
-      xdg-desktop-portal-wlr # Portal backend for Wayland compositors
       xdg-desktop-portal-gtk # Portal backend for GTK applications
     ];
+    config.common.default = "*";
   };
 
   programs = {
@@ -81,11 +81,18 @@
     };
     pulseaudio.enable = false; # Disable PulseAudio since we're using PipeWire
   };
+  
+  services.displayManager.sddm = {
+    enable = true;
+    wayland.enable = true; # Starts SDDM in a Wayland environment
+    
+    # Matches the exact naming signature produced by the override below
+    theme = "catppuccin-mocha-mauve";
+    package = lib.mkForce pkgs.kdePackages.sddm; # Uses the newer Qt6 wrapper
+  };
 
   fonts = {
-    fontDir.enable = true; # Enable font directory for custom fonts
     fontconfig.enable = true; # Enable fontconfig for managing fonts
-    
     packages = with pkgs; [
       nerd-fonts.fira-code # Fira Code Nerd Font for programming
       nerd-fonts.jetbrains-mono # JetBrains Mono Nerd Font for programming
@@ -95,6 +102,14 @@
 
   environment.systemPackages = with pkgs; [
     home-manager # Include Home Manager for user configuration management
+    (pkgs.catppuccin-sddm.override {
+      flavor = "mocha";
+      accent = "mauve";
+      font = "Noto Sans";
+      fontSize = "11";
+      loginBackground = true;
+      background = "${./wallpapers/wallpaper-nixos.jpg}";
+    })
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ]; # Enable experimental features for Nix

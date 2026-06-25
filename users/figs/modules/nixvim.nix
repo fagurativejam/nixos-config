@@ -298,9 +298,13 @@
       { mode = "n"; key = "gd"; action = "<cmd>lua vim.lsp.buf.definition()<cr>"; }
       { mode = "n"; key = "K"; action = "<cmd>lua vim.lsp.buf.hover()<cr>"; }
       { mode = "n"; key = "<leader>e"; action = "<cmd>Neotree toggle<cr>"; options ={ silent = true; }; }
+      { mode = "n"; key = "<leader>x"; action = "<cmd>Bdelete<cr>"; options ={ silent = true; }; }
       { mode = "n"; key = "<Tab>"; action = "<cmd>BufferLineCycleNext<CR>"; options ={ silent = true; }; }
       { mode = "n"; key = "<S-Tab>"; action = "<cmd>BufferLineCyclePrev<CR>"; options ={ silent = true; }; }
       { mode = "n"; key = "<leader>x"; action = "<cmd>bdelete<CR>"; options ={ silent = true; }; }
+    ];
+    extraPlugins = with pkgs.vimPlugins; [
+      bufdelete-nvim
     ];
   };
   home.packages = with pkgs; [
@@ -314,4 +318,5 @@
     black
     rustfmt
   ];
+
 }

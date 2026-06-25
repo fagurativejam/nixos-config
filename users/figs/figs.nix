@@ -1,8 +1,11 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 {
-  home.username = "figs";
-  home.homeDirectory = "/home/figs";
+  home = {
+    username = "figs";
+    homeDirectory = "/home/figs";
+    stateVersion = "25.05"; # match your NixOS release
+  };
 
   imports = [
     ./modules/vscode.nix
@@ -15,6 +18,7 @@
   programs = {
     hyfetch.enable = true;
     fastfetch.enable = true;
+    home-manager.enable = true;
   };
 
   programs.wezterm = {
@@ -93,17 +97,14 @@
       theme = "agnoster" ;
       plugins = [ "git" ];
     };
-    initExtra = ''
-    '';
   };
-
   programs.bash = {
     enable = true;
     shellAliases = {
-      hm = "nix run .#home-manager --";
-      hmrbld = "nix run .#home-manager -- switch --flake .#figs";
-      rebuild = "sudo nixos-rebuild switch --flake .#starkiller";
-      update = "nix flake update";
+      hmrbld  = "home-manager switch --flake .#figs";
+      hm      = "home-manager";
+      rbld = "sudo nixos-rebuild switch --flake .#starkiller";
+      update  = "nix flake update";
     };
   };
 
@@ -133,6 +134,4 @@
       firefox
       blender
   ];
-
-  home.stateVersion = "25.05"; # match your NixOS release
 }
