@@ -336,8 +336,8 @@ in
 
         /* Structural Parent Containers using centralized tokens */
         #workspaces, .modules-right {
-          background: rgba(${palette.nord1}, 0.8);
-          border: 2px solid rgba(${palette.nord3}, 0.9);
+          background: rgba(${palette.css.nord1}, 0.8);
+          border: 2px solid rgba(${palette.css.nord3}, 0.9);
           border-radius: 8px;
           margin: 2px 4px;
           padding: 2px 6px;
@@ -349,16 +349,16 @@ in
           background: transparent;
           border: none;
           padding: 1px 4px;
-          color: rgba(${palette.nord4}, 0.6);
+          color: rgba(${palette.css.nord4}, 0.6);
           transition: all 0.2s ease-in-out;
         }
         #workspaces button:hover {
           color: ${palette.css.nord4};
-          background: rgba(${palette.nord9}, 0.3);
+          background: rgba(${palette.css.nord9}, 0.3);
           border-radius: 6px;
         }
         #workspaces button.active {
-          background: rgba(${palette.nord9}, 0.8);
+          background: rgba(${palette.css.nord9}, 0.8);
           color: ${palette.css.nord4};
           box-shadow: inset 0 -2px ${palette.css.nord9};
         }
@@ -367,20 +367,20 @@ in
         #custom-power, #custom-notification, #cpu, #memory, #temperature, #pulseaudio, #bluetooth, #network, #clock, #mpris, #tray {
           padding: 2px 6px;
           margin: 2px 3px;
-          border: 2px solid rgba(${palette.nord0}, 0.9);
+          border: 2px solid rgba(${palette.css.nord0}, 0.9);
           border-radius: 6px;
         }
 
         /* Standardized Heritage Palette Target Injection mapping */
-        #custom-power { background: rgba(${palette.guardsRed}, 0.8); }
-        #custom-notification, #tray { background: rgba(${palette.nord1}, 0.8); }
-        #cpu { background: rgba(${palette.nord11}, 0.8); }
-        #memory { background: rgba(${palette.nord12}, 0.8); }
-        #temperature { background: rgba(${palette.nord13}, 0.8); }
-        #pulseaudio, #mpris { background: rgba(${palette.nord14}, 0.8); }
-        #bluetooth { background: rgba(${palette.nord7}, 0.8)}
-        #network { background: rgba(${palette.nord9}, 0.8); }
-        #clock { background: rgba(${palette.nord15}, 0.8); }
+        #custom-power { background: rgba(${palette.css.guardsRed}, 0.8); }
+        #custom-notification, #tray { background: rgba(${palette.css.nord1}, 0.8); }
+        #cpu { background: rgba(${palette.css.nord11}, 0.8); }
+        #memory { background: rgba(${palette.css.nord12}, 0.8); }
+        #temperature { background: rgba(${palette.css.nord13}, 0.8); }
+        #pulseaudio, #mpris { background: rgba(${palette.css.nord14}, 0.8); }
+        #bluetooth { background: rgba(${palette.css.nord7}, 0.8)}
+        #network { background: rgba(${palette.css.nord9}, 0.8); }
+        #clock { background: rgba(${palette.css.nord15}, 0.8); }
       '';
     };
 
@@ -491,7 +491,7 @@ in
       ];
       style = ''
         window {
-          background-color: rgba(${palette.nord0}, 0.85);
+          background-color: rgba(${palette.css.nord0}, 0.85);
         }
 
         button {
@@ -499,8 +499,8 @@ in
           font-size: 20px;
           font-weight: bold;
           color: ${palette.css.nord4};
-          background-color: rgba(${palette.bgMain}, 0.8);
-          border: 2px solid rgba(${palette.nord1}, 0.5);
+          background-color: rgba(${palette.css.bgMain}, 0.8);
+          border: 2px solid rgba(${palette.css.nord1}, 0.5);
           border-radius: 12px;
           margin: 15px;
           transition: all 0.2s ease-in-out;

@@ -1,3 +1,4 @@
+# /home/figs/Bullshit/users/figs/modules/palette.nix
 let
   # --- Core Design Tokens (Raw Hex Strings) ---
   colors = {
@@ -31,22 +32,31 @@ let
     nord14        = "a3be8c"; # Aurora Green (Audio)
     nord15        = "b48ead"; # Aurora Purple (Clock)
   };
-  # Explicitly bind the colors map so files can still access raw values if needed
-  raw = colors;
-
+in
+{
+  # 1. Centralized Typography Architecture
   font = {
     family  = "JetBrains Mono Nerd Font";
     size    = "12";
     gtkName = "JetBrains Mono Nerd Font 12";
   };
 
-in
-colors // {
-  # --- Auto-Formatting Helper Engines ---
-  
-  # Appends '#' prefix for standard CSS strings (Waybar, Wofi, SwayNC, ReGreet CSS)
+  # 2. Raw Hex Access (Fallback aligned with top-level block binding name)
+  raw = colors;
+
+  # 3. Standard Color Properties (Flat root strings for backwards compatibility)
+  bgMain       = colors.bgMain;
+  bgCrust      = colors.bgCrust;
+  surface      = colors.surface;
+  surfaceMuted = colors.surfaceMuted;
+  overlay      = colors.overlay;
+  textMain     = colors.textMain;
+  textMuted    = colors.textMuted;
+  guardsRed    = colors.guardsRed;
+
+  # 4. CSS Target Formatting Engine (Prefixes everything with '#')
   css = builtins.mapAttrs (name: value: "#${value}") colors;
 
-  # Formats into the "rgba(HEXff)" string requirement for Hyprland & Hyprlock configurations
+  # 5. Hyprland/Hyprlock Specific Engine (Formats into 'rgba(HEXff)')
   hypr = builtins.mapAttrs (name: value: "rgba(${value}ff)") colors;
 }

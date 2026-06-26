@@ -40,6 +40,7 @@ in
         local title = tab.active_pane.title
         if tab.is_active then
           return {
+            -- Using palette.css strings safely within quotes inside Lua table attributes
             {Background={Color="${palette.css.bgMain}"}},
             {Foreground={Color="${palette.css.textMain}"}},
             {Text=" " .. title .. " "},
@@ -50,10 +51,10 @@ in
 
       return {
         font = wezterm.font_with_fallback {
-          "JetBrains Mono Nerd Font",
+          "${palette.font.family}",
           "Fira Code",
         },
-        font_size = 12.0,
+        font_size = ${palette.font.size}.0,
         
         -- Custom direct-token layout configuration overriding hardcoded themes
         colors = {
