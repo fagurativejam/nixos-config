@@ -1,5 +1,10 @@
+# /users/figs/modules/hypr-figs.nix
 { config, lib, pkgs, ... }:
 
+let
+  # Bring down our unified central design tokens relative to this module
+  palette = import ./palette.nix;
+in
 {
   options.my.hyprland = {
     enable = lib.mkEnableOption "Enable User Hyprland Config";
@@ -15,9 +20,36 @@
         monitor = [ "*,preferred,auto,auto" ];
         exec-once = [
           "waybar"
-          "mako"
+          "swaync"
+          "nm-applet --no-indicator"
+          "blueman-applet"
+          "systemctl --user start hyprpolkitagent"
         ];
         
+        windowrule = [
+          {
+            name = "float-pavucontrol";
+            match.class = "org.pulseaudio.pavucontrol";
+            float = "on";
+            size = "900 450";
+            center = "on";
+          }
+          {
+            name = "float-nm-editor";
+            match.class = "nm-connection-editor";
+            float = "on";
+            size = "700 450";
+            center = "on";
+          }
+          {
+            name = "float-blueman";
+            match.class = ".blueman-manager-wrapped";
+            float = "on";
+            size = "700 450";
+            center = "on";
+          }
+        ];
+
         input = {
           kb_layout = "us";
           numlock_by_default = true;
@@ -27,8 +59,9 @@
           gaps_in = 2.5;
           gaps_out = 7;
           border_size = 2;
-          "col.active_border" = "rgba(e63946ee) rgba(1e1e2eee) 45deg";
-          "col.inactive_border" = "rgba(595959aa)";
+          # Unified active border utilizing true Porsche Guards Red gradient tracking
+          "col.active_border" = "${palette.hypr.guardsRed} ${palette.hypr.bgMain} 45deg";
+          "col.inactive_border" = "rgba(${palette.overlay}aa)";
         };
 
         decoration = {
@@ -37,24 +70,23 @@
           inactive_opacity = 0.9;
           dim_inactive = true;
           dim_strength = 0.1;
-        };
-
-        shadow = {
-          enabled = true;
-          range = 12;
-          render_power = 3;
-          color = "rgba(1e1e2e55)";
-        };
-
-        blur = {
+          shadow = {
+            enabled = true;
+            range = 12;
+            render_power = 3;
+            color = "rgba(${palette.bgMain}55)";
+          };
+          blur = {
             enabled = true;
             size = 6;
             passes = 3;
             new_optimizations = true;
+          };
         };
 
         animations = {
           enabled = true;
+          bezier = [ "myBezier, 0.05, 0.9, 0.1, 1.05" ];
           animation = [
             "windows, 1, 5, myBezier"
             "windowsOut, 1, 5, default, popin 80%"
@@ -70,75 +102,77 @@
 
         bind = [
           # Application Launchers
-            "SUPER, D, exec, wofi --show drun" 
-            "SUPER, RETURN, exec, wezterm" 
+          "SUPER, D, exec, wofi --show drun" 
+          "SUPER, RETURN, exec, wezterm" 
+          "SUPER, E, exec, thunar"
+          "SUPER, X, exec, wlogout -b 1"
           # General Keybindings
-            "SUPER, Q, killactive"
-            "SUPER, F, fullscreen"
-            "SUPER, ESC, exit"
-            "SUPER, SPACE, togglefloating"
-            "SUPER, R, exec, hyprctl reload"
+          "SUPER, Q, killactive"
+          "SUPER, F, fullscreen"
+          "SUPER, ESC, exit"
+          "SUPER, SPACE, togglefloating"
+          "SUPER, R, exec, hyprctl reload"
           # Playback
-            "SUPER, F7, exec, playerctl play-pause"
-            "SUPER, F8, exec, playerctl next"
-            "SUPER, F6, exec, playerctl previous"
-            "SUPER, F5, exec, playerctl stop"
+          "SUPER, F7, exec, playerctl play-pause"
+          "SUPER, F8, exec, playerctl next"
+          "SUPER, F6, exec, playerctl previous"
+          "SUPER, F5, exec, playerctl stop"
           # Audio Controls
-            "SUPER, F10, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-            "SUPER, F11, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-            "SUPER, F12, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+          "SUPER, F10, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+          "SUPER, F11, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+          "SUPER, F12, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
           # Workspace Switching
-            "SUPER, 1, workspace, 1"
-            "SUPER, 2, workspace, 2"
-            "SUPER, 3, workspace, 3"
-            "SUPER, 4, workspace, 4"
-            "SUPER, 5, workspace, 5"
-            "SUPER, 6, workspace, 6"
-            "SUPER, 7, workspace, 7"
-            "SUPER, 8, workspace, 8"
-            "SUPER, 9, workspace, 9"
-            "SUPER, 0, workspace, 10"
+          "SUPER, 1, workspace, 1"
+          "SUPER, 2, workspace, 2"
+          "SUPER, 3, workspace, 3"
+          "SUPER, 4, workspace, 4"
+          "SUPER, 5, workspace, 5"
+          "SUPER, 6, workspace, 6"
+          "SUPER, 7, workspace, 7"
+          "SUPER, 8, workspace, 8"
+          "SUPER, 9, workspace, 9"
+          "SUPER, 0, workspace, 10"
           # Move Active Window to Workspace
-            "SUPER|SHIFT, 1, movetoworkspace, 1"
-            "SUPER|SHIFT, 2, movetoworkspace, 2"
-            "SUPER|SHIFT, 3, movetoworkspace, 3"
-            "SUPER|SHIFT, 4, movetoworkspace, 4"
-            "SUPER|SHIFT, 5, movetoworkspace, 5"
-            "SUPER|SHIFT, 6, movetoworkspace, 6"
-            "SUPER|SHIFT, 7, movetoworkspace, 7"
-            "SUPER|SHIFT, 8, movetoworkspace, 8"
-            "SUPER|SHIFT, 9, movetoworkspace, 9"
-            "SUPER|SHIFT, 0, movetoworkspace, 10"
+          "SUPER|SHIFT, 1, movetoworkspace, 1"
+          "SUPER|SHIFT, 2, movetoworkspace, 2"
+          "SUPER|SHIFT, 3, movetoworkspace, 3"
+          "SUPER|SHIFT, 4, movetoworkspace, 4"
+          "SUPER|SHIFT, 5, movetoworkspace, 5"
+          "SUPER|SHIFT, 6, movetoworkspace, 6"
+          "SUPER|SHIFT, 7, movetoworkspace, 7"
+          "SUPER|SHIFT, 8, movetoworkspace, 8"
+          "SUPER|SHIFT, 9, movetoworkspace, 9"
+          "SUPER|SHIFT, 0, movetoworkspace, 10"
           # Cycle Workspaces
-            "SUPER, TAB, workspace, +1"
-            "SUPER|SHIFT, TAB, workspace, -1"
+          "SUPER, TAB, workspace, +1"
+          "SUPER|SHIFT, TAB, workspace, -1"
           # Move focus between windows
-            "SUPER, H, movefocus, l   # focus left"
-            "SUPER, L, movefocus, r   # focus right"
-            "SUPER, K, movefocus, u   # focus up"
-            "SUPER, J, movefocus, d   # focus down"
+          "SUPER, H, movefocus, l   # focus left"
+          "SUPER, L, movefocus, r   # focus right"
+          "SUPER, K, movefocus, u   # focus up"
+          "SUPER, J, movefocus, d   # focus down"
           # Move active window around
-            "SUPER|SHIFT, H, movewindow, l"
-            "SUPER|SHIFT, L, movewindow, r"
-            "SUPER|SHIFT, K, movewindow, u"
-            "SUPER|SHIFT, J, movewindow, d"
+          "SUPER|SHIFT, H, movewindow, l"
+          "SUPER|SHIFT, L, movewindow, r"
+          "SUPER|SHIFT, K, movewindow, u"
+          "SUPER|SHIFT, J, movewindow, d"
           # Swap active window with neighbor
-            "SUPER|CTRL, H, swapwindow, l"
-            "SUPER|CTRL, L, swapwindow, r"
-            "SUPER|CTRL, K, swapwindow, u"
-            "SUPER|CTRL, J, swapwindow, d"
+          "SUPER|CTRL, H, swapwindow, l"
+          "SUPER|CTRL, L, swapwindow, r"
+          "SUPER|CTRL, K, swapwindow, u"
+          "SUPER|CTRL, J, swapwindow, d"
           # Resize active window
-            "SUPER|ALT, H, resizeactive, -50 0"
-            "SUPER|ALT, L, resizeactive, 50 0"
-            "SUPER|ALT, K, resizeactive, 0 -50"
-            "SUPER|ALT, J, resizeactive, 0 50"
+          "SUPER|ALT, H, resizeactive, -50 0"
+          "SUPER|ALT, L, resizeactive, 50 0"
+          "SUPER|ALT, K, resizeactive, 0 -50"
+          "SUPER|ALT, J, resizeactive, 0 50"
           # Minimize-like behavior
-            "SUPER|SHIFT, M, movetoworkspace, special"
-            "SUPER, M, togglespecialworkspace"
+          "SUPER|SHIFT, M, movetoworkspace, special"
+          "SUPER, M, togglespecialworkspace"
           # Session Management
-            "SUPER|ALT, F1, exec, hyprlock"
-            "SUPER|ALT, F4, exec, systemctl reboot"
-            "SUPER|ALT, F5, exec, systemctl poweroff"
+          "SUPER|ALT, F1, exec, hyprlock"
+          "SUPER|ALT, F4, exec, systemctl reboot"
+          "SUPER|ALT, F5, exec, systemctl poweroff"
         ];
       };
     };
@@ -159,7 +193,7 @@
         }
 
         window {
-          background-color: rgba(30, 30, 46, 0.95); /* base */
+          background-color: rgba(${palette.bgMain}, 0.95);
           border-radius: 12px;
           padding: 10px;
         }
@@ -168,20 +202,20 @@
           margin: 8px;
           padding: 6px;
           border-radius: 8px;
-          background-color: rgba(49, 50, 68, 1.0); /* surface0 */
-          color: rgba(205, 214, 244, 1.0);         /* text */
+          background-color: ${palette.css.surface};
+          color: ${palette.css.textMain};
           min-width: 100%;
         }
 
         #entry {
           padding: 6px;
           border-radius: 6px;
-          color: rgba(205, 214, 244, 1.0);
+          color: ${palette.css.textMain};
         }
 
         #entry:selected {
-          background-color: rgba(137, 180, 250, 1.0); /* blue accent */
-          color: rgba(30, 30, 46, 1.0);
+          background-color: ${palette.css.guardsRed};
+          color: ${palette.css.bgCrust};
         }
 
         #text {
@@ -191,24 +225,24 @@
         }
 
         list {
-          background-color: rgba(137, 180, 250, 1.0); /* base */
+          background-color: ${palette.css.bgMain};
           padding: 6px;
         }
 
         list row {
-          background-color: rgba(69, 71, 90, 1.0);  /* surface1 */
-          color: rgba(205, 214, 244, 1.0);
-          border-radius: 0;                          /* remove rounding to avoid corners */
+          background-color: ${palette.css.surfaceMuted};
+          color: ${palette.css.textMain};
+          border-radius: 0;
           padding: 8px 10px;
           margin: 2px 0;
         }
 
         list row:hover {
-          background-color: rgba(88, 91, 112, 1.0); /* surface2 */
+          background-color: ${palette.css.overlay};
         }
 
         list row:selected {
-          border: 2px solid  rgba(88, 91, 112, 1.0);
+          border: 2px solid ${palette.css.overlay};
           border-radius: 4px;
         }
       '';
@@ -221,8 +255,7 @@
           layer = "top";
           position = "bottom";
           modules-left = [ "hyprland/workspaces" ];
-          modules-center = [ "tray" "mpris" ];
-          modules-right = [ "custom-notifications" "cpu" "memory" "temperature" "pulseaudio" "network" "clock" ];
+          modules-right = [ "custom/power" "custom/notification" "cpu" "memory" "temperature" "pulseaudio" "bluetooth" "network" "clock" ];
 
           "hyprland/workspaces" = {
             format = "{icon}";
@@ -241,7 +274,7 @@
             format-stopped = " Stopped";
           };
           cpu = { format = " {usage}%"; };
-          memory = { format = " {used}G / {total}G"; };
+          memory = { format = " {used}G"; };
           temperature = {
             format = " {temperatureC}°C";
             critical-threshold = 80;
@@ -251,19 +284,47 @@
             format-muted = " Muted";
             on-click = "pavucontrol";
           };
+          bluetooth = {
+            format = " {status}";
+            format-disabled = "󰂲";
+            format-connected = "󰂯 {num_connections}";
+            tooltip-format = "{device_alias}";
+            tooltip-format-connected = " {device_enumerate}";
+            tooltip-format-enumerate-connected = "{device_alias}";
+            on-click = "blueman-manager";
+          };
           network = {
-            format-wifi = "{essid}  ";
-            format-ethernet = "{ifname}  ";
-            format-disconnected = " Disconnected";
+            format-wifi = " ";
+            format-ethernet = " ";
+            format-disconnected = "󱛅";
+            format-disabled = "󰯡";
+            on-click = "nm-connection-editor";
           };
-          tray = { };
-          "custom-notifications" = { 
-            format = " {}";
-            exec = "makoctl list | wc -l"; #show active number of notificaitons
-            interval = 5;
-            on-click = "makoctl dismiss --all"; #clear notifications
+          "custom/notification" = { 
+            tooltip = false;
+            format = "{icon}";
+            format-icons = {
+              notification = "󰂚<span foreground='${palette.css.guardsRed}'><sup></sup></span>";
+              none = "󰂚";
+              dnd-notification = "󰂛<span foreground='${palette.css.guardsRed}'><sup></sup></span>";
+              dnd-none = "󰂛";
+              inhibited-notification = "󰂚<span foreground='${palette.css.guardsRed}'><sup></sup></span>";
+              inhibited-none = "󰂚";
+              dnd-inhibited-notification = "󰂛<span foreground='${palette.css.guardsRed}'><sup></sup></span>";
+              dnd-inhibited-none = "󰂛";
+            };
+            return-type = "json";
+            exec-if = "which swaync-client";
+            exec = "swaync-client -swb";
+            on-click = "sleep 0.1 && swaync-client -t -sw";
+            on-click-right = "sleep 0.1 && swaync-client -d -sw";
+            escape = true;
           };
-
+          "custom/power" = {
+            format = "󰐥";
+            tooltip = false;
+            on-click = "wlogout -b 1";
+          };
         };
       };
 
@@ -273,51 +334,53 @@
           border: none;
         }
 
-        /* Structural Parent Containers */
-        #workspaces, .modules-center, .modules-right {
-          background: rgba(76, 86, 106, 0.8);
-          border: 2px solid rgba(126, 135, 153, 0.9);
+        /* Structural Parent Containers using centralized tokens */
+        #workspaces, .modules-right {
+          background: rgba(${palette.nord1}, 0.8);
+          border: 2px solid rgba(${palette.nord3}, 0.9);
           border-radius: 8px;
           margin: 2px 4px;
           padding: 2px 6px;
         }
-        .modules-center, .modules-right { padding: 0; }
+        .modules-right { padding: 0; }
 
         /* Workspace Interaction Properties */
         #workspaces button {
           background: transparent;
           border: none;
           padding: 1px 4px;
-          color: rgba(236, 239, 244, 0.6);
+          color: rgba(${palette.nord4}, 0.6);
           transition: all 0.2s ease-in-out;
         }
         #workspaces button:hover {
-          color: rgba(236, 239, 244, 1.0);
-          background: rgba(129, 161, 193, 0.3);
+          color: ${palette.css.nord4};
+          background: rgba(${palette.nord9}, 0.3);
           border-radius: 6px;
         }
         #workspaces button.active {
-          background: rgba(129, 161, 193, 0.8);
-          color: rgba(236, 239, 244, 1.0);
-          box-shadow: inset 0 -2px #81a1c1;
+          background: rgba(${palette.nord9}, 0.8);
+          color: ${palette.css.nord4};
+          box-shadow: inset 0 -2px ${palette.css.nord9};
         }
 
         /* Combined Global Module Geometry Rules */
-        #custom-notifications, #cpu, #memory, #temperature, #pulseaudio, #network, #clock, #mpris, #tray {
+        #custom-power, #custom-notification, #cpu, #memory, #temperature, #pulseaudio, #bluetooth, #network, #clock, #mpris, #tray {
           padding: 2px 6px;
           margin: 2px 3px;
-          border: 2px solid rgba(46, 52, 64, 0.9);
+          border: 2px solid rgba(${palette.nord0}, 0.9);
           border-radius: 6px;
         }
 
-        /* Nord Color Mappings */
-        #custom-notifications, #tray { background: rgba(76, 86, 106, 0.8); }
-        #cpu { background: rgba(191, 97, 106, 0.8); }
-        #memory { background: rgba(208, 135, 112, 0.8); }
-        #temperature { background: rgba(235, 203, 139, 0.8); }
-        #pulseaudio, #mpris { background: rgba(163, 190, 140, 0.8); }
-        #network { background: rgba(129, 161, 193, 0.8); }
-        #clock { background: rgba(180, 142, 173, 0.8); }
+        /* Standardized Heritage Palette Target Injection mapping */
+        #custom-power { background: rgba(${palette.guardsRed}, 0.8); }
+        #custom-notification, #tray { background: rgba(${palette.nord1}, 0.8); }
+        #cpu { background: rgba(${palette.nord11}, 0.8); }
+        #memory { background: rgba(${palette.nord12}, 0.8); }
+        #temperature { background: rgba(${palette.nord13}, 0.8); }
+        #pulseaudio, #mpris { background: rgba(${palette.nord14}, 0.8); }
+        #bluetooth { background: rgba(${palette.nord7}, 0.8)}
+        #network { background: rgba(${palette.nord9}, 0.8); }
+        #clock { background: rgba(${palette.nord15}, 0.8); }
       '';
     };
 
@@ -349,11 +412,11 @@
             dots_size = 0.2;
             dots_spacing = 0.15;
             dots_center = true;
-            outer_color = "rgba(33ccffee)";
-            inner_color = "rgba(64646464)";
-            font_color = "rgba(ffffff)";
+            outer_color = "rgba(${palette.guardsRed}ee)";
+            inner_color = "rgba(${palette.surface}64)";
+            font_color = "rgba(${palette.textMain}ff)";
             fade_on_empty = false;
-            paceholder_text = "<i>Enter Password</i>";
+            placeholder_text = "<i>Enter Password</i>";
             position = "0, -120";
             halign = "center";
             valign = "center";
@@ -364,31 +427,100 @@
             monitor = "";
             text = "$TIME";
             font_size = 82;
+            color = "rgba(${palette.textMain}ff)";
             position = "0, 280";
             halign = "center";
             valign = "center";
             shadow_passes = 2;
           }
-
           {
             monitor = "";
             text = "cmd[update:1000] date +'%A, %B %d, %Y'";
             font_size = 22;
+            color = "rgba(${palette.textMain}ff)";
             position = "0, 200";
             halign = "center";
             valign = "center";
           }
-
           {
             monitor = "";
             text = "'Sup $USER";
             font_size = 18;
+            color = "rgba(${palette.guardsRed}ff)";
             position = "0, 150";
             halign = "center";
             valign = "center";
           }
         ];
       };
+    };
+
+    programs.wlogout = {
+      enable = true;
+      layout = [
+        {
+          label = "lock";
+          action = "hyprlock";
+          text = "󰌾 Lock: l";
+          keybind = "l";
+        }
+        {
+          label = "suspend";
+          action = "systemctl suspend";
+          text = "󰤄 Suspend: u";
+          keybind = "u";
+        }
+        {
+          label = "logout";
+          action = "hyprctl dispatch exit 0";
+          text = "󰍃 Logout: e";
+          keybind = "e";
+        }
+        {
+          label = "reboot";
+          action = "systemctl reboot";
+          text = "󰜉 Reboot: r";
+          keybind = "r";
+        }
+        {
+          label = "shutdown";
+          action = "systemctl poweroff";
+          text = "󰐥 Shutdown: s";
+          keybind = "s";
+        }
+      ];
+      style = ''
+        window {
+          background-color: rgba(${palette.nord0}, 0.85);
+        }
+
+        button {
+          font-family: "JetBrains Mono Nerd Font", sans-serif;
+          font-size: 20px;
+          font-weight: bold;
+          color: ${palette.css.nord4};
+          background-color: rgba(${palette.bgMain}, 0.8);
+          border: 2px solid rgba(${palette.nord1}, 0.5);
+          border-radius: 12px;
+          margin: 15px;
+          transition: all 0.2s ease-in-out;
+          background-repeat: no-repeat;
+          background-position: center;
+          background-image: none;
+        }
+
+        button:focus, button:hover {
+          background-color: rgba(${palette.guardsRed}, 0.4); 
+          border: 2px solid ${palette.css.nord8};
+          color: ${palette.css.nord8};
+        }
+
+        #shutdown:focus, #shutdown:hover {
+          background-color: rgba(${palette.guardsRed}, 0.2);
+          border: 2px solid ${palette.css.guardsRed};
+          color: ${palette.css.guardsRed};
+        }
+      '';
     };
 
     services.hypridle = {
@@ -401,11 +533,11 @@
         };
         listener = [  
           {
-            timeout = 1800; # Time in seconds before activating idle
+            timeout = 1800;
             on-timeout = "hyprlock";
           }
           {
-            timeout = 2400; # Time in seconds before activating sleep
+            timeout = 2400;
             on-timeout = "hyprctl dispatch dpms off";
             on-resume = "hyprctl dispatch dpms on";
           }
@@ -419,7 +551,6 @@
 
     services.hyprpaper = {
       enable = true;
-
       settings = {
         ipc = "on";
         splash = false;
@@ -430,13 +561,29 @@
       };
     };
 
+    services.swaync = {
+      enable = true;
+      settings = {
+        positionX = "right";
+        positionY = "bottom";
+        layer = "top";
+        control-center-margin-top = 0;
+        control-center-margin-bottom = 10;
+        control-center-margin-right = 10;
+        control-center-margin-left = 0;
+        text-icon = "";
+      };
+    };
+
     home.packages = with pkgs; [
-      #hypr ecosystem
-        hyprpaper #wallpaper daemon
-        hyprlock #lock screen
-        hypridle #idle management (sleep/lock)
-        mako #notification daemon
+      hyprpaper
+      hyprlock
+      hypridle
+      swaynotificationcenter
+      networkmanagerapplet
+      blueman
+      hyprpolkitagent
+      pavucontrol
     ];
   };
 }
-

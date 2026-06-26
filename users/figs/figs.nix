@@ -1,5 +1,10 @@
+# /users/figs/figs.nix
 { pkgs, inputs, ... }:
 
+let
+  # Bring in your central design tokens
+  palette = import ./modules/palette.nix;
+in
 {
   home = {
     username = "figs";
@@ -35,8 +40,8 @@
         local title = tab.active_pane.title
         if tab.is_active then
           return {
-            {Background={Color="#1e1e2e"}},
-            {Foreground={Color="#cdd6f4"}},
+            {Background={Color="${palette.css.bgMain}"}},
+            {Foreground={Color="${palette.css.textMain}"}},
             {Text=" " .. title .. " "},
           }
         end
@@ -49,7 +54,35 @@
           "Fira Code",
         },
         font_size = 12.0,
-        color_scheme = "Catppuccin Mocha", -- or "Dracula" , "Catppuccin Mocha" , "Tokyo Night"
+        
+        -- Custom direct-token layout configuration overriding hardcoded themes
+        colors = {
+          foreground = "${palette.css.textMain}",
+          background = "${palette.css.bgMain}",
+          cursor_bg  = "${palette.css.guardsRed}",
+          cursor_fg  = "${palette.css.bgCrust}",
+          
+          tab_bar = {
+            background = "${palette.css.bgCrust}",
+            inactive_tab = {
+              bg_color = "${palette.css.bgCrust}",
+              fg_color = "${palette.css.textMuted}",
+            },
+            inactive_tab_hover = {
+              bg_color = "${palette.css.surface}",
+              fg_color = "${palette.css.textMain}",
+            },
+            new_tab = {
+              bg_color = "${palette.css.bgCrust}",
+              fg_color = "${palette.css.textMuted}",
+            },
+            new_tab_hover = {
+              bg_color = "${palette.css.surface}",
+              fg_color = "${palette.css.guardsRed}",
+            },
+          },
+        },
+
         window_background_opacity = 0.85,
         window_padding = { left = 8, right = 8, top = 8, bottom = 8 },
         enable_tab_bar = true,
@@ -88,7 +121,7 @@
     shellAliases = {
       hmrbld  = "home-manager switch --flake .#figs";
       hm      = "home-manager";
-      rbld = "sudo nixos-rebuild switch --flake .#starkiller";
+      rbld    = "sudo nixos-rebuild switch --flake .#starkiller";
       update  = "nix flake update";
       garbage = "sudo nix-collect-garbage -d";
     };
@@ -103,7 +136,7 @@
     shellAliases = {
       hmrbld  = "home-manager switch --flake .#figs";
       hm      = "home-manager";
-      rbld = "sudo nixos-rebuild switch --flake .#starkiller";
+      rbld    = "sudo nixos-rebuild switch --flake .#starkiller";
       update  = "nix flake update";
     };
   };
@@ -115,6 +148,8 @@
       user.email = "fagurativejam@proton.me";
     };
   };
+
+  news.display = "silent";
 
   home.packages = with pkgs; [
     #terminal utils
@@ -133,5 +168,10 @@
     #duh
       firefox
       blender
+    # File Management Stack
+      thunar                  # The core file manager
+      thunar-archive-plugin   # Right-click "Extract Here" / "Compress"
+      thunar-volman           # Removable device management extensions
+      shared-mime-info             # Correctly identifies file types
   ];
 }

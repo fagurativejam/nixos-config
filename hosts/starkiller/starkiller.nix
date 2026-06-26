@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, inputs, lib, pkgs, ... }:
 
 {
 
@@ -8,7 +8,7 @@
   ];
 
   my.hyprland.enable = true;
-  my.kde.enable = true;
+  my.kde.enable = false;
 
   boot = {
     loader = {
@@ -70,7 +70,8 @@
   };
 
   services = {
-    udev.enable = true; # Enable udev for device management
+    gvfs.enable = true; # Enable GVfs for trash, network shares, and removable device mounting
+    tumbler.enable = true; # Enable Thumbnailing service
     udisks2.enable = true; # Enable udisks2 for automounting disks
     openssh.enable = true; # Enable OpenSSH server for remote access
     pipewire = {
@@ -80,15 +81,6 @@
       pulse.enable = true; # Enable PulseAudio compatibility layer
     };
     pulseaudio.enable = false; # Disable PulseAudio since we're using PipeWire
-  };
-  
-  services.displayManager.sddm = {
-    enable = true;
-    wayland.enable = true; # Starts SDDM in a Wayland environment
-    
-    # Matches the exact naming signature produced by the override below
-    theme = "catppuccin-mocha-mauve";
-    package = lib.mkForce pkgs.kdePackages.sddm; # Uses the newer Qt6 wrapper
   };
 
   fonts = {
@@ -102,14 +94,20 @@
 
   environment.systemPackages = with pkgs; [
     home-manager # Include Home Manager for user configuration management
-    (pkgs.catppuccin-sddm.override {
-      flavor = "mocha";
-      accent = "mauve";
-      font = "Noto Sans";
-      fontSize = "11";
-      loginBackground = true;
-      background = "${./wallpapers/wallpaper-nixos.jpg}";
+  ];
+
+  nix.package = inputs.nix-monitored.packages.${pkgs.stdenv.hostPlatform.system}.default;
+
+  nixpkgs.overlays = [
+    (self: super: {
+      nixos-rebuild = super.nixos-rebuild.override {
+        nix = inputs.nix-monitored.packages.${super.stdenv.hostPlatform.system}.default;
+      };
+      nix-direnv = super.nix-direnv.override {
+        nix = inputs.nix-monitored.packages.${super.stdenv.hostPlatform.system}.default;
+      };
     })
+    
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ]; # Enable experimental features for Nix
