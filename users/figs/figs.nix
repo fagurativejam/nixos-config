@@ -1,10 +1,6 @@
 # /users/figs/figs.nix
 { pkgs, inputs, ... }:
 
-let
-  # Bring in your central design tokens
-  palette = import ./modules/palette.nix;
-in
 {
   home = {
     username = "figs";
@@ -41,8 +37,8 @@ in
         if tab.is_active then
           return {
             -- Using palette.css strings safely within quotes inside Lua table attributes
-            {Background={Color="${palette.css.bgMain}"}},
-            {Foreground={Color="${palette.css.textMain}"}},
+            {Background={Color="#1e1e2e"}},
+            {Foreground={Color="#cdd6f4"}},
             {Text=" " .. title .. " "},
           }
         end
@@ -51,39 +47,11 @@ in
 
       return {
         font = wezterm.font_with_fallback {
-          "${palette.font.family}",
+          "JetBrains Mono Nerd Font",
           "Fira Code",
         },
-        font_size = ${palette.font.size}.0,
-        
-        -- Custom direct-token layout configuration overriding hardcoded themes
-        colors = {
-          foreground = "${palette.css.textMain}",
-          background = "${palette.css.bgMain}",
-          cursor_bg  = "${palette.css.guardsRed}",
-          cursor_fg  = "${palette.css.bgCrust}",
-          
-          tab_bar = {
-            background = "${palette.css.bgCrust}",
-            inactive_tab = {
-              bg_color = "${palette.css.bgCrust}",
-              fg_color = "${palette.css.textMuted}",
-            },
-            inactive_tab_hover = {
-              bg_color = "${palette.css.surface}",
-              fg_color = "${palette.css.textMain}",
-            },
-            new_tab = {
-              bg_color = "${palette.css.bgCrust}",
-              fg_color = "${palette.css.textMuted}",
-            },
-            new_tab_hover = {
-              bg_color = "${palette.css.surface}",
-              fg_color = "${palette.css.guardsRed}",
-            },
-          },
-        },
-
+        font_size = 12.0,
+        color_scheme = "Catppuccin Mocha", -- or "Dracula" , "Catppuccin Mocha" , "Tokyo Night"
         window_background_opacity = 0.85,
         window_padding = { left = 8, right = 8, top = 8, bottom = 8 },
         enable_tab_bar = true,

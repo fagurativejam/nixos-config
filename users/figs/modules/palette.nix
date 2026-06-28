@@ -21,11 +21,15 @@ let
     # Nord Heritage Suite (Retained for your multi-colored Waybar layout blocks)
     nord0         = "2e3440"; # Polar Night Dark
     nord1         = "4c566a"; # Polar Night Medium
+    nord2         = "ff6666"; # Brightened variant of guardsRed
     nord3         = "7e8799"; # Polar Night Light Framework
     nord4         = "eceff4"; # Snow Storm White
+    nord5         = "ff9900"; # High-vis orange/gold for alerts
+    nord6         = "33ff66"; # High-vis neon green
     nord7         = "8fbcbb"; # Frost Cyan (Bluetooth)
     nord8         = "88c0d0"; # Frost Ice Blue
     nord9         = "81a1c1"; # Frost Steel Blue (Network)
+    nord10        = "ff00ff"; # High-vis magenta
     nord11        = "bf616a"; # Aurora Red (CPU)
     nord12        = "d08770"; # Aurora Orange (Memory)
     nord13        = "ebcb8b"; # Aurora Yellow (Temperature)

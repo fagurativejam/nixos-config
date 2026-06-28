@@ -1,10 +1,5 @@
-# /users/figs/modules/hypr-figs.nix
 { config, lib, pkgs, ... }:
 
-let
-  # Bring down our unified central design tokens relative to this module
-  palette = import ./palette.nix;
-in
 {
   options.my.hyprland = {
     enable = lib.mkEnableOption "Enable User Hyprland Config";
@@ -59,9 +54,8 @@ in
           gaps_in = 2.5;
           gaps_out = 7;
           border_size = 2;
-          # Unified active border utilizing true Porsche Guards Red gradient tracking
-          "col.active_border" = "${palette.hypr.guardsRed} ${palette.hypr.bgMain} 45deg";
-          "col.inactive_border" = "rgba(${palette.overlay}aa)";
+          "col.active_border" = "rgba(33ccfeed)";
+          "col.inactive_border" = "rgba(595959aa)";
         };
 
         decoration = {
@@ -74,7 +68,7 @@ in
             enabled = true;
             range = 12;
             render_power = 3;
-            color = "rgba(${palette.bgMain}55)";
+            color = "rgba(30, 30, 46, 0.33)";
           };
           blur = {
             enabled = true;
@@ -102,77 +96,77 @@ in
 
         bind = [
           # Application Launchers
-          "SUPER, D, exec, wofi --show drun" 
-          "SUPER, RETURN, exec, wezterm" 
-          "SUPER, E, exec, thunar"
-          "SUPER, X, exec, wlogout -b 1"
+            "SUPER, D, exec, wofi --show drun" 
+            "SUPER, RETURN, exec, wezterm" 
+            "SUPER, E, exec, thunar"
+            "SUPER, X, exec, wlogout -b 1"
           # General Keybindings
-          "SUPER, Q, killactive"
-          "SUPER, F, fullscreen"
-          "SUPER, ESC, exit"
-          "SUPER, SPACE, togglefloating"
-          "SUPER, R, exec, hyprctl reload"
+            "SUPER, Q, killactive"
+            "SUPER, F, fullscreen"
+            "SUPER, ESC, exit"
+            "SUPER, SPACE, togglefloating"
+            "SUPER, R, exec, hyprctl reload"
           # Playback
-          "SUPER, F7, exec, playerctl play-pause"
-          "SUPER, F8, exec, playerctl next"
-          "SUPER, F6, exec, playerctl previous"
-          "SUPER, F5, exec, playerctl stop"
+            "SUPER, F7, exec, playerctl play-pause"
+            "SUPER, F8, exec, playerctl next"
+            "SUPER, F6, exec, playerctl previous"
+            "SUPER, F5, exec, playerctl stop"
           # Audio Controls
-          "SUPER, F10, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-          "SUPER, F11, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-          "SUPER, F12, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+            "SUPER, F10, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+            "SUPER, F11, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+            "SUPER, F12, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
           # Workspace Switching
-          "SUPER, 1, workspace, 1"
-          "SUPER, 2, workspace, 2"
-          "SUPER, 3, workspace, 3"
-          "SUPER, 4, workspace, 4"
-          "SUPER, 5, workspace, 5"
-          "SUPER, 6, workspace, 6"
-          "SUPER, 7, workspace, 7"
-          "SUPER, 8, workspace, 8"
-          "SUPER, 9, workspace, 9"
-          "SUPER, 0, workspace, 10"
+            "SUPER, 1, workspace, 1"
+            "SUPER, 2, workspace, 2"
+            "SUPER, 3, workspace, 3"
+            "SUPER, 4, workspace, 4"
+            "SUPER, 5, workspace, 5"
+            "SUPER, 6, workspace, 6"
+            "SUPER, 7, workspace, 7"
+            "SUPER, 8, workspace, 8"
+            "SUPER, 9, workspace, 9"
+            "SUPER, 0, workspace, 10"
           # Move Active Window to Workspace
-          "SUPER|SHIFT, 1, movetoworkspace, 1"
-          "SUPER|SHIFT, 2, movetoworkspace, 2"
-          "SUPER|SHIFT, 3, movetoworkspace, 3"
-          "SUPER|SHIFT, 4, movetoworkspace, 4"
-          "SUPER|SHIFT, 5, movetoworkspace, 5"
-          "SUPER|SHIFT, 6, movetoworkspace, 6"
-          "SUPER|SHIFT, 7, movetoworkspace, 7"
-          "SUPER|SHIFT, 8, movetoworkspace, 8"
-          "SUPER|SHIFT, 9, movetoworkspace, 9"
-          "SUPER|SHIFT, 0, movetoworkspace, 10"
+            "SUPER|SHIFT, 1, movetoworkspace, 1"
+            "SUPER|SHIFT, 2, movetoworkspace, 2"
+            "SUPER|SHIFT, 3, movetoworkspace, 3"
+            "SUPER|SHIFT, 4, movetoworkspace, 4"
+            "SUPER|SHIFT, 5, movetoworkspace, 5"
+            "SUPER|SHIFT, 6, movetoworkspace, 6"
+            "SUPER|SHIFT, 7, movetoworkspace, 7"
+            "SUPER|SHIFT, 8, movetoworkspace, 8"
+            "SUPER|SHIFT, 9, movetoworkspace, 9"
+            "SUPER|SHIFT, 0, movetoworkspace, 10"
           # Cycle Workspaces
-          "SUPER, TAB, workspace, +1"
-          "SUPER|SHIFT, TAB, workspace, -1"
+            "SUPER, TAB, workspace, +1"
+            "SUPER|SHIFT, TAB, workspace, -1"
           # Move focus between windows
-          "SUPER, H, movefocus, l   # focus left"
-          "SUPER, L, movefocus, r   # focus right"
-          "SUPER, K, movefocus, u   # focus up"
-          "SUPER, J, movefocus, d   # focus down"
+            "SUPER, H, movefocus, l   # focus left"
+            "SUPER, L, movefocus, r   # focus right"
+            "SUPER, K, movefocus, u   # focus up"
+            "SUPER, J, movefocus, d   # focus down"
           # Move active window around
-          "SUPER|SHIFT, H, movewindow, l"
-          "SUPER|SHIFT, L, movewindow, r"
-          "SUPER|SHIFT, K, movewindow, u"
-          "SUPER|SHIFT, J, movewindow, d"
+            "SUPER|SHIFT, H, movewindow, l"
+            "SUPER|SHIFT, L, movewindow, r"
+            "SUPER|SHIFT, K, movewindow, u"
+            "SUPER|SHIFT, J, movewindow, d"
           # Swap active window with neighbor
-          "SUPER|CTRL, H, swapwindow, l"
-          "SUPER|CTRL, L, swapwindow, r"
-          "SUPER|CTRL, K, swapwindow, u"
-          "SUPER|CTRL, J, swapwindow, d"
+            "SUPER|CTRL, H, swapwindow, l"
+            "SUPER|CTRL, L, swapwindow, r"
+            "SUPER|CTRL, K, swapwindow, u"
+            "SUPER|CTRL, J, swapwindow, d"
           # Resize active window
-          "SUPER|ALT, H, resizeactive, -50 0"
-          "SUPER|ALT, L, resizeactive, 50 0"
-          "SUPER|ALT, K, resizeactive, 0 -50"
-          "SUPER|ALT, J, resizeactive, 0 50"
+            "SUPER|ALT, H, resizeactive, -50 0"
+            "SUPER|ALT, L, resizeactive, 50 0"
+            "SUPER|ALT, K, resizeactive, 0 -50"
+            "SUPER|ALT, J, resizeactive, 0 50"
           # Minimize-like behavior
-          "SUPER|SHIFT, M, movetoworkspace, special"
-          "SUPER, M, togglespecialworkspace"
+            "SUPER|SHIFT, M, movetoworkspace, special"
+            "SUPER, M, togglespecialworkspace"
           # Session Management
-          "SUPER|ALT, F1, exec, hyprlock"
-          "SUPER|ALT, F4, exec, systemctl reboot"
-          "SUPER|ALT, F5, exec, systemctl poweroff"
+            "SUPER|ALT, F1, exec, hyprlock"
+            "SUPER|ALT, F4, exec, systemctl reboot"
+            "SUPER|ALT, F5, exec, systemctl poweroff"
         ];
       };
     };
@@ -193,7 +187,7 @@ in
         }
 
         window {
-          background-color: rgba(${palette.bgMain}, 0.95);
+          background-color: rgba(30, 30, 46, 0.95); /* base */
           border-radius: 12px;
           padding: 10px;
         }
@@ -202,20 +196,20 @@ in
           margin: 8px;
           padding: 6px;
           border-radius: 8px;
-          background-color: ${palette.css.surface};
-          color: ${palette.css.textMain};
+          background-color: rgba(49, 50, 68, 1); /* surface0 */
+          color: rgba(205, 214, 244, 1);         /* text */
           min-width: 100%;
         }
 
         #entry {
           padding: 6px;
           border-radius: 6px;
-          color: ${palette.css.textMain};
+          color: rgba(205, 214, 244, 1);
         }
 
         #entry:selected {
-          background-color: ${palette.css.guardsRed};
-          color: ${palette.css.bgCrust};
+          background-color: rgba(137, 180, 250, 1); /* blue accent */
+          color: rgba(30, 30, 46, 1);
         }
 
         #text {
@@ -225,24 +219,24 @@ in
         }
 
         list {
-          background-color: ${palette.css.bgMain};
+          background-color: rgba(137, 180, 250, 1); /* base */
           padding: 6px;
         }
 
         list row {
-          background-color: ${palette.css.surfaceMuted};
-          color: ${palette.css.textMain};
-          border-radius: 0;
+          background-color: rgba(69, 71, 90, 1);  /* surface1 */
+          color: rgba(205, 214, 244, 1);
+          border-radius: 0;                          /* remove rounding to avoid corners */
           padding: 8px 10px;
           margin: 2px 0;
         }
 
         list row:hover {
-          background-color: ${palette.css.overlay};
+          background-color: rgba(88, 91, 112, 1); /* surface2 */
         }
 
         list row:selected {
-          border: 2px solid ${palette.css.overlay};
+          border: 2px solid  rgba(88, 91, 112, 1);
           border-radius: 4px;
         }
       '';
@@ -255,6 +249,7 @@ in
           layer = "top";
           position = "bottom";
           modules-left = [ "hyprland/workspaces" ];
+          modules-center = [ "tray" "mpris" ];
           modules-right = [ "custom/power" "custom/notification" "cpu" "memory" "temperature" "pulseaudio" "bluetooth" "network" "clock" ];
 
           "hyprland/workspaces" = {
@@ -299,18 +294,20 @@ in
             format-disconnected = "󱛅";
             format-disabled = "󰯡";
             on-click = "nm-connection-editor";
+            tootip-format = "{device_alias}";
           };
+          tray = { };
           "custom/notification" = { 
             tooltip = false;
             format = "{icon}";
             format-icons = {
-              notification = "󰂚<span foreground='${palette.css.guardsRed}'><sup></sup></span>";
+              notification = "󰂚<span foreground='rgba(230, 0, 0, 1)'><sup></sup></span>";
               none = "󰂚";
-              dnd-notification = "󰂛<span foreground='${palette.css.guardsRed}'><sup></sup></span>";
+              dnd-notification = "󰂛<span foreground='rgba(230, 0, 0, 1)'><sup></sup></span>";
               dnd-none = "󰂛";
-              inhibited-notification = "󰂚<span foreground='${palette.css.guardsRed}'><sup></sup></span>";
+              inhibited-notification = "󰂚<span foreground='rgba(230, 0, 0, 1)'><sup></sup></span>";
               inhibited-none = "󰂚";
-              dnd-inhibited-notification = "󰂛<span foreground='${palette.css.guardsRed}'><sup></sup></span>";
+              dnd-inhibited-notification = "󰂛<span foreground='rgba(230, 0, 0, 1)'><sup></sup></span>";
               dnd-inhibited-none = "󰂛";
             };
             return-type = "json";
@@ -335,52 +332,52 @@ in
         }
 
         /* Structural Parent Containers using centralized tokens */
-        #workspaces, .modules-right {
-          background: rgba(${palette.css.nord1}, 0.8);
-          border: 2px solid rgba(${palette.css.nord3}, 0.9);
-          border-radius: 8px;
-          margin: 2px 4px;
-          padding: 2px 6px;
-        }
-        .modules-right { padding: 0; }
+          #workspaces, .modules-center, .modules-right {
+            background: rgba(76, 86, 106, 0.8);
+            border: 2px solid rgba(126, 135, 153, 0.9);
+            border-radius: 8px;
+            margin: 2px 4px;
+            padding: 2px 6px;
+          }
+          .modules-center, .modules-right { padding: 0; }
 
         /* Workspace Interaction Properties */
-        #workspaces button {
-          background: transparent;
-          border: none;
-          padding: 1px 4px;
-          color: rgba(${palette.css.nord4}, 0.6);
-          transition: all 0.2s ease-in-out;
-        }
-        #workspaces button:hover {
-          color: ${palette.css.nord4};
-          background: rgba(${palette.css.nord9}, 0.3);
-          border-radius: 6px;
-        }
-        #workspaces button.active {
-          background: rgba(${palette.css.nord9}, 0.8);
-          color: ${palette.css.nord4};
-          box-shadow: inset 0 -2px ${palette.css.nord9};
-        }
+          #workspaces button {
+            background: transparent;
+            border: none;
+            padding: 1px 4px;
+            color: rgba(236, 239, 244, 0.6);
+            transition: all 0.2s ease-in-out;
+          }
+          #workspaces button:hover {
+            color: rgba(236, 239, 244, 1);
+            background: rgba(129, 161, 193, 0.3);
+            border-radius: 6px;
+          }
+          #workspaces button.active {
+            background: rgba(129, 161, 193, 0.8);
+            color: rgba(236, 239, 244, 1);
+            box-shadow: inset 0 -2px rgba(129, 161, 193, 1);
+          }
 
         /* Combined Global Module Geometry Rules */
-        #custom-power, #custom-notification, #cpu, #memory, #temperature, #pulseaudio, #bluetooth, #network, #clock, #mpris, #tray {
-          padding: 2px 6px;
-          margin: 2px 3px;
-          border: 2px solid rgba(${palette.css.nord0}, 0.9);
-          border-radius: 6px;
-        }
+          #custom-power, #custom-notification, #cpu, #memory, #temperature, #pulseaudio, #bluetooth, #network, #clock, #mpris, #tray {
+            padding: 2px 6px;
+            margin: 2px 3px;
+            border: 2px solid rgba(46, 52, 64, 0.9);
+            border-radius: 6px;
+          }
 
         /* Standardized Heritage Palette Target Injection mapping */
-        #custom-power { background: rgba(${palette.css.guardsRed}, 0.8); }
-        #custom-notification, #tray { background: rgba(${palette.css.nord1}, 0.8); }
-        #cpu { background: rgba(${palette.css.nord11}, 0.8); }
-        #memory { background: rgba(${palette.css.nord12}, 0.8); }
-        #temperature { background: rgba(${palette.css.nord13}, 0.8); }
-        #pulseaudio, #mpris { background: rgba(${palette.css.nord14}, 0.8); }
-        #bluetooth { background: rgba(${palette.css.nord7}, 0.8)}
-        #network { background: rgba(${palette.css.nord9}, 0.8); }
-        #clock { background: rgba(${palette.css.nord15}, 0.8); }
+          #custom-power { background: rgba(230, 0, 0, 1); }
+          #custom-notification, #tray { background: rgba(76, 86, 106, 0.8); }
+          #cpu { background: rgba(191, 97, 106, 0.8); }
+          #memory { background: rgba(208, 135, 112, 0.8); }
+          #temperature { background: rgba(235, 203, 139, 0.8); }
+          #pulseaudio, #mpris { background: rgba(163, 190, 140, 0.8); }
+          #bluetooth { background: rgba(143, 188, 187, 0.8); }
+          #network { background: rgba(129, 161, 193, 0.8); }
+          #clock { background: rgba(180, 142, 173, 0.8); }
       '';
     };
 
@@ -412,9 +409,9 @@ in
             dots_size = 0.2;
             dots_spacing = 0.15;
             dots_center = true;
-            outer_color = "rgba(${palette.guardsRed}ee)";
-            inner_color = "rgba(${palette.surface}64)";
-            font_color = "rgba(${palette.textMain}ff)";
+            outer_color = "rgba(51, 204, 254, 0.93)";
+            inner_color = "rgba(100, 100, 100, 0.39)";
+            font_color = "rgba(255, 255, 255, 1)";
             fade_on_empty = false;
             placeholder_text = "<i>Enter Password</i>";
             position = "0, -120";
@@ -427,7 +424,7 @@ in
             monitor = "";
             text = "$TIME";
             font_size = 82;
-            color = "rgba(${palette.textMain}ff)";
+            color = "rgba(205, 214, 244, 1)";
             position = "0, 280";
             halign = "center";
             valign = "center";
@@ -437,7 +434,7 @@ in
             monitor = "";
             text = "cmd[update:1000] date +'%A, %B %d, %Y'";
             font_size = 22;
-            color = "rgba(${palette.textMain}ff)";
+            color = "rgba(205, 214, 244, 1)";
             position = "0, 200";
             halign = "center";
             valign = "center";
@@ -446,7 +443,7 @@ in
             monitor = "";
             text = "'Sup $USER";
             font_size = 18;
-            color = "rgba(${palette.guardsRed}ff)";
+            color = "rgba(205, 214, 244, 1)";
             position = "0, 150";
             halign = "center";
             valign = "center";
@@ -491,35 +488,38 @@ in
       ];
       style = ''
         window {
-          background-color: rgba(${palette.css.nord0}, 0.85);
+          background-color: rgba(30, 30, 46, 0.9); 
         }
+        /* Button */
+          button {
+            font-family: "JetBrains Mono Nerd Font";
+            font-size: 20px;
+            font-weight: bold;
+            color: rgba(236, 239, 244, 1);
+            background-color: transparent; 
+            border: 2px solid rgba(126, 135, 153, 0.9);  
+            border-radius: 12px;
+            margin: 15px;
+            transition: all 0.2s ease-in-out;
+            opacity: 0.8;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-image: none;
+          }
 
-        button {
-          font-family: "JetBrains Mono Nerd Font", sans-serif;
-          font-size: 20px;
-          font-weight: bold;
-          color: ${palette.css.nord4};
-          background-color: rgba(${palette.css.bgMain}, 0.8);
-          border: 2px solid rgba(${palette.css.nord1}, 0.5);
-          border-radius: 12px;
-          margin: 15px;
-          transition: all 0.2s ease-in-out;
-          background-repeat: no-repeat;
-          background-position: center;
-          background-image: none;
-        }
+        /* Generic Hover/Focus state */
+          button:focus, button:hover {
+            background-color: rgba(129, 161, 193, 0.8); 
+            border: 2px solid rgba(126, 135, 153, 0.9);
+            color: rgba(236, 239, 244, 1);
+          }
 
-        button:focus, button:hover {
-          background-color: rgba(${palette.guardsRed}, 0.4); 
-          border: 2px solid ${palette.css.nord8};
-          color: ${palette.css.nord8};
-        }
-
-        #shutdown:focus, #shutdown:hover {
-          background-color: rgba(${palette.guardsRed}, 0.2);
-          border: 2px solid ${palette.css.guardsRed};
-          color: ${palette.css.guardsRed};
-        }
+        /* Specific Shutdown ID override */
+          #shutdown:focus, #shutdown:hover {
+            background-color: rgba(191, 97, 106, 0.8);
+            border: 2px solid rgba(230, 0, 0, 0.9);
+            color: rgba(236, 239, 244, 1);
+          }
       '';
     };
 
