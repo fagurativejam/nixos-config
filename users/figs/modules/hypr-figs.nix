@@ -16,8 +16,6 @@
         exec-once = [
           "waybar"
           "swaync"
-          "nm-applet --no-indicator"
-          "blueman-applet"
           "systemctl --user start hyprpolkitagent"
         ];
         
@@ -28,6 +26,7 @@
             float = "on";
             size = "900 450";
             center = "on";
+            opacity = "0.8 override 0.8 override 0.8 override";
           }
           {
             name = "float-nm-editor";
@@ -35,13 +34,20 @@
             float = "on";
             size = "700 450";
             center = "on";
+            opacity = "0.8 override 0.8 override 0.8 override";
           }
           {
             name = "float-blueman";
-            match.class = ".blueman-manager-wrapped";
+            match.class = "0.8 override 0.8 override 0.8 override";
             float = "on";
             size = "700 450";
             center = "on";
+            opacity = "0.8 override 0.8 override 0.8 override";
+          }
+          {
+            name = "thunar-styling";
+            match.class = "thunar";
+            opacity = "0.8 override 0.8 override 0.8 override";
           }
         ];
 
@@ -296,18 +302,18 @@
             on-click = "nm-connection-editor";
             tootip-format = "{device_alias}";
           };
-          tray = { };
+          tray = {};
           "custom/notification" = { 
             tooltip = false;
             format = "{icon}";
             format-icons = {
-              notification = "󰂚<span foreground='rgba(230, 0, 0, 1)'><sup></sup></span>";
+              notification = "󰂚<span foreground='#e60000'><sup></sup></span>";
               none = "󰂚";
-              dnd-notification = "󰂛<span foreground='rgba(230, 0, 0, 1)'><sup></sup></span>";
+              dnd-notification = "󰂛<span foreground='#e60000'><sup></sup></span>";
               dnd-none = "󰂛";
-              inhibited-notification = "󰂚<span foreground='rgba(230, 0, 0, 1)'><sup></sup></span>";
+              inhibited-notification = "󰂚<span foreground='#e60000'><sup></sup></span>";
               inhibited-none = "󰂚";
-              dnd-inhibited-notification = "󰂛<span foreground='rgba(230, 0, 0, 1)'><sup></sup></span>";
+              dnd-inhibited-notification = "󰂛<span foreground='#e60000'><sup></sup></span>";
               dnd-inhibited-none = "󰂛";
             };
             return-type = "json";
@@ -333,9 +339,10 @@
 
         /* Structural Parent Containers using centralized tokens */
           #workspaces, .modules-center, .modules-right {
-            background: rgba(76, 86, 106, 0.8);
+            background: rgba(89, 89, 89, 0.67);
             border: 2px solid rgba(126, 135, 153, 0.9);
             border-radius: 8px;
+            color: rgba(236, 239, 244, 0.8);
             margin: 2px 4px;
             padding: 2px 6px;
           }
@@ -572,6 +579,60 @@
         control-center-margin-right = 10;
         control-center-margin-left = 0;
         text-icon = "";
+      };
+    };
+
+    gtk = {
+      enable = true;
+
+      gtk3.extraConfig = {
+        gtk-application-prefer-dark-theme = 1;
+      };
+
+      gtk4.extraConfig = {
+        gtk-application-prefer-dark-theme = 1;
+      };
+
+      # Hardcode solid Mocha colors into GTK3 apps (Alpha layer removed)
+      gtk3.extraCss = ''
+        @define-color window_bg_color #1e1e2e;
+        @define-color window_fg_color #cdd6f4;
+        @define-color view_bg_color #11111b;
+        @define-color view_fg_color #cdd6f4;
+        @define-color headerbar_bg_color #181825;
+        @define-color headerbar_fg_color #cdd6f4;
+        @define-color accent_color #cba6f7;
+        @define-color accent_bg_color #cba6f7;
+        @define-color accent_fg_color #11111b;
+      '';
+
+      # Hardcode solid Mocha colors into GTK4/Libadwaita apps (Alpha layer removed)
+      gtk4.extraCss = ''
+        @define-color window_bg_color #1e1e2e;
+        @define-color window_fg_color #cdd6f4;
+        @define-color view_bg_color #11111b;
+        @define-color view_fg_color #cdd6f4;
+        @define-color headerbar_bg_color #181825;
+        @define-color headerbar_fg_color #cdd6f4;
+        @define-color accent_color #cba6f7;
+        @define-color accent_bg_color #cba6f7;
+        @define-color accent_fg_color #11111b;
+      '';
+
+      iconTheme = {
+        name = "Papirus-Dark";
+        package = pkgs.papirus-icon-theme;
+      };
+
+      cursorTheme = {
+        name = "catppuccin-mocha-dark-cursors";
+        package = pkgs.catppuccin-cursors.mochaDark;
+        size = 24;
+      };
+
+      font = {
+        name = "JetBrains Mono";
+        size = 10;
       };
     };
 

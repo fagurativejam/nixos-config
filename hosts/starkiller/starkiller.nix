@@ -4,11 +4,9 @@
 
   imports = [
     ./sysmodules/hypr-starkiller.nix
-    ./sysmodules/kde.nix
   ];
 
   my.hyprland.enable = true;
-  my.kde.enable = false;
 
   boot = {
     loader = {
@@ -42,8 +40,6 @@
 
     firewall = {
       enable = true;
-      #allowedTCPPorts = [ 25565 ]; # Allow Minecraft server port through firewall
-      #allowedUDPPorts = [ 25565 ]; # Uncomment if your Minecraft server uses UDP as well
     };
   };
 

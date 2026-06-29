@@ -1,4 +1,3 @@
-# /users/figs/modules/nixvim.nix
 { pkgs, inputs, ... }:
 
 {
@@ -8,6 +7,7 @@
 
   programs.nixvim = {
     enable = true;
+    nixpkgs.source = pkgs.path;
 
     colorschemes.catppuccin = {
       enable = true;
@@ -15,7 +15,7 @@
         flavor = "mocha"; # latte, frappe, macchiato, mocha
         transparent_background = true;
       };
-    };
+     };
 
     opts = {
       number = true;
@@ -260,8 +260,10 @@
           vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signatureHelp, { border= "rounded"})
         '';
         servers = {
-          nil_ls.enable = true;
-          pyright.enable = true;
+          nil_ls = {
+            enable = false;
+          };
+          pyright.enable = false;
           rust_analyzer = { 
             enable = true;
             installCargo = true;
