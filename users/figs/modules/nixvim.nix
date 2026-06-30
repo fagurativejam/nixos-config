@@ -30,6 +30,7 @@
       foldlevel = 99;         # Keeps folds open by default unless manually collapsed
       foldlevelstart = 99;    # Ensures files start with open folds
       foldenable = true;      # Globally enables code folding
+      foldopen = "block,hor,mark,percent,quickfix,search,tag,undo";
       clipboard = "unnamedplus"; # Syncs Neovim yank register with system clipboard
       selectmode = "mouse,key";  # Ensures Shift+Arrows triggers selection mode
       splitright = true;
@@ -41,7 +42,57 @@
       wrap = false;
       undofile = true;
       swapfile = false;
+      wrapscan = true;
+      viewoptions = [ "folds" "cursor" ];
     };
+
+    extraConfigLua = ''
+            -- --- AUTO-OPEN ALPHA ON EMPTY BUFFER ---
+      local alpha_empty_group = vim.api.nvim_create_augroup("AlphaOnEmptyBuffer", { clear = true })
+        vim.api.nvim_create_autocmd("User", {
+          pattern = "BDeletePre *",
+          group = alpha_empty_group,
+          callback = function()
+            local bufnr = vim.api.nvim_get_current_buf()
+            local name = vim.api.nvim_buf_get_name(bufnr)
+            -- If the current file name is completely empty, wipe it and load Alpha
+            if name == "" then
+              vim.cmd("Alpha | bd#")
+            end
+          end,
+        })
+
+      vim.diagnostic.config({
+        signs = {
+          text = {
+            [vim.diagnostic.severity.ERROR] = "   ",
+            [vim.diagnostic.severity.WARN]  = "   ",
+            [vim.diagnostic.severity.HINT]  = "   ",
+            [vim.diagnostic.severity.INFO]  = "   ",
+          },
+        },
+      })
+
+      local fold_group = vim.api.nvim_create_augroup("AutoPersistentFolds", { clear = true })
+        vim.api.nvim_create_autocmd({ "BufWinLeave", "BufLeave" }, {
+          group = fold_group,
+          pattern = "?*",
+          command = "silent! mkview",
+        })
+        vim.api.nvim_create_autocmd({ "BufWinEnter", "BufEnter" }, {
+          group = fold_group,
+          pattern = "?*",
+          command = "silent! loadview",
+        })
+
+      vim.api.nvim_create_autocmd("TextYankPost", {
+        desc = "Highlight yanked text",
+        group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
+        callback = function()
+          vim.highlight.on_yank({ higroup = "Visual", timeout = 150 })
+        end,
+      })
+    '';
 
     plugins = {
       lualine = {
@@ -107,7 +158,6 @@
         };
       };
 
-
       indent-blankline = {
         enable = true;
         settings = {
@@ -129,6 +179,7 @@
 
       neoscroll.enable = true;
       ts-autotag.enable = true;
+
       colorizer = {
         enable = true;
         settings = {
@@ -141,6 +192,7 @@
           };
         };
       };
+      
       web-devicons.enable = true;
       nvim-autopairs.enable = true;
       comment.enable = true;
@@ -152,134 +204,135 @@
         settings.layout = [
           { type = "padding"; val = 2; }
           # Header
-          {
-            type = "text";
-            val = [
-              " ::::    ::: ::::::::::: :::    ::: :::     ::: ::::::::::: ::::    ::::  "
-              " :+:+:   :+:     :+:     :+:    :+: :+:     :+:     :+:     +:+:+: :+:+:+ "
-              " :+:+:+  +:+     +:+      +:+  +:+  +:+     +:+     +:+     +:+ +:+:+ +:+ "
-              " +#+ +:+ +#+     +#+       +#++:+   +#+     +:+     +#+     +#+  +:+  +#+ "
-              " +#+  +#+#+#     +#+      +#+  +#+   +#+   +#+      +#+     +#+       +#+ "
-              " #+#   #+#+#     #+#     #+#    #+#   #+#+#+#       #+#     #+#       #+# "
-              " ###    #### ########### ###    ###     ###     ########### ###       ### "
-            ];
-            opts = {
-              position = "center";
-              hl = "Type";
-            };
-          }
+            {
+              type = "text";
+              val = [
+                " ::::    ::: ::::::::::: :::    ::: :::     ::: ::::::::::: ::::    ::::  "
+                " :+:+:   :+:     :+:     :+:    :+: :+:     :+:     :+:     +:+:+: :+:+:+ "
+                " :+:+:+  +:+     +:+      +:+  +:+  +:+     +:+     +:+     +:+ +:+:+ +:+ "
+                " +#+ +:+ +#+     +#+       +#++:+   +#+     +:+     +#+     +#+  +:+  +#+ "
+                " +#+  +#+#+#     +#+      +#+  +#+   +#+   +#+      +#+     +#+       +#+ "
+                " #+#   #+#+#     #+#     #+#    #+#   #+#+#+#       #+#     #+#       #+# "
+                " ###    #### ########### ###    ###     ###     ########### ###       ### "
+              ];
+              opts = {
+                position = "center";
+                hl = "Type";
+              };
+            }
           { type = "padding"; val = 2; }
           # Buttons
-          {
-            type = "group";
-            val = [
-              #new file
-                {
-                  type = "button";
-                  val = "  New File";
-                  opts = {
-                    keymap = [ "n" "e" "<cmd>ene <CR>" { noremap = true; silent = true; } ];
-                    shortcut = "e";
-                    position = "center";
-                    hl = "Special";
-                    hl_shortcut = "AlphaShortcut";
-                    width = 35;
-                    align_shortcut = "right";
-                  };
-                }
-              { type = "padding"; val = 1; }
-              #find file
-                {
-                  type = "button";
-                  val = " 󰮗 Find File";
-                  opts = {
-                    keymap = [ "n" "f" "<cmd>Telescope find_files<CR>" { noremap = true; silent = true; } ];
-                    shortcut = "f";
-                    position = "center";
-                    hl = "Special";
-                    hl_shortcut = "AlphaShortcut";
-                    width = 35;
-                    align_shortcut = "right";
-                  };
-                }
-              { type = "padding"; val = 1; }
-              #find text
-                {
-                  type = "button";
-                  val = " 󱘣 Find Text";
-                  opts = {
-                    keymap = [ "n" "g" "<cmd>Telescope live_grep<CR>" { noremap = true; silent = true; } ];
-                    shortcut = "g";
-                    position = "center";
-                    hl = "Special";
-                    hl_shortcut = "AlphaShortcut";
-                    width = 35;
-                    align_shortcut = "right";
-                  };
-                }
-              { type = "padding"; val = 1; }
-              #recent files
-                {
-                  type = "button";
-                  val = " 󱋢 Recent Files";
-                  opts = {
-                    keymap = [ "n" "r" "<cmd>Telescope oldfiles<CR>" { noremap = true; silent = true; } ];
-                    shortcut = "r";
-                    position = "center";
-                    hl = "Special";
-                    hl_shortcut = "AlphaShortcut";
-                    width = 35;
-                    align_shortcut = "right";
-                  };
-                }
-              { type = "padding"; val = 1; }
-              #link to this file
-                {
-                  type = "button";
-                  val = "  Open Configuration";
-                  opts = {
-                    keymap = [ "n" "c" "<cmd>e ~/home/figs/Bullshit/users/figs/modules/nixvim.nix<CR>" { noremap = true; silent = true; } ];
-                    shortcut = "c";
-                    position = "center";
-                    hl = "Special";
-                    hl_shortcut = "AlphaShortcut";
-                    width = 35;
-                    align_shortcut = "right";
-                  };
-                }
-              { type = "padding"; val = 1; }
-              #quit
-                {
-                  type = "button";
-                  val = " 󰈆 Quit NixVIM";
-                  opts = {
-                    keymap = [ "n" "q" "<cmd>qa <CR>" { noremap = true; silent = true; } ];
-                    shortcut = "q";
-                    position = "center";
-                    hl = "Special";
-                    hl_shortcut = "AlphaShortcut";
-                    width = 35;
-                    align_shortcut = "right";
-                  };
-                }
-              { type = "padding"; val = 2; }
-              # Footer
-                {
-                  type = "text";
-                  val = [
-                    "󰜗 Welcome to my sick and twisted NVIM 󰜗"
-                  ];
-                  opts = {
-                    position = "center";
-                    hl = "Comment";
-                  };
-                }
-            ];
-          }
+            {
+              type = "group";
+              val = [
+                #new file
+                  {
+                    type = "button";
+                    val = "  New File";
+                    opts = {
+                      keymap = [ "n" "e" "<cmd>ene <CR>" { noremap = true; silent = true; } ];
+                      shortcut = "e";
+                      position = "center";
+                      hl = "Special";
+                      hl_shortcut = "AlphaShortcut";
+                      width = 35;
+                      align_shortcut = "right";
+                    };
+                  }
+                { type = "padding"; val = 1; }
+                #find file
+                  {
+                    type = "button";
+                    val = " 󰮗 Find File";
+                    opts = {
+                      keymap = [ "n" "f" "<cmd>Telescope find_files<CR>" { noremap = true; silent = true; } ];
+                      shortcut = "f";
+                      position = "center";
+                      hl = "Special";
+                      hl_shortcut = "AlphaShortcut";
+                      width = 35;
+                      align_shortcut = "right";
+                    };
+                  }
+                { type = "padding"; val = 1; }
+                #find text
+                  {
+                    type = "button";
+                    val = " 󱘣 Find Text";
+                    opts = {
+                      keymap = [ "n" "g" "<cmd>Telescope live_grep<CR>" { noremap = true; silent = true; } ];
+                      shortcut = "g";
+                      position = "center";
+                      hl = "Special";
+                      hl_shortcut = "AlphaShortcut";
+                      width = 35;
+                      align_shortcut = "right";
+                    };
+                  }
+                { type = "padding"; val = 1; }
+                #recent files
+                  {
+                    type = "button";
+                    val = " 󱋢 Recent Files";
+                    opts = {
+                      keymap = [ "n" "r" "<cmd>Telescope oldfiles<CR>" { noremap = true; silent = true; } ];
+                      shortcut = "r";
+                      position = "center";
+                      hl = "Special";
+                      hl_shortcut = "AlphaShortcut";
+                      width = 35;
+                      align_shortcut = "right";
+                    };
+                  }
+                { type = "padding"; val = 1; }
+                #link to this file
+                  {
+                    type = "button";
+                    val = "  Open Configuration";
+                    opts = {
+                      keymap = [ "n" "c" "<cmd>e ~/home/figs/Bullshit/users/figs/modules/nixvim.nix<CR>" { noremap = true; silent = true; } ];
+                      shortcut = "c";
+                      position = "center";
+                      hl = "Special";
+                      hl_shortcut = "AlphaShortcut";
+                      width = 35;
+                      align_shortcut = "right";
+                    };
+                  }
+                { type = "padding"; val = 1; }
+                #quit
+                  {
+                    type = "button";
+                    val = " 󰈆 Quit NixVIM";
+                    opts = {
+                      keymap = [ "n" "q" "<cmd>qa <CR>" { noremap = true; silent = true; } ];
+                      shortcut = "q";
+                      position = "center";
+                      hl = "Special";
+                      hl_shortcut = "AlphaShortcut";
+                      width = 35;
+                      align_shortcut = "right";
+                    };
+                  }
+                { type = "padding"; val = 2; }
+                # Footer
+                  {
+                    type = "text";
+                    val = [
+                      "󰜗 Welcome to my sick and twisted NVIM 󰜗"
+                    ];
+                    opts = {
+                      position = "center";
+                      hl = "Comment";
+                    };
+                  }
+              ];
+            }
         ];
       };
       
       todo-comments.enable = true;
+     
       noice = {
         enable = true;
         settings.presets = {
@@ -291,10 +344,12 @@
       };
       
       dressing.enable = true;
+
       gitsigns = {
         enable = true;
         settings.current_line_blame = true;
       };
+     
       barbecue.enable = true;
       
       toggleterm = {
@@ -315,14 +370,8 @@
       
       lsp = {
         enable = true;
-        postConfig = ''
-          vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border= "rounded"})
-          vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signatureHelp, { border= "rounded"})
-        '';
         servers = {
-          nil_ls = {
-            enable = false;
-          };
+          nil_ls.enable = false;
           pyright.enable = false;
           rust_analyzer = { 
             enable = true;
@@ -331,7 +380,7 @@
           };
         };
       };
-      
+
       cmp = {
         enable = true;
         settings = {
