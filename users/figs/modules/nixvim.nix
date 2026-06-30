@@ -26,6 +26,21 @@
       cursorline = true;
       signcolumn = "yes";
       termguicolors = true;
+      foldcolumn = "1";       # Shows the folding bar on the left next to line numbers
+      foldlevel = 99;         # Keeps folds open by default unless manually collapsed
+      foldlevelstart = 99;    # Ensures files start with open folds
+      foldenable = true;      # Globally enables code folding
+      clipboard = "unnamedplus"; # Syncs Neovim yank register with system clipboard
+      selectmode = "mouse,key";  # Ensures Shift+Arrows triggers selection mode
+      splitright = true;
+      splitbelow = true;
+      ignorecase = true;
+      smartcase = true;
+      hlsearch = true;
+      scrolloff = 8;
+      wrap = false;
+      undofile = true;
+      swapfile = false;
     };
 
     plugins = {
@@ -41,6 +56,17 @@
         };
       };
       
+      auto-save = {
+        enable = true;
+        settings = {
+          enabled = true;
+          trigger_events = {
+            InsertLeave = true;
+            TextChanged = true;
+          };
+        };
+      };
+
       bufferline = {
         enable = true;
         settings = {
@@ -67,9 +93,54 @@
         enable = true;
         settings.closeIfLastWindow = true;
       };
-      
+
+      rainbow-delimiters.enable = true;
+
+      nvim-ufo = {
+        enable = true;
+        settings = {
+          provider_selector = ''
+            function(bufnr, filetype, buftype)
+              return 'indent'
+            end
+          '';
+        };
+      };
+
+
+      indent-blankline = {
+        enable = true;
+        settings = {
+          scope = { enabled = true; show_start = false; };
+          exclude = { filetypes = [ "alpha" "neo-tree" ]; };
+        };
+      };
+
       telescope.enable = true;
-      treesitter.enable = true;
+
+      treesitter = {
+        enable = true;
+        settings = {
+          highlight.enable = true;
+          indent.enable = true;
+          rainbow.enable = true;
+        };
+      };
+
+      neoscroll.enable = true;
+      ts-autotag.enable = true;
+      colorizer = {
+        enable = true;
+        settings = {
+          filetypes = [ "*" ]; # Target all active files
+          user_default_options = {
+            RGB = true;        # Highlights standard RGB text
+            RRGGBB = true;     # Highlights standard Hex codes
+            css = true;        # Enables parsing of CSS color rules
+            css_fn = true;     # FORCES parsing of functional rgb() and rgba() strings
+          };
+        };
+      };
       web-devicons.enable = true;
       nvim-autopairs.enable = true;
       comment.enable = true;
@@ -207,16 +278,6 @@
           }
         ];
       };
-
-      indent-blankline = {
-        enable = true;
-        settings = {
-          scope = {
-            enabled = true;
-            show_start = false;
-          };
-        };
-      };
       
       todo-comments.enable = true;
       noice = {
@@ -235,7 +296,6 @@
         settings.current_line_blame = true;
       };
       barbecue.enable = true;
-      rainbow-delimiters.enable = true;
       
       toggleterm = {
         enable = true;
@@ -299,13 +359,17 @@
     keymaps = [
       { mode = "n"; key = "<leader>ff"; action = "<cmd>Telescope find_files<cr>"; }
       { mode = "n"; key = "<leader>fg"; action = "<cmd>Telescope live_grep<cr>";}
-      { mode = "n"; key = "<leader>ca"; action = "<cmd>lua vim.lsb.buf.code_action<cr>"; }
+      { mode = "n"; key = "<leader>ca"; action = "<cmd>lua vim.lsp.buf.code_action<cr>"; }
       { mode = "n"; key = "gd"; action = "<cmd>lua vim.lsp.buf.definition()<cr>"; }
       { mode = "n"; key = "K"; action = "<cmd>lua vim.lsp.buf.hover()<cr>"; }
       { mode = "n"; key = "<leader>e"; action = "<cmd>Neotree toggle<cr>"; options ={ silent = true; }; }
       { mode = "n"; key = "<leader>x"; action = "<cmd>Bdelete<cr>"; options ={ silent = true; }; }
       { mode = "n"; key = "<Tab>"; action = "<cmd>BufferLineCycleNext<CR>"; options ={ silent = true; }; }
       { mode = "n"; key = "<S-Tab>"; action = "<cmd>BufferLineCyclePrev<CR>"; options ={ silent = true; }; }
+      { mode = "n"; key = "zR"; action = "<cmd>lua require('ufo').openAllFolds()<CR>"; options.desc = "Open all folds"; }
+      { mode = "n"; key = "zM"; action = "<cmd>lua require('ufo').closeAllFolds()<CR>"; options.desc = "Close all folds"; }
+      { mode = "n"; key = "<leader>ya"; action = "<cmd>%y+<CR>"; options.desc = "Yank entire file to system clipboard"; }
+      { mode = "n"; key = "<Esc>"; action = "<cmd>nohlsearch<CR>"; options.desc = "Clear search highlights"; }
     ];
     
     extraPlugins = with pkgs.vimPlugins; [

@@ -186,7 +186,7 @@
         lines = 10;
         width = 225;
       };
-      style = ''
+      style = '' /* lua */
         * {
           font-family: "JetBrains Mono", monospace;
           font-size: 14px;
@@ -202,8 +202,8 @@
           margin: 8px;
           padding: 6px;
           border-radius: 8px;
-          background-color: rgba(49, 50, 68, 1); /* surface0 */
-          color: rgba(205, 214, 244, 1);         /* text */
+          background-color: rgba(49, 50, 68, 1);
+          color: rgba(205, 214, 244, 1);
           min-width: 100%;
         }
 
@@ -297,12 +297,12 @@
           network = {
             format-wifi = " ";
             format-ethernet = " ";
-            format-disconnected = "󱛅";
-            format-disabled = "󰯡";
+            format-disconnected = "󱛅 ";
+            format-disabled = "󰯡 ";
+            tooltip-format = "{essid}";
             on-click = "nm-connection-editor";
-            tootip-format = "{device_alias}";
           };
-          tray = {};
+          tray = {  };
           "custom/notification" = { 
             tooltip = false;
             format = "{icon}";
@@ -539,19 +539,19 @@
           lock_cmd = "hyprlock";
         };
         listener = [  
-          {
-            timeout = 1800;
-            on-timeout = "hyprlock";
-          }
-          {
-            timeout = 2400;
-            on-timeout = "hyprctl dispatch dpms off";
-            on-resume = "hyprctl dispatch dpms on";
-          }
-          {
-            timeout = 3000;
-            on-timeout = "systemctl suspend";
-          }
+           # {
+           #   timeout = 1800;
+           #   on-timeout = "hyprlock";
+           # }
+           # {
+           #   timeout = 2400;
+           #   on-timeout = "hyprctl dispatch dpms off";
+           #   on-resume = "hyprctl dispatch dpms on";
+           # }
+           # {
+           #   timeout = 3000;
+           #   on-timeout = "systemctl suspend";
+           # }
         ];
       };
     };
