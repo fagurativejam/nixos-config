@@ -5,6 +5,10 @@
     enable = lib.mkEnableOption "Enable User Hyprland Config";
   };
 
+  imports = [
+    ./hypr-scale.nix
+  ];
+
   config = lib.mkIf config.my.hyprland.enable {
 
     wayland.windowManager.hyprland = {
@@ -186,7 +190,7 @@
         lines = 10;
         width = 225;
       };
-      style = '' /* lua */
+      style = /* lua */ ''
         * {
           font-family: "JetBrains Mono", monospace;
           font-size: 14px;
@@ -214,7 +218,7 @@
         }
 
         #entry:selected {
-          background-color: rgba(137, 180, 250, 1); /* blue accent */
+          background-color: rgba(137, 180, 250, 1);
           color: rgba(30, 30, 46, 1);
         }
 
@@ -225,20 +229,20 @@
         }
 
         list {
-          background-color: rgba(137, 180, 250, 1); /* base */
+          background-color: rgba(137, 180, 250, 1);
           padding: 6px;
         }
 
         list row {
-          background-color: rgba(69, 71, 90, 1);  /* surface1 */
+          background-color: rgba(69, 71, 90, 1);
           color: rgba(205, 214, 244, 1);
-          border-radius: 0;                          /* remove rounding to avoid corners */
+          border-radius: 0;
           padding: 8px 10px;
           margin: 2px 0;
         }
 
         list row:hover {
-          background-color: rgba(88, 91, 112, 1); /* surface2 */
+          background-color: rgba(88, 91, 112, 1);
         }
 
         list row:selected {
@@ -331,7 +335,7 @@
         };
       };
 
-      style = ''
+      style = /*lua*/ ''
         window#waybar {
           background: transparent;
           border: none;
@@ -493,7 +497,7 @@
           keybind = "s";
         }
       ];
-      style = ''
+      style = /*lua*/ ''
         window {
           background-color: rgba(30, 30, 46, 0.9); 
         }
@@ -539,19 +543,19 @@
           lock_cmd = "hyprlock";
         };
         listener = [  
-           # {
-           #   timeout = 1800;
-           #   on-timeout = "hyprlock";
-           # }
-           # {
-           #   timeout = 2400;
-           #   on-timeout = "hyprctl dispatch dpms off";
-           #   on-resume = "hyprctl dispatch dpms on";
-           # }
-           # {
-           #   timeout = 3000;
-           #   on-timeout = "systemctl suspend";
-           # }
+           {
+             timeout = 1800;
+             on-timeout = "hyprlock";
+           }
+           {
+             timeout = 2400;
+             on-timeout = "hyprctl dispatch dpms off";
+             on-resume = "hyprctl dispatch dpms on";
+           }
+           {
+             timeout = 3000;
+             on-timeout = "systemctl suspend";
+           }
         ];
       };
     };
@@ -594,7 +598,7 @@
       };
 
       # Hardcode solid Mocha colors into GTK3 apps (Alpha layer removed)
-      gtk3.extraCss = ''
+      gtk3.extraCss = /*css*/ ''
         @define-color window_bg_color #1e1e2e;
         @define-color window_fg_color #cdd6f4;
         @define-color view_bg_color #11111b;
@@ -607,7 +611,7 @@
       '';
 
       # Hardcode solid Mocha colors into GTK4/Libadwaita apps (Alpha layer removed)
-      gtk4.extraCss = ''
+      gtk4.extraCss = /*css*/ ''
         @define-color window_bg_color #1e1e2e;
         @define-color window_fg_color #cdd6f4;
         @define-color view_bg_color #11111b;
