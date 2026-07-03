@@ -188,7 +188,7 @@
         prompt = "Search...";
         show-icons = true;
         lines = 10;
-        width = 225;
+        width = 300;
       };
       style = /* lua */ ''
         * {
