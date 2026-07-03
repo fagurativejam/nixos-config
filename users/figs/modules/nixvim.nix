@@ -47,21 +47,6 @@
     };
 
     extraConfigLua = ''
-            -- --- AUTO-OPEN ALPHA ON EMPTY BUFFER ---
-      local alpha_empty_group = vim.api.nvim_create_augroup("AlphaOnEmptyBuffer", { clear = true })
-        vim.api.nvim_create_autocmd("User", {
-          pattern = "BDeletePre *",
-          group = alpha_empty_group,
-          callback = function()
-            local bufnr = vim.api.nvim_get_current_buf()
-            local name = vim.api.nvim_buf_get_name(bufnr)
-            -- If the current file name is completely empty, wipe it and load Alpha
-            if name == "" then
-              vim.cmd("Alpha | bd#")
-            end
-          end,
-        })
-
       vim.diagnostic.config({
         signs = {
           text = {
