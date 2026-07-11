@@ -1,0 +1,161 @@
+{config, pkgs, ...}:
+
+{
+  programs.wezterm = {
+    enable = true;
+    extraConfig = /*lua*/ ''
+      local wezterm = require("wezterm")
+      local config = wezterm.config_builder()
+      local act = wezterm.action
+
+      --Appearance
+        config.font = wezterm.font_with_fallback({"JetBrains Mono Nerd Font", "Fira Code"})
+        config.font_size = 12.0
+        config.color_scheme = "Catppuccin Mocha"
+        config.window_background_opacity = 0.85
+        config.window_padding = {left=8, right=8, top=8, bottom=8}
+        config.inactive_pane_hsb = {saturation=0.9, brightness=0.8}
+        config.window_decorations="NONE"
+        config.switch_to_last_active_tab_when_closing_tab=true
+        config.scrollback_lines=10000
+        config.enable_scroll_bar=true
+      --Cursor
+        config.default_cursor_style="BlinkingBar"
+        config.cursor_thickness="2.5pt"
+        config.cursor_blink_rate=500
+        config.force_reverse_video_cursor=true
+      --Tab Bar
+        config.enable_tab_bar=true
+        config.use_fancy_tab_bar=true
+        config.hide_tab_bar_if_only_one_tab=false
+        config.tab_max_width=32
+        config.colors={
+          tab_bar={
+            inactive_tab_edge="#cdd6f4",
+            background="#1e1e2e",
+            active_tab={
+              bg_color="#cba6f7",
+              fg_color="#1e1e2e",
+            },
+            inactive_tab={
+              bg_color="#313244",
+              fg_color="#cdd6f4",
+            },
+            inactive_tab_hover={
+              bg_color="#45475a",
+              fg_color="#cdd6f4",
+            },
+            new_tab={
+              bg_color="#313244",
+              fg_color="#cdd6f4",
+            },
+            new_tab_hover={
+              bg_color="#cba6f7",
+              fg_color="#313244",
+            },
+          },
+        }
+        config.window_frame={
+          font=wezterm.font{family="JetBrains Mono"},
+          active_titlebar_bg="#1e1e2e",
+          inactive_titlebar_bg="#1e1e2e",
+          font_size=11,
+        }
+      --Multiplexer Persistence
+        config.unix_domains={{name="mydomain"}}
+        config.default_gui_startup_args={"connect","mydomain"}
+        config.default_domain="mydomain"
+      --Leader & Keybinds
+        config.disable_default_key_bindings=true
+        config.leader={key="a", mods="CTRL", timeout_milliseconds=2000}
+        config.keys={
+          -- Split Domain
+            {key="|", mods="CTRL|SHIFT", action=act.SplitHorizontal {domain="CurrentPaneDomain"}},
+            {key="_", mods="CTRL|SHIFT", action=act.SplitVertical {domain="CurrentPaneDomain"}},
+          -- Pane navigation
+            {key="h", mods="CTRL", action=act.ActivatePaneDirection("Left")},
+            {key="j", mods="CTRL", action=act.ActivatePaneDirection("Down")},
+            {key="k", mods="CTRL", action=act.ActivatePaneDirection("Up")},
+            {key="l", mods="CTRL", action=act.ActivatePaneDirection("Right")},
+          -- Pane Resizing
+            {key="h", mods="CTRL|ALT", action=act.AdjustPaneSize {"Left", 5}},
+            {key="j", mods="CTRL|ALT", action=act.AdjustPaneSize {"Down", 5}},
+            {key="k", mods="CTRL|ALT", action=act.AdjustPaneSize {"Up", 5}},
+            {key="l", mods="CTRL|ALT", action=act.AdjustPaneSize {"Right", 5}},
+          -- Workspaces
+            {key="w", mods="CTRL", action=act.ShowLauncherArgs {flags="FUZZY|WORKSPACES"}},
+            {key="n", mods="CTRL", action=act.SwitchToWorkspace, name="new"},
+            {key="n", mods="CTRL|SHIFT", action=act.SwitchWorkspaceRelative(1)},
+            {key="p", mods="CTRL|SHIFT", action=act.SwitchWorkspaceRelative(-1)},
+            {key="r", mods="CTRL|ALT", action=act.PromptInputLine {description="Rename Workspace:",
+                action=wezterm.action_callback(function(window,pane,line)
+                  if line then
+                    wezterm.mux.rename_workspace(
+                      wezterm.mux.get_active_workspace(),
+                      line
+                    )
+                  end
+                end),
+            },},
+          -- Tab Control
+            {key="t", mods="CTRL", action=act.SpawnTab("CurrentPaneDomain")},
+            {key="Tab", mods="CTRL", action=act.ActivateTabRelative(1)},
+            {key="Tab", mods="CTRL|SHIFT", action=act.ActivateTabRelative(-1)},
+          -- Close tabs/pains
+            {key="x", mods="CTRL|ALT", action=act.CloseCurrentPane {confirm=true}},
+            {key="q", mods="CTRL|ALT", action=act.CloseCurrentTab {confirm=true}},
+          -- Resizing
+            { key = '=', mods = 'CTRL|ALT', action = act.IncreaseFontSize },
+            { key = '-', mods = 'CTRL|ALT', action = act.DecreaseFontSize },
+            { key = '0', mods = 'CTRL|ALT', action = act.ResetFontSize },
+          -- Copy Paste 
+            { key = 'c', mods = 'CTRL', action = act.CopyTo 'Clipboard' },
+            { key = 'c', mods = 'CTRL|SHIFT', action = act.CopyTo 'Clipboard' },
+            { key = 'v', mods = 'CTRL', action = act.PasteFrom 'Clipboard' },
+            { key = 'v', mods = 'CTRL|SHIFT', action = act.PasteFrom 'Clipboard' },
+          -- Arrow Selection
+            {key="LeftArrow",mods="SHIFT",action=act.Multiple{act.ActivateCopyMode,act.CopyMode {SetSelectionMode="Cell"},act.CopyMode'MoveLeft'}},
+            {key="RightArrow",mods="SHIFT",action=act.Multiple{act.ActivateCopyMode,act.CopyMode {SetSelectionMode="Cell"},act.CopyMode'MoveRight'}},
+            {key="DownArrow",mods="SHIFT",action=act.Multiple{act.ActivateCopyMode,act.CopyMode {SetSelectionMode="Cell"},act.CopyMode'MoveDown'}},
+            {key="UpArrow",mods="SHIFT",action=act.Multiple{act.ActivateCopyMode,act.CopyMode {SetSelectionMode="Cell"},act.CopyMode'MoveUp'}},
+          }
+        config.mouse_bindings={
+          {event={Down={streak=1,button ="Left"}}, mods="ALT", action=act.StartWindowDrag},
+          {event={Down={streak=1,button="Middle"}}, mods="NONE", action=act.PasteFrom("Clipboard")},
+        }
+        --Alternative Modes for wezterm bindings
+          config.key_tables={
+            copy_mode={
+              --Navigation
+                {key="LeftArrow",mods="NONE",action=act.CopyMode 'MoveLeft'},
+                {key="RightArrow",mods="NONE",action=act.CopyMode 'MoveRight'},
+                {key="DownArrow",mods="NONE",action=act.CopyMode 'MoveDown'},
+                {key="UpArrow",mods="NONE",action=act.CopyMode 'MoveUp'},
+              --Copy & Exit CopyMode
+                {key="c",mods="CTRL|SHIFT",action=act.Multiple{act.CopyTo 'Clipboard',act.CopyMode'Close'}},
+                {key="y",mods="NONE",action=act.Multiple{act.CopyTo 'Clipboard',act.CopyMode'Close'}},
+              --Exit CopyMode
+                {key="Escape",mods="NONE",action=act.CopyMode 'Close'},
+                {key="q",mods="NONE",action=act.CopyMode 'Close'},
+            },
+          } 
+      --Events  
+        wezterm.on("update-right-status", function(window, pane)
+          local date = wezterm.strftime("%Y-%m-%d %H:%M")
+          local ws = window:active_workspace()
+          window:set_right_status(ws .. " | " .. date)
+        end)
+
+        wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
+          local title = tab.active_pane.title
+          if tab.is_active then
+            return {
+              {Text=" " .. title .. " "},
+            }
+          end
+          return title
+        end)
+      return config
+    '';
+  };
+}

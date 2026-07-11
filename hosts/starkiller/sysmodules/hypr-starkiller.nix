@@ -15,7 +15,7 @@
     #primary display manager: sddm
     services.displayManager = {
       enable = true;
-      defaultSession = "hyprland"; 
+      #Session = "hyprland"; 
 
       sddm = {
         enable = true;

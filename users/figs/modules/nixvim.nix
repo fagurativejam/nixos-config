@@ -47,6 +47,31 @@
     };
 
     extraConfigLua = ''
+      local started = false
+      vim.api.nvim_create_autocmd("VimEnter", {
+        callback = function()
+          started=true
+        end
+      })
+      
+      vim.api.nvim_create_autocmd("BufDelete", {
+        callback = function()
+          if not started then return end
+          vim.defer_fn(function()
+            local bufs = vim.tbl_filter(function(buf)
+              return vim.api.nvim_buf_is_valid(buf)
+                and vim.bo[buf].buflisted
+                and vim.api.nvim_buf_get_name(buf) ~= ""
+              end, vim.api.nvim_list_bufs())
+            local count = 0
+            for _ in pairs(bufs) do count = count + 1 end
+            if count == 0 then
+              vim.cmd("Alpha")
+            end
+          end, 10)
+        end,
+      })
+
       vim.diagnostic.config({
         signs = {
           text = {
@@ -80,110 +105,6 @@
     '';
 
     plugins = {
-      lualine = {
-        enable = true;
-        settings = {
-          options = {
-            theme = "catppuccin";
-            globalstatus = true;
-            component_separators = { left = "|"; right = "|"; };
-            section_separators = { left = ""; right = ""; };
-          };
-        };
-      };
-      
-      auto-save = {
-        enable = true;
-        settings = {
-          enabled = true;
-          trigger_events = {
-            InsertLeave = true;
-            TextChanged = true;
-          };
-        };
-      };
-
-      bufferline = {
-        enable = true;
-        settings = {
-          options = {
-            separator_style = "thin";
-            transparent_background = true;
-            diagnostics = "nvim-lsp";
-            show_buffer_close_icons = false;
-            show_close_icon = false;
-            always_show_bufferline = true;
-            offsets = [
-              {
-                filetype = "neotree";
-                text = "File Explorer";
-                text_align = "center";
-                separator = true;
-              }
-            ];
-          };
-        };
-      };
-
-      neo-tree = {
-        enable = true;
-        settings.closeIfLastWindow = true;
-      };
-
-      rainbow-delimiters.enable = true;
-
-      nvim-ufo = {
-        enable = true;
-        settings = {
-          provider_selector = ''
-            function(bufnr, filetype, buftype)
-              return 'indent'
-            end
-          '';
-        };
-      };
-
-      indent-blankline = {
-        enable = true;
-        settings = {
-          scope = { enabled = true; show_start = false; };
-          exclude = { filetypes = [ "alpha" "neo-tree" ]; };
-        };
-      };
-
-      telescope.enable = true;
-
-      treesitter = {
-        enable = true;
-        settings = {
-          highlight.enable = true;
-          indent.enable = true;
-          rainbow.enable = true;
-        };
-      };
-
-      neoscroll.enable = true;
-      ts-autotag.enable = true;
-
-      colorizer = {
-        enable = true;
-        settings = {
-          filetypes = [ "*" ]; # Target all active files
-          user_default_options = {
-            RGB = true;        # Highlights standard RGB text
-            RRGGBB = true;     # Highlights standard Hex codes
-            css = true;        # Enables parsing of CSS color rules
-            css_fn = true;     # FORCES parsing of functional rgb() and rgba() strings
-          };
-        };
-      };
-      
-      web-devicons.enable = true;
-      nvim-autopairs.enable = true;
-      comment.enable = true;
-      which-key.enable = true;
-      trouble.enable = true;
-      
       alpha = {
         enable = true;
         settings.layout = [
@@ -275,7 +196,7 @@
                     type = "button";
                     val = "  Open Configuration";
                     opts = {
-                      keymap = [ "n" "c" "<cmd>e ~/home/figs/Bullshit/users/figs/modules/nixvim.nix<CR>" { noremap = true; silent = true; } ];
+                      keymap = [ "n" "c" "<cmd>e ~/Bullshit/users/figs/modules/nixvim.nix<CR>" { noremap = true; silent = true; } ];
                       shortcut = "c";
                       position = "center";
                       hl = "Special";
@@ -315,57 +236,38 @@
             }
         ];
       };
-      
-      todo-comments.enable = true;
-     
-      noice = {
-        enable = true;
-        settings.presets = {
-          bottom_search = false;
-          command_palette = true;
-          long_message_to_split = true;
-          lsp_doc_border = true;
-        };
-      };
-      
-      dressing.enable = true;
-
-      gitsigns = {
-        enable = true;
-        settings.current_line_blame = true;
-      };
-     
-      barbecue.enable = true;
-      
-      toggleterm = {
+      auto-save = {
         enable = true;
         settings = {
-          open_mapping = "[[<c-\\>]]";
-          direction = "float";
-          highlights = {
-            NormalFloat = { link = "NormalFloat"; };
-            FloatBorder = { link = "FloatBorder"; };
-          };
-          float_opts = {
-            border = "rounded";
-            winblend = 0;
+          enabled = true;
+          trigger_events = {
+            InsertLeave = true;
+            TextChanged = true;
           };
         };
       };
-      
-      lsp = {
+      barbecue.enable = true;
+      bufferline = {
         enable = true;
-        servers = {
-          nil_ls.enable = false;
-          pyright.enable = false;
-          rust_analyzer = { 
-            enable = true;
-            installCargo = true;
-            installRustc = true; 
+        settings = {
+          options = {
+            separator_style = "thin";
+            transparent_background = true;
+            diagnostics = "nvim-lsp";
+            show_buffer_close_icons = false;
+            show_close_icon = false;
+            always_show_bufferline = true;
+            offsets = [
+              {
+                filetype = "neotree";
+                text = "File Explorer";
+                text_align = "center";
+                separator = true;
+              }
+            ];
           };
         };
       };
-
       cmp = {
         enable = true;
         settings = {
@@ -385,6 +287,108 @@
           };
         };
       };
+      colorizer = {
+        enable = true;
+        settings = {
+          filetypes = [ "*" ]; # Target all active files
+          user_default_options = {
+            RGB = true;        # Highlights standard RGB text
+            RRGGBB = true;     # Highlights standard Hex codes
+            css = true;        # Enables parsing of CSS color rules
+            css_fn = true;     # FORCES parsing of functional rgb() and rgba() strings
+          };
+        };
+      };
+      comment.enable = true;
+      dressing.enable = true;
+      gitsigns = {
+        enable = true;
+        settings.current_line_blame = true;
+      };
+      indent-blankline = {
+        enable = true;
+        settings = {
+          scope = { enabled = true; show_start = false; };
+          exclude = { filetypes = [ "alpha" "neo-tree" ]; };
+        };
+      };
+      lsp = {
+        enable = true;
+        servers = {
+          nil_ls.enable = false;
+          pyright.enable = false;
+          rust_analyzer = { 
+            enable = true;
+            installCargo = true;
+            installRustc = true; 
+          };
+        };
+      };
+      lualine = {
+        enable = true;
+        settings = {
+          options = {
+            theme = "catppuccin";
+            globalstatus = true;
+            component_separators = { left = "|"; right = "|"; };
+            section_separators = { left = ""; right = ""; };
+          };
+        };
+      };
+      neoscroll.enable = true;
+      neo-tree = {
+        enable = true;
+        settings.closeIfLastWindow = true;
+      };
+      noice = {
+        enable = true;
+        settings.presets = {
+          bottom_search = false;
+          command_palette = true;
+          long_message_to_split = true;
+          lsp_doc_border = true;
+        };
+      };
+      nvim-autopairs.enable = true;
+      nvim-ufo = {
+        enable = true;
+        settings = {
+          provider_selector = ''
+            function(bufnr, filetype, buftype)
+              return 'indent'
+            end
+          '';
+        };
+      };
+      rainbow-delimiters.enable = true;
+      telescope.enable = true;
+      toggleterm = {
+        enable = true;
+        settings = {
+          open_mapping = "[[<c-\\>]]";
+          direction = "float";
+          highlights = {
+            NormalFloat = { link = "NormalFloat"; };
+            FloatBorder = { link = "FloatBorder"; };
+          };
+          float_opts = {
+            border = "rounded";
+            winblend = 0;
+          };
+        };
+      };
+      treesitter = {
+        enable = true;
+        settings = {
+          highlight.enable = true;
+          indent.enable = true;
+          rainbow.enable = true;
+        };
+      };
+      trouble.enable = true;
+      ts-autotag.enable = true;
+      web-devicons.enable = true;
+      which-key.enable = true;
     };
 
     globals.mapleader = " ";

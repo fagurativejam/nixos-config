@@ -63,7 +63,7 @@ in
 {
   wayland.windowManager.hyprland.settings.bind = [
     # Increase
-    "SUPER ALT SHIFT, equal, exec, ${scaleScript}/bin/hypr-scale up"
+    "SUPER ALT, equal, exec, ${scaleScript}/bin/hypr-scale up"
     "SUPER ALT, KP_Add, exec, ${scaleScript}/bin/hypr-scale up"
 
     # Decrease
