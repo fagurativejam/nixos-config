@@ -1,5 +1,10 @@
-{ config, lib, ... }:
+{ config, lib, myTheme,... }:
 
+let
+  colors = myTheme.colors;
+  rgba = myTheme.toRGBACss;
+  hex = myTheme.toHashHex;
+in
 {
   config = lib.mkIf config.my.hyprland.enable {
     programs.waybar = {
@@ -53,7 +58,7 @@
             format-ethernet = " ";
             format-disconnected = "󱛅 ";
             format-disabled = "󰯡 ";
-            tooltip-format = "{essid}";
+            tooltip-format = "{essid} ({signalStrength}%)";
             on-click = "nm-connection-editor";
           };
           tray = {  };
@@ -61,13 +66,13 @@
             tooltip = false;
             format = "{icon}";
             format-icons = {
-              notification = "󰂚<span foreground='#e60000'><sup></sup></span>";
+              notification = "󰂚<span foreground='${hex colors.porsche}'><sup></sup></span>";
               none = "󰂚";
-              dnd-notification = "󰂛<span foreground='#e60000'><sup></sup></span>";
+              dnd-notification = "󰂛<span foreground='${hex colors.porsche}'><sup></sup></span>";
               dnd-none = "󰂛";
-              inhibited-notification = "󰂚<span foreground='#e60000'><sup></sup></span>";
+              inhibited-notification = "󰂚<span foreground='${hex colors.porsche}'><sup></sup></span>";
               inhibited-none = "󰂚";
-              dnd-inhibited-notification = "󰂛<span foreground='#e60000'><sup></sup></span>";
+              dnd-inhibited-notification = "󰂛<span foreground='${hex colors.porsche}'><sup></sup></span>";
               dnd-inhibited-none = "󰂛";
             };
             return-type = "json";
@@ -84,17 +89,21 @@
           };
         };
       };
-      style = /*lua*/ ''
+      style =/*css*/ ''
+        *{
+          font-family: "Jetbrains Mono Nerd Font", "Symbols Nerd Font Mono";
+          font-size: 13px;
+        }
         window#waybar {
           background: transparent;
           border: none;
         }
         /* Structural Parent Containers using centralized tokens */
           #workspaces, .modules-center, .modules-right {
-            background: rgba(89, 89, 89, 0.67);
-            border: 2px solid rgba(126, 135, 153, 0.9);
+            background: ${rgba colors.surface0 "0.67"};
+            border: 2px solid ${rgba colors.surface2 "0.9"};
             border-radius: 8px;
-            color: rgba(236, 239, 244, 0.8);
+            color: ${rgba colors.fg0 "0.8"};
             margin: 2px 4px;
             padding: 2px 6px;
           }
@@ -104,36 +113,37 @@
             background: transparent;
             border: none;
             padding: 1px 4px;
-            color: rgba(236, 239, 244, 0.6);
+            color: ${rgba colors.fg0 "0.6"};
             transition: all 0.2s ease-in-out;
           }
           #workspaces button:hover {
-            color: rgba(236, 239, 244, 1);
-            background: rgba(129, 161, 193, 0.3);
+            color: ${rgba colors.white "1"};
+            background: ${rgba colors.blue2 "0.3"};
             border-radius: 6px;
           }
           #workspaces button.active {
-            background: rgba(129, 161, 193, 0.8);
-            color: rgba(236, 239, 244, 1);
-            box-shadow: inset 0 -2px rgba(129, 161, 193, 1);
+            background: ${rgba colors.blue2 "0.8"};
+            color: ${rgba colors.white "1"};
+            box-shadow: inset 0 -2px ${rgba colors.blue2 "1"};
           }
         /* Combined Global Module Geometry Rules */
           #custom-power, #custom-notification, #cpu, #memory, #temperature, #pulseaudio, #bluetooth, #network, #clock, #mpris, #tray {
             padding: 2px 6px;
             margin: 2px 3px;
-            border: 2px solid rgba(46, 52, 64, 0.9);
+            border: 2px solid ${rgba colors.surface2 "0.9"};
             border-radius: 6px;
           }
         /* Standardized Heritage Palette Target Injection mapping */
-          #custom-power { background: rgba(230, 0, 0, 1); }
-          #custom-notification, #tray { background: rgba(76, 86, 106, 0.8); }
-          #cpu { background: rgba(191, 97, 106, 0.8); }
-          #memory { background: rgba(208, 135, 112, 0.8); }
-          #temperature { background: rgba(235, 203, 139, 0.8); }
-          #pulseaudio, #mpris { background: rgba(163, 190, 140, 0.8); }
-          #bluetooth { background: rgba(143, 188, 187, 0.8); }
-          #network { background: rgba(129, 161, 193, 0.8); }
-          #clock { background: rgba(180, 142, 173, 0.8); }
+          #custom-power { background: ${rgba colors.porsche "1"}; color: ${hex colors.crust};}
+          #custom-notification { background: ${rgba colors.fg0 "1"}; color: ${hex colors.crust};}
+          #tray {background: ${rgba colors.surface1 "1"}; color: ${hex colors.white};}
+          #cpu { background: ${rgba colors.red2 "1"}; color: ${hex colors.crust}; }
+          #memory { background: ${rgba colors.orange2 "1"}; color: ${hex colors.crust};}
+          #temperature { background: ${rgba colors.yellow2 "1"}; color: ${hex colors.crust};}
+          #pulseaudio, #mpris { background: ${rgba colors.green2 "1"}; color: ${hex colors.crust};}
+          #bluetooth { background: ${rgba colors.teal2 "1"}; color: ${hex colors.crust};}
+          #network { background: ${rgba colors.blue2 "1"}; color: ${hex colors.crust};}
+          #clock { background: ${rgba colors.purple2 "1"}; color: ${hex colors.crust};}
       '';
     };
   };

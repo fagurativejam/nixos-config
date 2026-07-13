@@ -9,6 +9,7 @@
 
   imports = [
     #./modules/vscode.nix
+    ./modules/fastfetch.nix
     ./modules/hypr-de/hypr-figs.nix
     ./modules/nixvim.nix
     ./modules/wezterm.nix
@@ -18,7 +19,6 @@
 
   programs = {
     hyfetch.enable = true;
-    fastfetch.enable = true;
     home-manager.enable = true;
   };
 
@@ -85,6 +85,15 @@
   };
 
   news.display = "silent";
+
+  home.pointerCursor = {
+    enable=true;
+    gtk.enable = true;
+    x11.enable = true;
+    name = "catppuccin-mocha-dark-cursors";
+    package = pkgs.catppuccin-cursors.mochaDark;
+    size = 24;
+  };
 
   home.packages = with pkgs; [
     #terminal utils

@@ -1,53 +1,54 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, myTheme, ... }:
 
+let
+  colors = myTheme.colors;
+  hex = myTheme.toHashHex;
+  
+  gtkCustomCss = ''
+    @define-color window_bg_color ${hex colors.bg};
+    @define-color window_fg_color ${hex colors.fg0};
+    @define-color view_bg_color ${hex colors.crust};
+    @define-color view_fg_color ${hex colors.fg0};
+    @define-color headerbar_bg_color ${hex colors.mantle};
+    @define-color headerbar_fg_color ${hex colors.fg0};
+    @define-color accent_color ${hex colors.purple1};
+    @define-color accent_bg_color ${hex colors.purple1};
+    @define-color accent_fg_color ${hex colors.crust};
+    @define-color popover_bg_color ${hex colors.mantle};
+    @define-color card_bg_color ${hex colors.surface0};
+  '';
+in
 {
   config = lib.mkIf config.my.hyprland.enable {
+    
+    dconf.settings = {
+      "org/gnome/desktop/interface" = {
+        color-scheme = "prefer-dark";
+      };
+    };
     gtk = {
       enable = true;
-      gtk3.extraConfig = {
-        gtk-application-prefer-dark-theme = 1;
+      theme = {
+        name = "adw-gtk3-dark";
+        package = pkgs.adw-gtk3;
       };
+      iconTheme = {
+        name = "candy-icons";
+        package = pkgs.candy-icons;
+      };
+      gtk4.theme = null;
       gtk4.extraConfig = {
         gtk-application-prefer-dark-theme = 1;
-      };
-      # Hardcode solid Mocha colors into GTK3 apps (Alpha layer removed)
-      gtk3.extraCss = /*css*/ ''
-        @define-color window_bg_color #1e1e2e;
-        @define-color window_fg_color #cdd6f4;
-        @define-color view_bg_color #11111b;
-        @define-color view_fg_color #cdd6f4;
-        @define-color headerbar_bg_color #181825;
-        @define-color headerbar_fg_color #cdd6f4;
-        @define-color accent_color #cba6f7;
-        @define-color accent_bg_color #cba6f7;
-        @define-color accent_fg_color #11111b;
-      '';
-      # Hardcode solid Mocha colors into GTK4/Libadwaita apps (Alpha layer removed)
-      gtk4.extraCss = /*css*/ ''
-        @define-color window_bg_color #1e1e2e;
-        @define-color window_fg_color #cdd6f4;
-        @define-color view_bg_color #11111b;
-        @define-color view_fg_color #cdd6f4;
-        @define-color headerbar_bg_color #181825;
-        @define-color headerbar_fg_color #cdd6f4;
-        @define-color accent_color #cba6f7;
-        @define-color accent_bg_color #cba6f7;
-        @define-color accent_fg_color #11111b;
-      '';
-      iconTheme = {
-        name = "Papirus-Dark";
-        package = pkgs.papirus-icon-theme;
-      };
-      cursorTheme = {
-        name = "catppuccin-mocha-dark-cursors";
-        package = pkgs.catppuccin-cursors.mochaDark;
-        size = 24;
+        gtk-theme-name = "adw-gtk3-dark";
       };
       font = {
         name = "JetBrains Mono";
         size = 10;
       };
     };
+
+    xdg.configFile."gtk-3.0/gtk.css".text = gtkCustomCss;
+    xdg.configFile."gtk-4.0/gtk.css".text = gtkCustomCss;
   };
 }
 

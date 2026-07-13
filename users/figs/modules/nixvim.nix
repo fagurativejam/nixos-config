@@ -1,5 +1,9 @@
-{ pkgs, inputs, ... }:
+{ pkgs, inputs, myTheme, ... }:
 
+let 
+  colors=myTheme.colors;
+  hex = myTheme.toHashHex;
+in
 {
   imports = [
     inputs.nixvim.homeModules.nixvim
@@ -7,6 +11,7 @@
 
   programs.nixvim = {
     enable = true;
+
     nixpkgs.source = pkgs.path;
 
     colorschemes.catppuccin = {
@@ -317,11 +322,6 @@
         servers = {
           nil_ls.enable = false;
           pyright.enable = false;
-          rust_analyzer = { 
-            enable = true;
-            installCargo = true;
-            installRustc = true; 
-          };
         };
       };
       lualine = {
@@ -418,11 +418,10 @@
   home.packages = with pkgs; [
     tree-sitter
     fd
+    ripgrep
     nil
     pyright
-    rust-analyzer
     alejandra
     black
-    rustfmt
   ];
 }

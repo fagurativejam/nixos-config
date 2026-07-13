@@ -9,21 +9,23 @@
           "SUPER, RETURN, exec, wezterm" 
           "SUPER, E, exec, thunar"
           "SUPER, X, exec, wlogout -b 1"
+          "SUPER, N, exec, swaync-client -t -sw"
+        # Screenshotting
+          "SUPER, S, exec, hyprshot -m region -o /home/figs/Pictures/Screenshots"
+          "SUPER|SHIFT, S, exec, hyprshot -m window -o /home/figs/Pictures/Screenshots"
+          "SUPER|CTRL, S, exec, hyprshot -m output -o /home/figs/Pictures/Screenshots"
         # General Keybindings
           "SUPER, Q, killactive"
           "SUPER, F, fullscreen"
           "SUPER, ESC, exit"
           "SUPER, SPACE, togglefloating"
+          "SUPER, P, pin"
           "SUPER, R, exec, hyprctl reload"
         # Playback
           "SUPER, F7, exec, playerctl play-pause"
           "SUPER, F8, exec, playerctl next"
           "SUPER, F6, exec, playerctl previous"
           "SUPER, F5, exec, playerctl stop"
-        # Audio Controls
-          "SUPER, F10, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-          "SUPER, F11, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-          "SUPER, F12, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
         # Workspace Switching
           "SUPER, 1, workspace, 1"
           "SUPER, 2, workspace, 2"
@@ -76,6 +78,16 @@
           "SUPER|ALT, F1, exec, hyprlock"
           "SUPER|ALT, F4, exec, systemctl reboot"
           "SUPER|ALT, F5, exec, systemctl poweroff"
+      ];
+      binde = [
+        # Audio Controls
+          "SUPER, F10, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+          "SUPER, F11, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+          "SUPER, F12, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+      ];
+      bindm = [
+        "SUPER, mouse:272, movewindow"   # SUPER + Left Click drags windows
+        "SUPER, mouse:273, resizewindow" # SUPER + Right Click resizes windows
       ];
     };
   };

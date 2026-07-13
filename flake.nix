@@ -29,13 +29,17 @@
       inherit system;
       config.allowUnfree = true; #Allow unfree packages (for firmware, etc)
     };
+
+    themeModule= import ./users/figs/modules/theme.nix {inherit pkgs;};
+    myTheme = themeModule._module.args.myTheme;
+
   in {
     #NixOS system configuration for starkiller
     nixosConfigurations.starkiller = nixpkgs.lib.nixosSystem {
       inherit system;
 
       #Makes flake inputs/outputs available as specialArgs in all modules
-      specialArgs = {inherit inputs self;};
+      specialArgs = {inherit inputs self myTheme;};
 
       modules = [
         #Hardware + host config
@@ -49,7 +53,7 @@
           home-manager = {
             useGlobalPkgs = true; #Use system pkgs instead of per-user
             useUserPackages = true; #Install user packages to ~/.nix-profile
-            extraSpecialArgs = {inherit inputs self;}; #Pass flake to HM too
+            extraSpecialArgs = {inherit inputs self myTheme;}; #Pass flake to HM too
             users.figs = import ./users/figs/figs.nix;
           };
         }
@@ -62,7 +66,7 @@
       inherit pkgs;
 
       #same specialArgs as system so modules behave consistently
-      extraSpecialArgs = {inherit inputs self;};
+      extraSpecialArgs = {inherit inputs self myTheme;};
 
       modules = [
         ./users/figs/figs.nix

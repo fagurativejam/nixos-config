@@ -15,7 +15,7 @@
     #primary display manager: sddm
     services.displayManager = {
       enable = true;
-      #Session = "hyprland"; 
+      defaultSession = "hyprland"; 
 
       sddm = {
         enable = true;
@@ -24,12 +24,6 @@
         theme = "catppuccin-mocha-mauve";
         autoNumlock = true; 
         
-        settings = {
-          Autologin = {
-            Session = "hyprland.desktop";
-          };
-        };
-
         extraPackages = with pkgs; [
           kdePackages.qtsvg
           qt6.qtwayland

@@ -1,9 +1,14 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, myTheme, ... }:
 
+let
+  colors = myTheme.colors;
+  hyprHex = myTheme.toHyprHex;
+in
 {
   options.my.hyprland = {
     enable = lib.mkEnableOption "Enable User Hyprland Config";
   };
+  
   imports = [
     ./hypr-modules/gtk.nix
     ./hypr-modules/hypr-binds.nix
@@ -11,26 +16,14 @@
     ./hypr-modules/hyprlock.nix
     ./hypr-modules/hyprpaper.nix
     ./hypr-modules/hypr-scale.nix
+    ./hypr-modules/hyprshot.nix
     ./hypr-modules/swaync.nix
     ./hypr-modules/waybar.nix
     ./hypr-modules/wlogout.nix
     ./hypr-modules/wofi.nix
   ];
+
   config = lib.mkIf config.my.hyprland.enable {
-    home.sessionVariables ={
-      EDITOR = "nvim";
-      VISUAL = "nvim";
-    };
-
-    programs.bash.initExtra = ''
-      export EDITOR=nvim
-      export VISUAL=nvim
-    '';
-
-    programs.zsh.initExtra = ''
-      export EDITOR=nvim
-      export VISUAL=nvim
-    '';
 
     wayland.windowManager.hyprland = {
       enable = true;
@@ -62,7 +55,7 @@
           }
           {
             name = "float-blueman";
-            match.class = "0.8 override 0.8 override 0.8 override";
+            match.class = ".blueman-manager-wrapped";
             float = "on";
             size = "700 450";
             center = "on";
@@ -82,8 +75,9 @@
           gaps_in = 2.5;
           gaps_out = 7;
           border_size = 2;
-          "col.active_border" = "rgba(33ccfeed)";
-          "col.inactive_border" = "rgba(595959aa)";
+          
+          "col.active_border" = "${hyprHex colors.purple1 "ee"} ${hyprHex colors.cerulean "ee"} 45deg";
+          "col.inactive_border" = "${hyprHex colors.surface2 "aa"}";
         };
         decoration = {
           rounding = 5;
@@ -95,7 +89,7 @@
             enabled = true;
             range = 12;
             render_power = 3;
-            color = "rgba(30, 30, 46, 0.33)";
+            color = "${hyprHex colors.crust "55"}";
           };
           blur = {
             enabled = true;
@@ -121,10 +115,16 @@
       };
     };
     home.packages = with pkgs; [
+      #connectivity
       networkmanagerapplet
       blueman
       hyprpolkitagent
       pavucontrol
+      #media playback
+      hyprshot
+      drawing
+      loupe
+      clapper
     ];
   };
 }

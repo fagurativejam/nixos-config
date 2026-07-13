@@ -92,6 +92,11 @@
     home-manager # Include Home Manager for user configuration management
   ];
 
+  environment.sessionVariables = {
+    NIXOS_OZONE_HWP = "1";
+    ELECTRON_OZONE_PLATFORM_HINT = "wayland";
+  };
+
   nix.package = inputs.nix-monitored.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
   nixpkgs.overlays = [

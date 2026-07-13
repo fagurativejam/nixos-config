@@ -1,4 +1,4 @@
-{pkgs,...};
+{pkgs,...}:
 
 let
   # Parsers (translate raw hex)
@@ -34,7 +34,7 @@ let
       fg0 = "cdd6f4"; #text color "#cdd6f4"
       fg1 = "b4befe"; #"#b4befe"
       fg2 = "f5e0dc"; #"#f5e0dc"
-      white = "ffffff"; #
+      white = "ffffff"; #"#eceff4"
       #vibrant accents
       purple1 = "cba6f7"; #"#cba6f7"
       red1="f38ba8";#"#f38ba8"
@@ -59,11 +59,14 @@ let
       purple2="b48ead";#"#b48ead"
       pink2="d699b4";#"#d699b4"
       maroon2="";#"#a2686a"
-    };
+      #important colors
+      porsche="ff0000";#"#ff0000"
+      cerulean="33ccfe";#"#33ccfe"
+  };
 in {
   _module.args = {
     myTheme = {
-        inherit colors toRGBACss toHyprHex toHashHex;
+        inherit colors toRGBACss toHyprHex toHashHex sub hexToDec;
     };
   };
 }
