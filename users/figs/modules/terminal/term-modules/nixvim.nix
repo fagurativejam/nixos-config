@@ -322,7 +322,6 @@ in
         servers = {
           nil_ls.enable = false;
           pyright.enable = false;
-          };
         };
       };
       lualine = {
