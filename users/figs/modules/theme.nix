@@ -16,7 +16,8 @@ let
     toRGBACss = hex: alpha: "rgba(${hexToDec (sub 0 2 hex)}, ${hexToDec (sub 2 2 hex)}, ${hexToDec (sub 4 2 hex)}, ${alpha})";
     toHyprHex = hex: alphaHex: "0x${alphaHex}${hex}";
     toHashHex = hex: "#${hex}";
-
+    toTermParam = hex: "38;2;${hexToDec (sub 0 2 hex)};${hexToDec (sub 2 2 hex)};${hexToDec (sub 4 2 hex)}";
+    toAnsi = hex: "\\e[${toTermParam hex}m";
   # MASTER PALETTE
     colors = {
       #Neutral Bases
@@ -66,7 +67,7 @@ let
 in {
   _module.args = {
     myTheme = {
-        inherit colors toRGBACss toHyprHex toHashHex sub hexToDec;
+        inherit colors toRGBACss toHyprHex toHashHex sub hexToDec toTermParam toAnsi;
     };
   };
 }

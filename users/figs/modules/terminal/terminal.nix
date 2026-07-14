@@ -17,5 +17,7 @@
       bottom
       lf
       cava
+      sl
+      pipes
   ];
 }
