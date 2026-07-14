@@ -10,7 +10,7 @@
   my.hyprland.enable = true;
 
   imports = [
-    ./modules/git.nix
+    ./modules/common/git.nix
     ./modules/hypr-de/hypr-figs.nix
     ./modules/terminal/terminal.nix
   ];
