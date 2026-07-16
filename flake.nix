@@ -30,7 +30,7 @@
       config.allowUnfree = true; #Allow unfree packages (for firmware, etc)
     };
 
-    themeModule= import ./users/figs/modules/theme.nix {inherit pkgs;};
+    themeModule= import ./users/figs/modules/common/theme.nix {inherit pkgs;};
     myTheme = themeModule._module.args.myTheme;
 
   in {

@@ -52,12 +52,15 @@
 
   time.timeZone = "America/Chicago"; # Set your local timezone
 
-  xdg.portal = {
-    enable = true; # Enable XDG portals for sandboxed applications
-    extraPortals = with pkgs; [
-      xdg-desktop-portal-gtk # Portal backend for GTK applications
-    ];
-    config.common.default = "*";
+  xdg = {
+    portal = {
+      enable = true; # Enable XDG portals for sandboxed applications
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-gtk # Portal backend for GTK applications
+      ];
+      config.common.default = "*";
+    };
+    mime.enable = true;
   };
 
   programs = {

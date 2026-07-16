@@ -125,6 +125,8 @@ in
       drawing
       loupe
       clapper
+      #disk manager
+      gparted
     ];
   };
 }

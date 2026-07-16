@@ -41,12 +41,9 @@
     #duh
       firefox
       blender
-    #disk manager
-      gparted
     # File Management Stack
       thunar                  # The core file manager
       thunar-archive-plugin   # Right-click "Extract Here" / "Compress"
       thunar-volman           # Removable device management extensions
-      shared-mime-info             # Correctly identifies file types
   ];
 }

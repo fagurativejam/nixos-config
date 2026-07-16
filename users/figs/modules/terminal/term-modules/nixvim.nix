@@ -422,5 +422,6 @@ in
     pyright
     alejandra
     black
+    ripgrep
   ];
 }
