@@ -45,5 +45,7 @@
       thunar                  # The core file manager
       thunar-archive-plugin   # Right-click "Extract Here" / "Compress"
       thunar-volman           # Removable device management extensions
+    #motherboard component rgb control
+      openrgb-with-all-plugins
   ];
 }

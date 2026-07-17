@@ -46,7 +46,6 @@ in
         size = 10;
       };
     };
-
     xdg.configFile."gtk-3.0/gtk.css".text = gtkCustomCss;
     xdg.configFile."gtk-4.0/gtk.css".text = gtkCustomCss;
   };

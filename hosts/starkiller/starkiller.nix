@@ -1,9 +1,9 @@
 { config, inputs, lib, pkgs, ... }:
 
 {
-
   imports = [
     ./sysmodules/hypr-starkiller.nix
+    ./sysmodules/openrgb.nix
   ];
 
   my.hyprland.enable = true;
@@ -17,7 +17,6 @@
         useOSProber = true; # Detect other OSes for dual-booting
       };
       timeout = 5; # Shorten GRUB timeout for faster booting
-
       efi = {
         efiSysMountPoint = "/boot"; # Mount EFI system partition at /boot
         canTouchEfiVariables = true; # Allow NixOS to update EFI variables for bootloader
@@ -37,7 +36,6 @@
   networking = {
     hostName = "starkiller";
     networkmanager.enable = true;
-
     firewall = {
       enable = true;
     };
@@ -47,7 +45,7 @@
     isNormalUser = true;
     description = "Fig Jam";
     shell = pkgs.zsh; # Use Zsh as default shell
-    extraGroups = [ "networkmanager" "wheel" "video" "audio" ]; # Add user to necessary groups
+    extraGroups = [ "networkmanager" "wheel" "video" "audio" "i2c" ]; # Add user to necessary groups
   };
 
   time.timeZone = "America/Chicago"; # Set your local timezone
@@ -111,7 +109,6 @@
         nix = inputs.nix-monitored.packages.${super.stdenv.hostPlatform.system}.default;
       };
     })
-    
   ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ]; # Enable experimental features for Nix
