@@ -9,6 +9,28 @@ in
     inputs.nixvim.homeModules.nixvim
   ];
 
+  xdg.desktopEntries.nixvim = {
+    name = "Nixvim";
+    genericName = "Text Editor";
+    exec = "wezterm start -- nvim %F";
+    terminal = false;
+    categories = ["Utility" "TextEditor" "Development"];
+    mimeType = ["text/plain" "text/markdown" "application/x-zerosize"];
+    icon = "nvim";
+  };
+
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "image/png" = ["org.gnome.Loupe.desktop"];
+      "image/jpg" = ["org.gnome.Loupe.desktop"];
+      "image/jpeg" = ["org.gnome.Loupe.desktop"];
+      "image/webp" = ["org.gnome.Loupe.desktop"];
+      "image/gif" = ["org.gnome.Loupe.desktop"];
+      "image/svg+xml" = ["org.gnome.Loupe.desktop"];
+    };
+  };
+
   programs.nixvim = {
     enable = true;
 
@@ -106,6 +128,15 @@ in
         callback = function()
           vim.highlight.on_yank({ higroup = "Visual", timeout = 150 })
         end,
+      })
+
+      vim.api.nvim_create_autocmd("BufEnter", {
+        pattern = { "*.png", "*.jpg", "*.jpeg", "*.webp", "*.gif", "*.svg" },
+        callback = function()
+          local file = vim.fn.expand("%:p")
+          vim.cmd("bd!")
+          vim.fn.jobstart({"xdg-open", file}, {detatch = true})
+        end
       })
     '';
 
@@ -361,7 +392,9 @@ in
         };
       };
       rainbow-delimiters.enable = true;
-      telescope.enable = true;
+      telescope = {
+        enable = true;
+      };
       toggleterm = {
         enable = true;
         settings = {
@@ -423,5 +456,7 @@ in
     alejandra
     black
     ripgrep
+    imagemagick
+    file
   ];
 }

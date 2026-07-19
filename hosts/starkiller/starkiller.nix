@@ -45,7 +45,7 @@
     isNormalUser = true;
     description = "Fig Jam";
     shell = pkgs.zsh; # Use Zsh as default shell
-    extraGroups = [ "networkmanager" "wheel" "video" "audio" "i2c" ]; # Add user to necessary groups
+    extraGroups = [ "networkmanager" "wheel" "video" "audio" ]; # Add user to necessary groups
   };
 
   time.timeZone = "America/Chicago"; # Set your local timezone

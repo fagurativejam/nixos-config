@@ -34,6 +34,7 @@ in
           "waybar"
           "swaync"
           "systemctl --user start hyprpolkitagent"
+          "openrgb --profile default"
         ];
         
         windowrule = [
