@@ -3,7 +3,7 @@
   imports = [
     ./term-modules/bash.nix
     ./term-modules/fastfetch.nix
-    ./term-modules/nixvim.nix
+    ./term-modules/nixvim/nixvim.nix
     ./term-modules/wezterm.nix
     ./term-modules/zsh.nix
   ];
